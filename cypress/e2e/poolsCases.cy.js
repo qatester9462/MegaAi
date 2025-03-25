@@ -1,9 +1,11 @@
 import { SignInPage } from "../PageObject/SignInPage";
-import { PoolsStep } from "../PageObject/PoolsStep";
+//import { PoolsStep } from "../PageObject/PoolsStep";
 import { ClientsPage } from "../PageObject/ClientsPage";
+import { CreateProject } from "../PageObject/CreateProject";
 const signIn = new SignInPage
-const poolsPage = new PoolsStep
+//const poolsPage = new PoolsStep
 const clients = new ClientsPage()
+const createproject = new CreateProject();
 
 describe("Clients page", () => {
     const email = Cypress.config('users').user1.username
@@ -17,18 +19,38 @@ describe("Clients page", () => {
 
     it("Verify the complete flow to Pool's Step in Project Creation", () => {
         clients.clickonclients()
-        poolsPage.validatePoolsStep('MEGA-Bhargav', 'Testing Project', 'Testing Mega AI Pools step', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
-        poolsPage.clickButton('Next Step')
-        poolsPage.selectGoal()
-        poolsPage.clickButton('Next Step')
+        createproject.validatePoolsStep('MEGA-Bhargav', 'Testing Project', 'Testing Mega AI Pools step', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        createproject.clickButton('Next Step')
+        createproject.selectGoal()
+        createproject.clickButton('Next Step')
     })
     it("Validate that user is able to move to Next Step by selecting any already created pools", () => {
         clients.clickonclients()
-        poolsPage.validatePoolsStep('MEGA-Bhargav', 'Testing Project', 'Testing Mega AI Pools step', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
-        poolsPage.clickButton('Next Step')
-        poolsPage.selectGoal()
-        poolsPage.clickButton('Next Step')
-        poolsPage.selectpool()
-        poolsPage.clickButton('Next Step')
+        createproject.validatePoolsStep('MEGA-Bhargav', 'Testing Project', 'Testing Mega AI Pools step', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        createproject.clickButton('Next Step')
+        createproject.selectGoal()
+        createproject.clickButton('Next Step')
+        createproject.selectpool()
+        createproject.clickButton('Next Step')
+    })
+    it("Validate that user is able to move to Next Step by uploading new pool", () => {
+        const poolName='Testing'
+        clients.clickonclients()
+        createproject.validatePoolsStep('MEGA-Bhargav', 'Testing Project', 'Testing Mega AI Pools step', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        createproject.clickButton('Next Step')
+        createproject.selectGoal()
+        createproject.clickButton('Next Step')
+        createproject.clickUploadPool()
+        createproject.addPoolName(poolName)
+        createproject.addPoolDescription('testing upload pool section')
+        createproject.selectProject()
+        createproject.selectCountry()
+        createproject.clickContinue()
+        createproject.uploadFile('files/test call.xlsx')
+        createproject.validateFileColumns()
+        createproject.validateUploadedCoulmns()
+        createproject.clickUploadButton()
+        createproject.validateUploadedPool(poolName)
+        createproject.clickButton('Next Step')
     })
 })

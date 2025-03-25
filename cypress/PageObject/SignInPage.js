@@ -15,7 +15,7 @@ export class SignInPage  {
         cy.get("#password").should("be.visible").clear({force:true}).type(password)
         cy.get(".p-checkbox-box").click();
         cy.get(".p-button-label").should("be.visible").click({force:true});
-        cy.wait(2000)
+        cy.wait(4000)
        cy.url().should("include", "/admin-dashboard"); 
         cy.get(".header-title").should("be.visible").and('contain.text','Dashboard')
     }

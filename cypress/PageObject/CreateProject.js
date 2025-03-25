@@ -37,63 +37,63 @@ export class CreateProject {
       cy.wait(1000);
       cy.get('[class="px-2 relative group ng-star-inserted"] [class*="border-round-sm relative"]').should('be.visible').click();
 
-    }); 
+    });
     // Use cy command inside the class method
     cy.get('[class="p-element ng-star-inserted"]').should('be.visible') //page should be fully loaded
     cy.wait(2000)
     cy.get('.p-speeddial > .p-ripple').should('be.visible').click(); // Create project icon
     cy.url().should('include', '/projects/create');
   }
-  verifyElementsCreateNewProjectPage(){
+  verifyElementsCreateNewProjectPage() {
 
     cy.get("span[class='ng-star-inserted']").should('be.visible').and('contain.text', '(MEGA-Bhargav)');
   }
-  verifyValidInputProjectNameField(){
+  verifyValidInputProjectNameField() {
     cy.get('#projectName').should("be.visible").and("have.attr", "placeholder", "Enter Project Name");
     cy.get('#projectName').should("be.visible").type('My New Project');
-        
+
   }
-  verifySpecialCharactersProjectNameField(){
+  verifySpecialCharactersProjectNameField() {
     cy.get('#projectName').should("be.visible").and("have.attr", "placeholder", "Enter Project Name");
     cy.get('#projectName').should("be.visible").type('!@#$%^&*()"');
-        
+
   }
-  verifyErrorMessageEmptyProjectNameField(){
+  verifyErrorMessageEmptyProjectNameField() {
     cy.get('#projectName').should("be.visible").and("have.attr", "placeholder", "Enter Project Name");
     cy.get('#projectName').should("be.visible").click();
     cy.get('#description').should('be.visible').click();
-    cy.get('.error').should('be.visible').and ('contain.text', 'Enter Project Name')
-  }        
-  verifyValidInputProjectDescriptionField(){
+    cy.get('.error').should('be.visible').and('contain.text', 'Enter Project Name')
+  }
+  verifyValidInputProjectDescriptionField() {
     cy.get('#description').should('be.visible').and("have.attr", "placeholder", "Enter Project Description");
     cy.get('#description').should('be.visible').type('Project management with real-time tracking');
-  }        
-  verifyValidSelectionCampaignTypeDropdown(){
+  }
+  verifyValidSelectionCampaignTypeDropdown() {
     cy.get("p-dropdown[placeholder='Select Campaign Type']").should('be.visible').click();
     cy.get('[class="p-ripple p-element p-dropdown-item"]').should('be.visible').eq(0).click();
 
   }
-  verifyValidSelectionCountryDropdown(){
+  verifyValidSelectionCountryDropdown() {
     cy.get("p-dropdown[placeholder='Select Country']").should('be.visible').click();
     cy.get('[class="flex align-items-center ng-star-inserted"]').should('be.visible').eq(0).click();
   }
-  verifyValidSelectionTimezoneDropdown(){
+  verifyValidSelectionTimezoneDropdown() {
     cy.wait(2000)
     cy.get("p-dropdown[placeholder='Select Timezone']").should('be.visible').click().wait(1000);
-    cy.get('#pn_id_19_0').should('exist').click({force:true});
+    cy.get('#pn_id_19_0').should('exist').click({ force: true });
 
   }
-  verifyNextStepButtonEnabled(){
+  verifyNextStepButtonEnabled() {
     cy.get("button[class='p-element bg-teal-700 border-0 font-semibold p-button p-component'] span[class='ng-star-inserted']").should('be.visible').click();
 
   }
-  verifyCancelButtonFunctionality(){
+  verifyCancelButtonFunctionality() {
     cy.get('.p-button-label').should('be.visible').click();
     cy.url().should('include', '/projects');
     cy.get("span[class='ng-star-inserted']").should('be.visible').and('contain.text', '(MEGA-Bhargav)');
 
   }
-  verifyBrowserRefreshClearsData(){
+  verifyBrowserRefreshClearsData() {
     cy.reload();
     cy.get('#projectName').should("be.visible").and("have.attr", "placeholder", "Enter Project Name");
     cy.get('#projectName').should('have.value', '');
@@ -103,7 +103,116 @@ export class CreateProject {
     cy.get("p-dropdown[placeholder='Select Country']").should('have.value', '');
     cy.get("p-dropdown[placeholder='Select Timezone']").should('have.value', '');
   }
-  verifyProjectDescriptionFieldOptional(){
+  verifyProjectDescriptionFieldOptional() {
     cy.get("button[class='p-element bg-teal-700 border-0 font-semibold p-button p-component'] span[class='ng-star-inserted']").should('be.visible').click();
   }
+
+
+  validatePoolsStep(name, projectName, projectDescription, campaignType, country, timezone) {
+    cy.get('.p-paginator-page').eq(1).should('exist').click()
+    cy.get('.p-datatable-table tbody tr td:nth-child(1)').contains(name).should('exist').click()
+    cy.url().should("include", "/dashboard");
+    cy.get('.header-title').contains('Dashboard (MEGA-Bhargav)').should('exist')
+    cy.get('[class="sidebarMenu-icon ng-star-inserted"]').eq(4).should('exist').click()
+    cy.url().should("include", "/projects");
+    cy.get('.header-title').contains('Projects (MEGA-Bhargav)').should('exist')
+    cy.get('.p-button.p-component').should('exist').click()
+    cy.url().should("include", "/projects/create");
+    cy.get('.header-title').contains('Create Project (MEGA-Bhargav)').should('exist')
+    cy.get('[class="form-labal"]').contains('Project Name').should('exist')
+    cy.get('#projectName').should('exist').clear().type(projectName)
+    cy.get('[class="form-labal"]').contains('Project Description').should('exist')
+    cy.get('#projectName').should('exist').clear().type(projectDescription)
+    cy.get('[class="form-labal"]').contains('Campaign Type').should('exist')
+    cy.get('.p-dropdown-label').eq(0).should('exist').click()
+    cy.get('[role*="listbox"]').contains(campaignType).should('exist').click()
+    cy.get('[class="form-labal"]').contains('Country').should('exist')
+    cy.get('.p-dropdown-label').eq(1).should('exist').click()
+    cy.get('[role*="listbox"]').contains(country).should('exist').click()
+    cy.get('[class="form-labal"]').contains('Timezone').should('exist')
+    cy.get('.p-dropdown-label').eq(2).should('exist').click()
+    cy.get('[role*="listbox"]').contains(timezone).should('exist').click()
+
+  }
+  clickButton(buttonName) {
+    cy.get('.p-ripple.p-element').contains(buttonName).should('exist').click()
+  }
+  selectGoal() {
+    cy.url().should("include", "/projects/create/goal");
+    cy.wait(3000)
+    cy.get('[class="p-steps-number"]').contains('1').should('exist')
+    cy.get('.p-steps-title').contains('Goal').should('exist')
+    cy.get('[class="p-button-group p-component"] span').contains('Debt Collection').should('exist')
+    cy.get('[class="stepCard ng-star-inserted"]').eq(0).contains('Debt handling').should('exist').click()
+  }
+  selectpool() {
+    cy.url().should("include", "/projects/create/pool");
+    cy.wait(2000)
+    cy.get('.p-datatable-table tbody tr').should('have.length.at.least', 2).then(($rows) => {
+      cy.wrap($rows[0]).click();
+      cy.wrap($rows[1]).click();
+    });
+  }
+clickUploadPool(){
+  cy.get('.p-button-outlined').contains('Upload Pool').should('exist').click()
+  cy.wait(2000)
+  cy.get('.header-title').contains('Pool Libraries (MEGA-Bhargav)').should('exist')
+}
+addPoolName(poolName){
+  cy.get('[class="form-labal"]').contains('Pool Name').should('exist')
+  cy.get('[id="Enter Pool Name"]').should('exist').clear().type(poolName)
+}
+addPoolDescription(poolDescription){
+  cy.get('[class="form-labal"]').contains('Pool Description').should('exist')
+  cy.get('[id="Enter Pool Description"]').should('exist').clear().type(poolDescription)
+}
+selectProject(){
+  cy.get('[class="form-labal"]').contains('Project').should('exist')
+  cy.get('[aria-label="Select Project"]').should('exist').click()
+  cy.get('[role="listbox"]').should('exist')
+  cy.get('[role="listbox"] li').eq(3).should('exist').click()
+  cy.wait(2000)
+}
+selectCountry(){
+  cy.get('[class="form-labal"]').contains('Country').should('exist')
+cy.get('[class*="flex align-items-center"]').should('exist')//selected country
+}
+clickContinue(){
+  cy.get('.p-button').contains('Continue to upload').should('exist').click()
+}
+uploadFile(file){
+  cy.get('[class="innerContent-title"]').contains('Upload New List').should('exist')
+  cy.get('input[type*="file"]').attachFile(file)
+  cy.wait(2000)
+}
+validateFileColumns(){
+  cy.get('[class="card"]').eq(0).should('exist')
+  cy.get('[class="card-header"]').contains('File Columns').should('exist')
+  cy.get('input[type="text"]').should('exist').and('be.disabled')
+}
+validateUploadedCoulmns(){
+  cy.get('[class="card"]').eq(1).should('exist')
+  cy.get('.justify-content-start').contains('Uploaded Columns').should('exist')
+  cy.get('[role="combobox"]').eq(0).should('exist').click()
+  cy.get('.p-dropdown-items').contains('First Name').should('exist').click()
+  cy.wait(1000)
+  cy.get('[role="combobox"]').eq(1).should('exist').click()
+  cy.get('.p-dropdown-items').contains('Last Name').should('exist').click()
+  cy.wait(1000)
+  cy.get('[role="combobox"]').eq(2).should('exist').click()
+  cy.get('.p-dropdown-items').contains('Telephone 1').should('exist').click()
+  cy.wait(1000)
+  cy.get('[role="combobox"]').eq(3).should('exist').click()
+  cy.get('.p-dropdown-items').contains('Zipcode').should('exist').click()
+  cy.wait(1000)
+}
+clickUploadButton(){
+  cy.get('.p-button.p-component').contains('Upload').should('exist').click()
+  cy.wait(3000)
+ 
+}
+validateUploadedPool(poolName){
+  cy.url().should("include", "/projects/create/pool");
+  cy.get('.p-datatable-table tbody tr:nth-child(1) td:nth-child(1)').contains(poolName).should('exist')
+}
 }
