@@ -1,9 +1,7 @@
 import { SignInPage } from "../PageObject/SignInPage";
-//import { PoolsStep } from "../PageObject/PoolsStep";
 import { ClientsPage } from "../PageObject/ClientsPage";
 import { CreateProject } from "../PageObject/CreateProject";
 const signIn = new SignInPage
-//const poolsPage = new PoolsStep
 const clients = new ClientsPage()
 const createproject = new CreateProject();
 

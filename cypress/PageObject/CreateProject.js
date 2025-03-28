@@ -215,4 +215,40 @@ validateUploadedPool(poolName){
   cy.url().should("include", "/projects/create/pool");
   cy.get('.p-datatable-table tbody tr:nth-child(1) td:nth-child(1)').contains(poolName).should('exist')
 }
+validateScriptStep(){
+  cy.url().should("include", "/projects/create/script");
+  cy.get('[class="p-steps-number"]').contains('3').should('exist')
+  cy.get('[class*="p-steps-title"]').contains('Script').should('exist')
+}
+addFirstMessage(firstMsg){
+  cy.get('[class="card"]').contains('First Message').should('exist')
+  cy.get('[placeholder="Select Lead"]').eq(0).should('exist').click()
+  cy.get('[role="listbox"] li').eq(0).should('exist').click()
+  cy.get('[id="first_message"]').should('exist').clear().type(firstMsg)
+}
+addLastMessage(lastMsg){
+  cy.get('[class="card"]').contains('Last Message').should('exist')
+  cy.get('[placeholder="Select Lead"]').eq(1).should('exist').click()
+  cy.get('[role="listbox"] li').eq(1).should('exist').click()
+  cy.get('[id="first_message"]').should('exist').clear().type(lastMsg)
+}
+selectGender(gender){
+  cy.get('[class="form-labal"]').contains('Gender').should('exist')
+  cy.get('[placeholder="Select a gender"]').should('exist').click()
+  cy.get('.p-dropdown-panel li').contains(gender).should('exist').click()
+}
+selectVoice(){
+  cy.get('[class="form-labal"]').contains('Voice').should('exist')
+  cy.get('[aria-label="Select voice"]').should('exist').click()
+  cy.get('.p-dropdown-panel li').first().should('exist').click()
+}
+selectDomainLibrary(){
+  cy.get('[class="form-labal"]').contains('Domain Library').should('exist')
+  cy.get('[aria-label="Select library"]').should('exist').click()
+  cy.get('.p-dropdown-panel li').first().should('exist').click()
+}
+addPrompts(systemPrompt){
+  cy.get('[class="card-header"]').contains('System Prompts').should('exist')
+  cy.get('.p-inputtextarea').eq(2).should('exist').clear().type(systemPrompt)
+}
 }
