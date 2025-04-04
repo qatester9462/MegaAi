@@ -14,9 +14,10 @@ describe("Clients page", () => {
         cy.viewport(1920, 1080)
         signIn.verifyLoginFuntionality(email, password);
     })
-    it("Verify the complete flow to Script Step in Project Creation and validate all fields", () => {
+    it("Verify the complete flow to 'Review' Step in Project Creation and able to submit it", () => {
+        const projectDescription='Testing Mega AI Review step'
         clients.clickonclients()
-        createproject.validatePoolsStep('MEGA-Bhargav', 'Testing Project', 'Testing Mega AI Script step', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        createproject.validatePoolsStep('MEGA-Bhargav', 'Testing Project', projectDescription, 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
         createproject.clickButton('Next Step')
         createproject.selectGoal()
         createproject.clickButton('Next Step')
@@ -30,5 +31,19 @@ describe("Clients page", () => {
         createproject.selectDomainLibrary()
         createproject.addPrompts('You are a debt resolution AI assistant, your goal is to empathetically assist debtors')
         createproject.clickButton('Next Step')
+        createproject.validateSettingStep()
+        createproject.setCampaignPriority()
+        createproject.setNumberofBots()
+        createproject.selectSMSTemplate()
+        createproject.selectCallNumber()
+        createproject.clickButton('Next Step')
+        createproject.validatedialingStep()
+        createproject.setStatusToggles()
+        createproject.validateTable()
+        createproject.setHours()
+        createproject.addMaxDays('14')
+        createproject.addTotalAttempts('5')
+        createproject.clickButton('Next Step')
+        createproject.validateReviewStep(projectDescription)
     })
 })

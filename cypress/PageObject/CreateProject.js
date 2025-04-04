@@ -251,4 +251,81 @@ addPrompts(systemPrompt){
   cy.get('[class="card-header"]').contains('System Prompts').should('exist')
   cy.get('.p-inputtextarea').eq(2).should('exist').clear().type(systemPrompt)
 }
+
+validateSettingStep(){
+  cy.url().should("include", "/projects/create/setting");
+  cy.get('[class="p-steps-number"]').contains('4').should('exist')
+  cy.get('[class*="p-steps-title"]').contains('Setting').should('exist')
+}
+setCampaignPriority(){
+  cy.wait(1000)
+  cy.get('[class="form-labal"]').contains('Campaign Priority').should('exist')
+  cy.get('.p-slider').eq(0).click()
+}
+setNumberofBots(){
+  cy.wait(1000)
+  cy.get('[class="form-labal"]').contains('Number of Bots').should('exist')
+  cy.get('.p-slider').eq(1).click()
+  cy.get('[class="form-labal"]').contains('Bot Functions:').should('exist')
+}
+selectSMSTemplate(){
+  cy.get('[class="form-labal"]').contains('SMS Template Used in Call').should('exist')
+  cy.get('[role="combobox"]').eq(0).should('exist').click()
+  cy.get('[class="p-dropdown-items-wrapper"]').should('exist')
+  cy.get('[role="option"]').eq(1).should('exist').click()
+}
+selectCallNumber(){
+  cy.get('[class="form-labal"]').contains('Transfer Calls to').should('exist')
+  cy.get('[role="combobox"]').eq(1).should('exist').click()
+  cy.get('[class="p-dropdown-items-wrapper"]').should('exist')
+  cy.get('[role="option"]').eq(0).should('exist').click()
+}
+validatedialingStep(){
+  cy.url().should("include", "/projects/create/dialing");
+  cy.get('[class="p-steps-number"]').contains('5').should('exist')
+  cy.get('[class*="p-steps-title"]').contains('Dialing').should('exist')
+}
+setStatusToggles(){
+  cy.get('.p-datatable-wrapper table tbody td:nth-child(4)').should('exist')
+  //Turn OFF all checked toggles
+cy.get('.p-inputswitch.p-component.p-inputswitch-checked').each(($el) => {
+  cy.wrap($el).click()
+});
+// Validate all toggles are OFF
+cy.get('.p-inputswitch.p-component.p-inputswitch-checked').should('not.exist')
+cy.get('.p-inputswitch.p-component').should('have.length', 7)
+// Turn ON all toggles again
+cy.get('.p-inputswitch.p-component').each(($el) => {
+  cy.wrap($el).click()
+});
+//Validate all toggles are ON again
+cy.get('.p-inputswitch.p-component.p-inputswitch-checked').should('have.length', 7)
+}
+validateTable(){
+  cy.get('.p-datatable-wrapper table thead tr th:nth-child(1)').contains('Day').should('exist')
+  cy.get('.p-datatable-wrapper table thead tr th:nth-child(2)').contains('Start').should('exist')
+  cy.get('.p-datatable-wrapper table thead tr th:nth-child(3)').contains('Stop').should('exist')
+  cy.get('.p-datatable-wrapper table thead tr th:nth-child(4)').contains('Status').should('exist')
+  cy.get('.p-datatable-wrapper table tbody tr').should('exist').and('have.length',7)
+}
+setHours(){
+  cy.get('[class="form-labal"]').contains('Hours between Redials to unanswered calls').should('exist')
+  cy.get('.p-slider').eq(0).click()
+}
+addMaxDays(days){
+  cy.get('[class="form-labal"]').contains('Max. Days ahead for scheduling Redials:').should('exist')
+  cy.get('[placeholder="Enter days"]').should('exist').clear().type(days)
+}
+addTotalAttempts(attempts){
+  cy.get('[class="form-labal"]').contains('Max. Total Attempts:').should('exist')
+  cy.get('[placeholder="Enter no. of attempts"]').should('exist').clear().type(attempts)
+}
+validateReviewStep(projectDescription){
+  cy.url().should("include", "/projects/create/review");
+  cy.get('[class="p-steps-number"]').contains('6').should('exist')
+  cy.get('[class*="p-steps-title"]').contains('Review').should('exist')
+  cy.get('[class="form-labal"]').contains('Project Name').should('exist')
+  cy.get('[id="projectName"]').should('be.disabled').invoke('val').should('eq', projectDescription)
+}
+
 }
