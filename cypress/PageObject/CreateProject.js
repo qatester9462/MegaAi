@@ -327,5 +327,43 @@ validateReviewStep(projectDescription){
   cy.get('[class="form-labal"]').contains('Project Name').should('exist')
   cy.get('[id="projectName"]').should('be.disabled').invoke('val').should('eq', projectDescription)
 }
-
+validateEditGoal(){
+  cy.get('[class="card-title"]').contains('Goal').should('exist')
+  cy.get('[class="card-icon"]').eq(0).should('exist').click()
+  cy.url().should("include", "/projects/create/goal");
+  cy.wait(3000)
+  cy.get('[class="p-steps-number"]').contains('1').should('exist')
+  cy.get('.p-steps-title').contains('Goal').should('exist')
+  cy.get('[class="p-button-group p-component"] span').contains('Debt Collection').should('exist')
+  cy.get('[class="stepCard ng-star-inserted"]').eq(0).contains('Debt handling').should('exist').click()
+}
+validateEditPool(){
+  cy.get('.card-title').contains('Pools').should('exist')
+  cy.get('[class="card-icon"]').eq(2).should('exist').click()
+  cy.url().should("include", "/projects/create/pool");
+  cy.wait(2000)
+  cy.get('.p-datatable-table tbody tr').should('have.length.at.least', 2).then(($rows) => {
+    cy.wrap($rows[0]).click();
+    cy.wrap($rows[1]).click();
+    cy.wrap($rows[2]).click();
+  });
+}
+validateEditScript(){
+  cy.get('.card-title').contains('Script').should('exist')
+  cy.get('[class="card-icon"]').eq(4).should('exist').click()
+  cy.url().should("include", "/projects/create/script");
+  cy.get('[class="p-steps-number"]').contains('3').should('exist')
+  cy.get('[class*="p-steps-title"]').contains('Script').should('exist')
+}
+validateToastMessage(toastMsg){
+  cy.get('[class*="p-toast-message-text"]').contains(toastMsg).should('exist').wait(1000)
+}
+deleteProject(){
+  cy.url().should("include", "/projects");
+  cy.get('[class="innerContent-title"]').contains('Project Overview').should('exist')
+  cy.get('[class="pi pi-trash"]').first().should('exist').click()
+  cy.get('[class*="p-element ng-trigger"]').contains('Delete project').should('exist')
+  cy.get('[class="p-button-label"]').contains('Delete').should('exist').click()
+  
+}
 }
