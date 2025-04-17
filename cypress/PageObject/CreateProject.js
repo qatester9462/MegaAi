@@ -364,6 +364,6 @@ deleteProject(){
   cy.get('[class="pi pi-trash"]').first().should('exist').click()
   cy.get('[class*="p-element ng-trigger"]').contains('Delete project').should('exist')
   cy.get('[class="p-button-label"]').contains('Delete').should('exist').click()
-  
 }
+
 }
