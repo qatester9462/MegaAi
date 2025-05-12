@@ -20,24 +20,31 @@ describe("Clients page", () => {
     it("Validate that user is able to Edit,Save,Delete basic info of any selected project", () => {
         const name = ('Editing Porject Name ' + reuseableCode.generateRandomString(5))
         clients.clickonclients()
-        project.gotoClientMegaBhargav('MEGA-Bhargav')
-        project.gotoProjectsPage()
-        project.validateEditBasicInfo(name, '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        //project.gotoClientMegaBhargav('MEGA-Bhargav')
+        const clientName = 'Sammi'
+        project.gotoClient(clientName)
+        project.gotoProjectsPage(clientName)
+        project.validateEditBasicInfo(name, '(+45) Denmark', 'Europe/Copenhagen (UTC +02:00)')
         createproject.clickButton('Save')
         createproject.validateToastMessage('Success')
     })
     it("Validate that user is able to Edit,Save,Delete Goal step of any selected project", () => {
+        const clientName = 'Sammi'
+
         clients.clickonclients()
-        project.gotoClientMegaBhargav('MEGA-Bhargav')
-        project.gotoProjectsPage()
-        project.validateEditGoal()
-        createproject.clickButton('Save')
-        createproject.validateToastMessage('Success')
+       project.gotoClient(clientName)
+    project.gotoProjectsPage(clientName)
+ project.validateEditGoall()
+
+
+
     })
     it("Validate that user is able to Edit,Save,Delete Pools step of any selected project", () => {
+        const clientName = 'MEGA-Bhargav'
+
         clients.clickonclients()
-        project.gotoClientMegaBhargav('MEGA-Bhargav')
-        project.gotoProjectsPage()
+        project.gotoClient('MEGA-Bhargav')
+        project.gotoProjectsPage('MEGA-Bhargav')
         project.validateEditPools()
         createproject.clickButton('Save')
         createproject.validateToastMessage('Success')
