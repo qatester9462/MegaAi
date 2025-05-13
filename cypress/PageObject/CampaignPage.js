@@ -52,33 +52,159 @@ export class Campaign {
         cy.url('https://app.aegis.mobi/campaigns/create').should('exist')
     }
 
-    CreateCampaign() {
+    CreateCampaign(campaignName) {
+
         cy.get('span[aria-label="Select Project"]').as('jugar').should('be.visible')
         cy.get('@jugar').click();
         cy.get('li[aria-label="Third Project"]').eq(0).should('be.visible').click()
-        const campaignName = faker.company.name()
-        cy.wrap(campaignName).as('campaignName')
+
+        // cy.wrap(campaignName).as('campaignName')
         cy.get('input[id="Enter Campaign Name"]').type(campaignName)
         cy.get('span[role="combobox"]').eq(1).should('be.visible')
         cy.get('p-dropdown[placeholder="Select Country"]').should('be.visible')
         cy.get('p-dropdown[optionlabel="time_zone"]').should('be.visible')
 
     }
-    selectGoalType(type) {
-        cy.contains(type).parents('[data-pc-name="button"]').should('be.visible').click()
-        cy.contains('div', 'its connect description').should('be.visible').click()
+    selectGoalType(goalName) {
+
+        cy.contains('span.p-button-label', goalName)
+            .should('be.visible')
+            .click();
+        cy.contains('div', 'its connect description').should('exist').click()
+
 
     }
     SelectPools() {
-        cy.url().should('include','/create/pools')
+        cy.url().should('include', '/create/pools')
         //cy.url('https://app.aegis.mobi/campaigns/create/pools').should('exist')
         cy.get('.p-datatable-tbody > :nth-child(2) > :nth-child(3)').should('be.visible').click()
     }
     SelectScript() {
-
+        cy.contains('.card-title', 'First Message')
+            .parents('.card') // Get the full card
+            .find('span[aria-label="Select Lead"]') // Narrow down to just its dropdown
+            .should('be.visible')
+            .click();
+        cy.get('ul.p-dropdown-items', { timeout: 10000 }) // Give it enough time to render
+            .should('exist');
+        cy.get('ul.p-dropdown-items')
+            .find('li.p-dropdown-item')
+            .should('have.length.greaterThan', 1)
+            .eq(1)
+            .click();
         cy.get('p-dropdown[placeholder="Select a Gender"]').click().find('[aria-label="female"]').eq(0).click().should('be.visible')
-
         cy.get('p-dropdown[placeholder="Select voice"]').click().find('[aria-label="Olivia"]').eq(0).click().should('be.visible')
+
+        cy.contains('.card-title', 'Last Message')
+            .parents('.card')
+            .find('span[role="combobox"]')
+            .should('be.visible')
+            .click();
+
+        // Step 2: Wait for the dropdown list to appear
+        cy.get('ul.p-dropdown-items', { timeout: 10000 })
+            .should('exist');
+
+        // Step 3: Select the second item from the list
+        cy.get('ul.p-dropdown-items p-dropdownitem > li.p-dropdown-item')
+            .eq(1)
+            .should('be.visible')
+            .click();
+
+        // Optional: Assert the value is selected
+        cy.contains('.card-title', 'Last Message')
+            .parents('.card')
+            .find('span[role="combobox"]')
+            .should('not.contain.text', 'Select Lead');
+
+
+
+    }
+    selectSettings() {
+
+
+        cy.contains('.form-labal', 'Campaign Priority')
+            .parents('.form-group')
+            .find('span[role="slider"]')
+            .focus()
+            .type('{rightarrow}{rightarrow}'); // Assuming step is 1
+
+        // Set Number of Bots to 10
+        cy.contains('.form-labal', 'Number of Bots')
+            .parents('.form-group')
+            .find('span[role="slider"]')
+            .focus()
+            .type('{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); // 4 steps to go from 6 to 10
+
+        cy.contains('.form-labal', 'SMS Template Used in Call')
+            .parents('.form-group')
+            .find('span[role="combobox"]') // Dropdown trigger
+            .should('be.visible')
+            .click();
+
+        cy.get('ul.p-dropdown-items p-dropdownitem > li.p-dropdown-item')
+            .eq(1)
+            .should('be.visible')
+            .click();
+
+        // Select second option from "Transfer Calls to"
+        cy.contains('.form-labal', 'Transfer Calls to')
+            .parents('.form-group')
+            .find('span[role="combobox"]')
+            .should('be.visible')
+            .click();
+
+        cy.get('ul.p-dropdown-items p-dropdownitem > li.p-dropdown-item')
+            .eq(0)
+            .should('be.visible')
+            .click();
+        cy.contains('.form-labal', 'Experimental AI')
+            .parents('.form-group')
+            .find('span.p-inputswitch-slider')
+            .click()
+
+
+    }
+    selectDialing() {
+
+
+
+        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+        days.forEach((day) => {
+            // 2. Find the row that contains the current day
+            cy.contains('td', day)               // find a <td> with text like "Monday"
+                .parent('tr')                      // go up to the full table row
+                .within(() => {                    // now work *inside* this row only
+
+                    // 3. Find the Start Time input and set a new time
+                    cy.get('input[type="time"]')     // gets both start & stop inputs
+                        .eq(0)                         // first one is start
+                        .clear()                       // clear existing value
+                        .type('09:00')                // type new start time
+                        .should('have.value', '09:00') // confirm it changed correctly
+
+                    // 4. Find the Stop Time input and set a new time
+                    cy.get('input[type="time"]')
+                        .eq(1)                         // second input is stop time
+                        .clear()
+                        .type('17:00')
+                        .should('have.value', '17:00')
+
+                    // 5. Find the toggle (checkbox) and flip it
+                    cy.get('input[type="checkbox"]').then(($checkbox) => {
+                        const wasChecked = $checkbox.prop('checked'); // get current state
+
+                        // click the visible slider to toggle it
+                        cy.get('.p-inputswitch-slider').click();
+
+                        // verify the state has flipped
+                        cy.get('input[type="checkbox"]')
+                            .should('have.prop', 'checked', !wasChecked); // validate flip
+                    });
+
+                });
+        });
     }
     clickOnNextButton() {
         cy.get('.btn-primary > .p-element').click()
