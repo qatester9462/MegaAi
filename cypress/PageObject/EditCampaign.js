@@ -186,42 +186,362 @@ export class EditCampaigns {
 
     }
 
-verifyDuplicateCampaign() {
-  // Open the Actions dropdown
-  cy.get('.p-dropdown-label').contains('Actions').click();
-  // Click on Duplicate option
-  cy.get('ul[role="listbox"] li[role="option"]')
-    .contains('Duplicate')
-    .should('be.visible')
-    .click();
+    verifyDuplicateCampaign() {
+        // Open the Actions dropdown
+        cy.get('.p-dropdown-label').contains('Actions').click();
+        // Click on Duplicate option
+        cy.get('ul[role="listbox"] li[role="option"]')
+            .contains('Duplicate')
+            .should('be.visible')
+            .click();
 
-  // Assert duplication confirmation
-  cy.get('.flex > :nth-child(1) > p-button.p-element > .p-ripple').click()
-  cy.contains('Your most recent campaign launched successfully')
-}
+        // Assert duplication confirmation
+        cy.get('.flex > :nth-child(1) > p-button.p-element > .p-ripple').click()
+        cy.contains('Your most recent campaign launched successfully')
+    }
 
-verifyDeleteCampaign() {
-  // Open the Actions dropdown
-  cy.get('.p-dropdown-label').contains('Actions').click();
+    verifyDeleteCampaign() {
+        // Open the Actions dropdown
+        cy.get('.p-dropdown-label').contains('Actions').click();
 
-  // Click on "Delete Campaign" option
-  cy.get('ul[role="listbox"] li[role="option"]')
-    .contains('Delete Campaign')
-    .should('be.visible')
-    .click();
+        // Click on "Delete Campaign" option
+        cy.get('ul[role="listbox"] li[role="option"]')
+            .contains('Delete Campaign')
+            .should('be.visible')
+            .click();
 
-  // Confirm Delete dialog is visible
-  cy.contains('.p-dialog', 'Delete Campaign').should('be.visible');
+        // Confirm Delete dialog is visible
+        cy.contains('.p-dialog', 'Delete Campaign').should('be.visible');
 
-  // Click the "Delete" button inside dialog
-  cy.contains('.p-dialog .p-button-label', 'Delete')
-    .should('be.visible')
-    .click();
+        // Click the "Delete" button inside dialog
+        cy.contains('.p-dialog .p-button-label', 'Delete')
+            .should('be.visible')
+            .click();
 
-  // Wait for and assert toast message
-  cy.get('.p-toast').should('be.visible')
-    //.contains('Campaign deleted successfully');
-}
+        // Wait for and assert toast message
+        cy.get('.p-toast').should('be.visible')
+        //.contains('Campaign deleted successfully');
+    }
+    VerifyRedirectionToScriptPage() {
+
+
+        cy.get('a.p-tabview-nav-link span') // tabs are inside <a> with span inside
+            .contains('Script')
+            .click();
+
+        cy.url().should('include', '/script'); // adjust if your URL doesn't change, alternatively check element presence
+        cy.get('textarea#first_message').should('be.visible');
+    }
+
+    VerifyUiElementsOnScriptPage() {
+        cy.contains('span', 'Script').click()
+        cy.get('textarea#first_message').should('be.visible');
+        cy.get('textarea#last_message').should('be.visible');
+
+        cy.get('p-dropdown[placeholder="Select a Gender"]').should('exist');
+        cy.get('p-dropdown[placeholder="Select voice"]').should('exist');
+        cy.get('p-dropdown[placeholder="Select library"]').should('exist');
+
+        cy.get('textarea[formcontrolname="systemPrompts"]').should('be.visible');
+        cy.get('button span').contains('Save').should('be.visible');
+        cy.get('p-dropdown').contains('Actions').should('exist');
+    }
+
+    gotoScript() {
+
+        cy.contains('span', 'Script').click()
+    }
+
+    VerifyFirstMessageFieldEditable() {
+
+        cy.get('textarea[formcontrolname="firstMessage"]')
+            .clear()
+            .type('Test Message');
+        cy.contains('Save').click();
+        cy.get('textarea[formcontrolname="firstMessage"]')
+            .should('have.value', 'Test Message');
+        //cy.contains('ul[role="listbox"] li[role="option"]', /Pause|Resume/).click();
+
+        // If Pause modal appears, click Pause button inside it
+        cy.get('body').then(($body) => {
+            if ($body.text().includes('Pause Campaign')) {
+                cy.get('.flex-column > .flex > .p-element').click()
+            }
+        });
+    }
+
+
+    EditLastMessagefieldAndSave() {
+
+
+
+        cy.get('textarea[formcontrolname="lastMessage"]')
+            .clear()
+            .type('Thank you for your cooperation');
+        cy.contains('Save').click();
+        cy.get('textarea[formcontrolname="lastMessage"]')
+            .should('contain.value', 'cooperation');
+
+    }
+
+
+    VerifyGenderdropdownOptions() {
+
+        cy.get('p-dropdown[placeholder="Select a Gender"]').click();
+        cy.get('ul[role="listbox"]').within(() => {
+            cy.contains('male').should('exist');
+            cy.contains('female').should('exist');
+
+        })
+    }
+    selectGenderAndSave() {
+
+        cy.get('p-dropdown[placeholder="Select a Gender"]').click();
+        cy.contains('female').click();
+        cy.contains('Save').click();
+        cy.get('p-dropdown[placeholder="Select a Gender"]').should('contain.text', 'female');
+
+
+    }
+    selectGenderAndCheckVoiceOptions() {
+
+        cy.get('p-dropdown[placeholder="Select a Gender"]').click();
+        cy.contains('male').click();
+        cy.get('p-dropdown[placeholder="Select voice"]').click();
+        cy.get('ul[role="listbox"]').should('exist'); // optionally verify voice names
+
+        //Select Voice and save,TC_Edit-Campaign(Script)_008 – Select Voice and Save
+        cy.get('p-dropdown[placeholder="Select voice"]').click();
+        cy.contains('Olivia').click(); // or another option like 'John'
+        cy.contains('Save').click();
+        cy.get('p-dropdown[placeholder="Select voice"]').should('contain.text', 'Olivia');
+
+    }
+
+    verifyDomainLibraryDropdownOptions() {
+
+        cy.get('p-dropdown[placeholder="Select library"]').click();
+        cy.get('ul[role="listbox"]').should('exist');
+    }
+    EditSystemPromptsandSave() {
+
+        cy.get('textarea[formcontrolname="systemPrompts"]')
+            .clear()
+            .type('You are a helpful AI assistant.');
+        cy.contains('Save').click();
+        cy.get('textarea[formcontrolname="systemPrompts"]')
+            .should('have.value', 'You are a helpful AI assistant.');
+
+
+        //TC_Edit-Campaign(Script)_012 – Verify Save button after editing any field
+
+        cy.get('textarea[formcontrolname="firstMessage"]')
+            .invoke('val', '')                // force clear
+            .trigger('input')                // notify Angular/React form that input changed
+            .type('Quick update test');      // now type new text
+
+        cy.contains('Save').click();
+    }
+    verifySettingsTabNavigation() {
+        cy.contains('a', 'Settings').click();
+        cy.url().should('include', '/settings'); // Adjust if URL pattern is different
+        cy.contains('Campaign Priority').should('be.visible');
+    }
+    VerifypreFilleddatainSettingsPage() {
+
+        cy.get('.form-labal').contains('Campaign Priority').should('contain', 'Campaign Priority');
+        cy.get('.form-labal').contains('Number of Bots').should('contain', 'Number of Bots');
+        cy.contains('Bot Functions:').should('exist');
+        cy.get('p-dropdown[placeholder="Select an option"]').should('contain.text', 'Appointment Reminder');
+        cy.get('p-dropdown[placeholder="Select an option"]').eq(1).should('contain.text', '+4520708989');
+    }
+
+    updateCampaignPrioritySlider() {
+        cy.get('.form-labal').contains('Campaign Priority:').then(($el) => {
+            const currentValue = parseInt($el.text().split(':')[1].trim());
+            const newValue = currentValue + 1;
+
+            cy.get('p-slider').first().within(() => {
+                cy.get('[role="slider"]').focus().type('{rightarrow}');
+            });
+
+            cy.contains('Save').click();
+
+            cy.get('.form-labal')
+                .contains(`Campaign Priority: ${newValue}`)
+                .should('exist');
+        })
+    }
+    verifySMSTemplateOptions() {
+        cy.get('p-dropdown[placeholder="Select an option"]').first().click();
+        cy.get('ul[role="listbox"]').should('be.visible');
+        cy.get('ul[role="listbox"] li').should('have.length.greaterThan', 0);
+    }
+
+    selectSMSTemplateAndSave() {
+        cy.get('p-dropdown[placeholder="Select an option"]').first().click();
+        cy.get('ul[role="listbox"] li').first().click();
+        cy.contains('Save').click();
+
+        cy.get('p-dropdown[placeholder="Select an option"]')
+            .find('.p-dropdown-label')
+            .should('not.contain.text', 'Select an option');
+    }
+
+    selectTransferCallOptionAndSave() {
+        cy.get('p-dropdown[placeholder="Select an option"]').eq(1).click();
+
+        // Wait until the list appears, then click the second item
+        cy.get('ul[role="listbox"]').should('be.visible');
+        cy.get('ul[role="listbox"] li').eq(0).should('be.visible').click();
+
+        cy.contains('Save').click();
+
+        cy.get('p-dropdown[placeholder="Select an option"]').eq(0) // was 0 → must be 1 here
+            .find('.p-dropdown-label')
+            .should('not.contain.text', 'Select an option');
+    }
+
+    verifyActionsDropdownOptions() {
+        cy.get('span.p-dropdown-label').contains('Actions').click();
+        cy.get('ul[role="listbox"]').within(() => {
+            cy.contains('Resume').should('exist');
+            cy.contains('Duplicate').should('exist');
+            cy.contains('Delete Campaign').should('exist');
+        });
+    }
+
+    verifyDialingTabRedirection() {
+        cy.contains('a', 'Dialing').click(); // Click on the "Dialing" tab
+        cy.url().should('include', '/dialing'); // Adjust URL check as needed
+        cy.contains('Hours between Redials').should('be.visible');
+    }
+
+    verifyPreFilledDialingData() {
+        // Check Monday row has time and switch
+        cy.contains('td', 'Monday')
+            .parent('tr')
+            .within(() => {
+                cy.get('input[type="time"]').should('have.length', 2);
+                cy.get('p-inputswitch').should('exist');
+            });
+
+        // Check presence of redial label
+        cy.contains('.form-labal', 'Hours between Redials').should('exist');
+
+        // Verify values are not empty
+        cy.get('input[placeholder="Enter days"]').invoke('val').should('not.be.empty');
+        cy.get('input[placeholder="Enter no. of attempts"]').invoke('val').should('not.be.empty');
+    }
+    toggleStatusForADayAndSave() {
+        cy.get('p-inputswitch input[type="checkbox"]').first().then(($input) => {
+            const isChecked = $input.prop('checked');
+            cy.wrap($input).click({ force: true });
+            cy.contains('Save').click();
+
+            cy.get('p-inputswitch input[type="checkbox"]').first()
+                .should('have.prop', 'checked', !isChecked);
+        });
+    }
+
+
+
+    toggleStatusForADayAndSave() {
+        cy.get('p-inputswitch input[type="checkbox"]').first().then(($input) => {
+            const isChecked = $input.prop('checked');
+            cy.wrap($input).click({ force: true });
+            cy.contains('Save').click();
+
+            cy.get('p-inputswitch input[type="checkbox"]').first()
+                .should('have.prop', 'checked', !isChecked);
+        });
+    }
+    changeStartStopTimeAndSave() {
+        // Change Monday's start and stop times (first row)
+        cy.contains('td', 'Monday')
+            .parent('tr')
+            .within(() => {
+                cy.get('input[type="time"]').eq(0).clear().type('11:00'); // Start time
+                cy.get('input[type="time"]').eq(1).clear().type('13:00'); // Stop time
+            });
+        cy.contains('Save').click();
+        // Optional: verify time values were saved correctly
+        cy.contains('td', 'Monday')
+            .parent('tr')
+            .within(() => {
+                cy.get('input[type="time"]').eq(0).should('have.value', '11:00');
+                cy.get('input[type="time"]').eq(1).should('have.value', '13:00');
+            });
+
+
+    }
+    verifyMaxDaysAheadInput() {
+        // Enter a valid value within allowed range (e.g., 15)
+        cy.get('input[placeholder="Enter days"]').clear().type('15');
+        // Click Save
+        cy.contains('Save').click();
+        // Confirm it was saved (optional)
+        cy.get('input[placeholder="Enter days"]').should('have.value', '15');
+    }
+
+    verifyMandatoryFieldsValidation() {
+        // Clear both required fields
+        cy.get('input[placeholder="Enter days"]').clear();
+        cy.get('input[placeholder="Enter no. of attempts"]').clear();
+        // Click Save
+        cy.contains('Save').click();
+        // Assert error messages (adjust text as per actual UI)
+        cy.get('p-toast').should('be.visible'); // Example
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
