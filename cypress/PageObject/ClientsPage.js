@@ -3,7 +3,7 @@ export class ClientsPage {
   clickonclients() {
     cy.get('[class="pi pi-users sidebarMenu-icon ng-star-inserted"]')
       .should("be.visible").click()
-      cy.wait(5000)
+      //cy.wait(5000)
   }
 
   verifyClientsPage() {
