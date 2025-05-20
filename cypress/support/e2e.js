@@ -17,3 +17,5 @@
 import './commands'
 import 'cypress-mochawesome-reporter/register';
 import 'cypress-file-upload';
+import { faker } from '@faker-js/faker';
+Cypress.faker = faker;

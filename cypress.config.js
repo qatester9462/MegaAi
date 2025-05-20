@@ -1,4 +1,5 @@
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress');
+
 module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
@@ -12,7 +13,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       require('cypress-mochawesome-reporter/plugin')(on);
     },
-    baseUrl: 'https://app.aegis.mobi',
+    baseUrl: 'https://app.aegis.mobi/',
     users: {
       user1: {
         username: "qatesthub2@gmail.com",
