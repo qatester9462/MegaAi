@@ -4,7 +4,7 @@ import { SignInPage } from "../PageObject/SignInPage";
 const clients = new ClientsPage()
 const signIn = new SignInPage
 
-describe("Clients page", () => {
+describe("clients", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
     beforeEach(() => {

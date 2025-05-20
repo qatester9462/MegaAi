@@ -5,7 +5,7 @@ const signIn = new SignInPage
 const clients = new ClientsPage()
 const createproject = new CreateProject();
 
-describe("Clients page", () => {
+describe("scriptCases", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
     beforeEach(() => {
