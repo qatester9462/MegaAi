@@ -3,12 +3,13 @@ import { ClientsPage } from "../PageObject/ClientsPage";
 import { ProjectPage } from "../PageObject/ProjectPage";
 import { CreateProject } from "../PageObject/CreateProject";
 
+const project = new ProjectPage();
 const signIn = new SignInPage();
 const clients = new ClientsPage();
 const projectpage = new ProjectPage();
 const createproject = new CreateProject();
 
-describe("CreateProject page", () => {
+describe("createProject", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
     beforeEach(() => {
@@ -17,9 +18,11 @@ describe("CreateProject page", () => {
         signIn.verifyLoginFuntionality(email,password);
     });
 
-    it("Verify Clicking '+' Add button Redirects user to the Create new Project", () => {
-        clients.clickonclients();
-        createproject.verifyEditButtonClickFunctionality();
+    it.only("Verify Clicking '+' Add button Redirects user to the Create new Project", () => {
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients()
+        project.gotoClient(clientName)
+        createproject.clickOnplusButtonOnProjectPage()
     });
     it("Verify All Elements on the 'Create New Project' Page" , () => {
         clients.clickonclients();

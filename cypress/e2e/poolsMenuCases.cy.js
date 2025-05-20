@@ -15,7 +15,7 @@ const poolss = new PoolsPage
 
 
 
-describe("Clients page", () => {
+describe("poolsMenuCases", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
     beforeEach(() => {

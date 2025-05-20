@@ -11,7 +11,7 @@ const projectPage = new ProjectPage();
 const createProject = new CreateProject();
 const goalsProject = new GoalsProject();
 
-describe("CreateProject Page", () => {
+describe("goals", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
     beforeEach(() => {

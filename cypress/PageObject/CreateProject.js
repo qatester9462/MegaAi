@@ -1,5 +1,16 @@
 export class CreateProject {
 
+  clickOnplusButtonOnProjectPage(){
+cy.get('.sidebarMenu-items ').should('be.visible').eq(6).click();
+    cy.url().should("include", "/projects");
+    cy.get('.header-title').contains('Projects').should('exist')
+    cy.get('button.p-speeddial-button')
+  .should('be.visible')
+  .click();
+  }
+  
+  
+  
   verifyEditButtonClickFunctionality() {
     cy.get('[title*="Edit"]').eq(0).should('exist').click(); //navigate to 2nd page
     cy.wait(1000);
