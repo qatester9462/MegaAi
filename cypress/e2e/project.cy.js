@@ -1,11 +1,13 @@
 import { ClientsPage } from "../PageObject/ClientsPage";
 import { ProjectPage } from "../PageObject/ProjectPage";
 import { SignInPage } from "../PageObject/SignInPage";
+import { CreateProject } from "../PageObject/CreateProject";
 
+const project = new ProjectPage();
 const signIn = new SignInPage();
 const clients = new ClientsPage();
-const project = new ProjectPage();
-
+const projectpage = new ProjectPage();
+const createproject = new CreateProject();
 
 describe("Project", () => {
     const email = Cypress.config('users').user1.username
@@ -14,126 +16,114 @@ describe("Project", () => {
 
         cy.visit('/login')
         cy.viewport(1920, 1080)
-        signIn.verifyLoginFuntionality(email,password);
+        signIn.verifyLoginFuntionality(email, password);
     })
-    it("Verify,Navigation to the Clients Page via Side Navigation Men", () => {
+
+
+    it(" TC_Project_001 - Verify,Project Page redirection", () => {
+        const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
-    });
-    it("Verify,Project Page redirection", () => {
-        clients.clickonclients()
-        project.verifyProjectPageRedirection();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
     })
     it("Verify, All elements present on the Projects page.", () => {
+        const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
-        project.verifyProjectPageRedirection();
-        project.verifyElementsPresentProjectsPage();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        projectpage.verifyDropdowns()
+        projectpage.verifySearchField()
+        projectpage.verifyCreateProjectButton()
+        projectpage.verifyProjectList()
+        projectpage.verifySettingsAndDelete()
+        projectpage.verifyPagination()
     })
-    it("Verify, Pools filter functionality", () => {
+    it('TC_Project_003 - Verify Pools filter functionality', () => {
+        const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
-        project.verifyProjectPageRedirection();
-        project.verifyPoolsFilterFunctionality();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        projectpage.openPoolsDropdown()
+        projectpage.selectPoolByIndex(1)
+        projectpage.verifyProjectsFiltered()
+
     })
-    it("Verify Clear Button Appears When Pools Filter is Applied", () => {
+    it('TC_Project_005 - Verify Campaigns filter functionality', () => {
+        const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
-        project.verifyProjectPageRedirection();
-        project.verifyPoolsFilterFunctionality();
-        project.verifyClearButtonAppearsWhenPoolsFilterApplied();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        projectpage.openCampaignsDropdown()
+        projectpage.selectCampaignByIndex(1)
+        projectpage.verifyProjectsFiltered()
     })
-    it("Verify Clear Button Appears When Pools Filter is Applied", () => {
+    it('TC_Project_006 - Verify Clear Button Appears When Campaign Filter is Applied', () => {
+        const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
-        project.verifyProjectPageRedirection();
-        project.verifyCampaignsFilterFunctionality();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        //projectpage.openCampaignsDropdown()
+        projectpage.selectFirstCampaign()
+        projectpage.verifyClearButtonVisible()
     })
-    it("Verify Clear Button Appears When Campaign Filter is Applied", () => {
+
+    it('TC_Project_007 - Verify Search field functionality by Exact Project Name', () => {
+        const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
-        project.verifyProjectPageRedirection();
-        project.verifyCampaignsFilterFunctionality();
-        project.verifyClearButtonAppearsWhenCampaignFilterApplied();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        projectpage.searchByProjectName('Testing Mega AI Script step')
+        projectpage.verifySearchedProjectVisible('Testing Mega AI Script step')
     })
-    it("Verify Search field functionality by Exact Project Name", () => {
+
+    it('TC_Project_008 - Verify Clicking the Clear Button Removes Pools Filter', () => {
+        const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
-        project.verifyProjectPageRedirection();
-        project.verifySearchFunctionalityExacProjectName();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        projectpage.selectPoolByIndex(1)
+        projectpage.clearFilters()
+        projectpage.verifyAllProjectsVisible()
     })
-    it("Verify Clicking the Clear Button Removes Pools Filter", () => {
+
+    it('TC_Project_012 - Verify Clearing the Search Field', () => {
+        const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
-        project.verifyProjectPageRedirection();
-        project.verifyPoolsFilterFunctionality();
-        project.verifyClickingClearButtonRemovesPoolsFilter()
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        projectpage.searchByProjectName('Testing Mega AI Script step')
+        projectpage.clearSearchField()
+        projectpage.verifyAllProjectsVisible()
     })
-    it("Verify Clicking the Clear Button Removes Campaign Filter ", () => {
+
+    it('TC_Project_017 - Verify Delete Button Functionality', () => {
+        const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
-        project.verifyProjectPageRedirection();
-        project.verifyCampaignsFilterFunctionality();
-        project.verifyClickingClearButtonRemovesCampaignFilter();
-})
-    it("Verify Clear Button Functionality When Both Filters are Applied", () => {
-    clients.clickonclients()
-    project.verifyProjectPageRedirection();
-    project.verifyPoolsFilterFunctionality();
-    project.verifyCampaignsFilterFunctionality();
-    project.verifyClearButtonFunctionalityBothFiltersApplied();
-})
-it("Verify Search Functionality with Non-Existing Project Name", () => {
-    clients.clickonclients()
-    project.verifyProjectPageRedirection();
-    project.verifySearchFunctionalityNonExistingProject()
-})
-it("Verify Search Functionality with Non-Existing Project Name", () => {
-    clients.clickonclients();
-    project.verifyProjectPageRedirection();
-    project.verifySearchFunctionalityNonExistingProject();
-    project.verifyClearSearchFunctionality();
-})
-it("Verify Clicking on a Project Name Redirects User to Project Details (Basic Info Step)", () => {
-    clients.clickonclients();
-    project.verifyProjectPageRedirection();
-    project.verifyClickingProjectRedirectsProjectDetails();
-  
-})
-it("Verify Settings Icon Redirects to Project Settings", () => {
-    clients.clickonclients();
-    project.verifyProjectPageRedirection();
-    project.verifySettingsIconRedirectProjectSetting();
-  
-})
-it("Verify Delete Icon Opens Confirmation Modal", () => {
-    clients.clickonclients();
-    project.verifyProjectPageRedirection();
-    project.verifyDeleteIconOpenConfirmationModal();
-  
-})
-it("Verify Keep Project Button Closes Modal ", () => {
-    clients.clickonclients();
-    project.verifyProjectPageRedirection();
-    project.verifyDeleteIconOpenConfirmationModal();
-    project.verifyKeepProjectButtonClosesModal();
-  
-})
-it("Verify Delete Button Functionality  ", () => {
-    clients.clickonclients();
-    project.verifyProjectPageRedirection();
-    project.verifyDeleteIconOpenConfirmationModal();
-    project.verifyDeleteButtonFunctionality();
-  
-})
-it("Verify Cross (X) Button Closes Delete Modal  ", () => {
-    clients.clickonclients();
-    project.verifyProjectPageRedirection();
-    project.verifyDeleteIconOpenConfirmationModal();
-    project.verifyCrossButtonClosesDeleteModal();
-  
-})
-it("Verify Pagination Functionality ", () => {
-    clients.clickonclients();
-    project.verifyProjectPageRedirection();
-    project.verifyPaginationFunctionality();
-  
-})
-// it("Verify Pagination Functionality ", () => {
-//     clients.clickonclients();
-//     project.verifyProjectPageRedirection();
-//     project.verifyRowsPerPageDropdownUpdatesDisplay();
-  
-// })
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        projectpage.clickDeleteButtonOnFirstProject()
+        projectpage.confirmDelete()
+        projectpage.verifyProjectDeleted()
+    })
+
+    it('TC_Project_018 - Verify Cross (X) Button Closes Delete Modal', () => {
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients()
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        projectpage.clickDeleteButtonOnFirstProject()
+        projectpage.closeDeleteModal()
+        projectpage.verifyProjectStillVisible()
+    })
+
+    it('TC_Project_019 - Verify Pagination Functionality', () => {
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients()
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        projectpage.goToNextPage()
+        projectpage.goToPreviousPage()
+        projectpage.clickSpecificPage(3)
+        projectpage.verifyPageNumber(3)
+    })
 })

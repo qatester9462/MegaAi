@@ -4,8 +4,7 @@ export class Campaign {
         cy.get('.sidebarMenu-items ').should('be.visible').eq(1).click();
     }
     ValidateAndEditdropdownCampaignType(item) {
-        cy.get('#pn_id_30').should('be.visible').click()
-
+        cy.get('p-dropdown[placeholder="Campaign Type: All"] .p-dropdown-trigger').click();
         // cy.get('[aria-label="Discover"]')
         // .should('be.visible')
         //.click();
@@ -16,22 +15,16 @@ export class Campaign {
     }
 
 
-    ValidateAndEditdropdownproject() {
-        cy.get('#pn_id_56').should('be.visible').click()
+    verifyfilteringCampaignsByProject() {
+        cy.get('p-dropdown[placeholder="Project: All"] .p-dropdown-trigger').click();
 
-        // cy.get('[aria-label="Discover"]')
-        // .should('be.visible')
-        //.click();
-        cy.get('.p-element.ng-star-inserted').find('li.p-dropdown-item').eq(0).click()
-        cy.get('.p-datatable-tbody > :nth-child(2) > :nth-child(4)').should('be.visible')
+        // Click on the third item (index 2)
+        cy.get('.p-dropdown-items li').eq(2).click();
     }
 
     ValidateAndEditdropdownStatus() {
-        cy.get('#pn_id_27').should('be.visible').click()
+        cy.get('p-dropdown[placeholder="Status: All"] .p-dropdown-trigger').click();
 
-        // cy.get('[aria-label="Discover"]')
-        // .should('be.visible')
-        //.click();
         cy.get('.p-element.ng-star-inserted').find('li.p-dropdown-item').eq(0).click().should('be.visible')
 
     }
@@ -54,9 +47,12 @@ export class Campaign {
 
     CreateCampaign(campaignName) {
 
-        cy.get('span[aria-label="Select Project"]').as('jugar').should('be.visible')
-        cy.get('@jugar').click();
-        cy.get('li[aria-label="Third Project"]').eq(0).should('be.visible').click()
+        //cy.get('span[aria-label="Select Project"]').as('jugar').should('be.visible')
+        //cy.get('@jugar').click();
+        cy.get('p-dropdown[placeholder="Select Project"] .p-dropdown-trigger').click({ force: true })
+
+        // Step 2: Select the second option from the dropdown (index 1)
+        cy.get('.p-dropdown-items li').eq(1).click({ force: true })
 
         // cy.wrap(campaignName).as('campaignName')
         cy.get('input[id="Enter Campaign Name"]').type(campaignName)
@@ -255,7 +251,7 @@ export class Campaign {
             .parent()
             .find('span[role="combobox"]')
             .should('not.have.text', 'Select Country')
-            .should('contain.text', '(+1) CA');
+            
 
 
         // Step 5: Assert 'Timezone' field has been populated

@@ -7,6 +7,7 @@ export class CreateProject {
     cy.get('.sidebarMenu-items ').should('be.visible').eq(6).click();
     cy.url().should("include", "/projects");
     cy.get('.header-title').contains('Projects').should('exist')
+    cy.wait(3000)
 
   }
   clickOnplusButtonOnProjectPage() {

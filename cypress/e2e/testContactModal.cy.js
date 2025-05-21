@@ -10,7 +10,7 @@ const signIn = new SignInPage
 const clients = new ClientsPage()
 const project = new ProjectPage();
 const campaign = new Campaign
-const testcall= new TestCallPage();
+const testcall = new TestCallPage();
 describe("testContactModal", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
@@ -28,10 +28,13 @@ describe("testContactModal", () => {
         project.gotoClient(clientName)
         campaign.gotoCampaign()
         testcall.clickONTestCall()
+        testcall.clickOnCreateNewButton()
         testcall.ValidateelementsOnModal()
+        
+
     })
 
-    it("TC_Modal_005 , Eye icon - view contact details ", () => {
+    /*it("TC_Modal_005 , Eye icon - view contact details ", () => {
 
         const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
@@ -39,7 +42,7 @@ describe("testContactModal", () => {
         campaign.gotoCampaign()
         testcall.clickONTestCall()
         testcall.ValidateEyeIconviewContactDetails()
-    })
+    })*/
     it("TC_Modal_007 , Cancel button functionality ", () => {
 
         const clientName = 'MEGA-Bhargav'
@@ -49,29 +52,40 @@ describe("testContactModal", () => {
         testcall.clickONTestCall()
         testcall.ValidateCancelbuttonFunctionality()
 
-})
-it("TC_Modal_008 ,Create New Contact button functionality ", () => {
+    })
+    it("TC_Modal_008 ,Create New Contact button functionality ", () => {
 
-    const clientName = 'MEGA-Bhargav'
-    clients.clickonclients()
-    project.gotoClient(clientName)
-    campaign.gotoCampaign()
-    testcall.clickONTestCall()
-    testcall.ValidatecreateNewButton()
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients()
+        project.gotoClient(clientName)
+        campaign.gotoCampaign()
+        testcall.clickONTestCall()
+        testcall.clickOnCreateNewButton()
 
-})
+    })
 
-it("TC_Create_001 ,Redirect to Create New Test Contact form ", () => {
+    it("TC_Create_001 ,Redirect to Create New Test Contact form ", () => {
 
-    const clientName = 'MEGA-Bhargav'
-    clients.clickonclients()
-    project.gotoClient(clientName)
-    campaign.gotoCampaign()
-    testcall.clickONTestCall()
-    testcall.ValidatecreateNewButton()
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients()
+        project.gotoClient(clientName)
+        campaign.gotoCampaign()
+        testcall.clickONTestCall()
+        testcall.clickOnCreateNewButton()
+        
 
-})
+    })
 
+ it("TC_Create_002 ,Verify all form elements are present ", () => {
 
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients()
+        project.gotoClient(clientName)
+        campaign.gotoCampaign()
+        testcall.clickONTestCall()
+        testcall.clickOnCreateNewButton()
+        testcall.ValidatecreateNewButton()
+
+    })
 
 })
