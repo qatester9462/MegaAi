@@ -26,7 +26,7 @@ describe("Project", () => {
         project.gotoClient(clientName)
         createproject.gotoProjects()
     })
-    it("Verify, All elements present on the Projects page.", () => {
+    it("TC_Project_002, Verify, All elements present on the Projects page.", () => {
         const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
         project.gotoClient(clientName)

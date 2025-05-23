@@ -66,7 +66,7 @@ describe("campaignCreationCases", () => {
 
     })
 
-    it.only("TC_Campaign_010 , Verify clicking + button redirects to the Create New Campaign page", () => {
+    it("TC_Campaign_010 , Verify clicking + button redirects to the Create New Campaign page", () => {
         const campaignName = faker.company.name()
 
         const clientName = 'MEGA-Bhargav'
