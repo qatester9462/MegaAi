@@ -3,7 +3,8 @@ import { ClientsPage } from "../PageObject/ClientsPage";
 import { ProjectPage } from "../PageObject/ProjectPage";
 import { Campaign } from "../PageObject/CampaignPage";
 import { TestCallPage } from "../PageObject/TestCallPage";
-
+import { ReuseableCode } from "../support/ReuseableCode";
+import { CreateProject } from "../PageObject/CreateProject";
 
 
 const signIn = new SignInPage
@@ -11,6 +12,8 @@ const clients = new ClientsPage()
 const project = new ProjectPage();
 const campaign = new Campaign
 const testcall = new TestCallPage();
+const reuseableCode = new ReuseableCode();
+const createproject = new CreateProject();
 describe("testContactModal", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
@@ -30,19 +33,19 @@ describe("testContactModal", () => {
         testcall.clickONTestCall()
         testcall.clickOnCreateNewButton()
         testcall.ValidateelementsOnModal()
-        
+
 
     })
 
-    /*it("TC_Modal_005 , Eye icon - view contact details ", () => {
+    // /*it("TC_Modal_005 , Eye icon - view contact details ", () => {
 
-        const clientName = 'MEGA-Bhargav'
-        clients.clickonclients()
-        project.gotoClient(clientName)
-        campaign.gotoCampaign()
-        testcall.clickONTestCall()
-        testcall.ValidateEyeIconviewContactDetails()
-    })*/
+    //     const clientName = 'MEGA-Bhargav'
+    //     clients.clickonclients()
+    //     project.gotoClient(clientName)
+    //     campaign.gotoCampaign()
+    //     testcall.clickONTestCall()
+    //     testcall.ValidateEyeIconviewContactDetails()
+    // })*/
     it("TC_Modal_007 , Cancel button functionality ", () => {
 
         const clientName = 'MEGA-Bhargav'
@@ -72,20 +75,33 @@ describe("testContactModal", () => {
         campaign.gotoCampaign()
         testcall.clickONTestCall()
         testcall.clickOnCreateNewButton()
-        
+
 
     })
 
- it("TC_Create_002 ,Verify all form elements are present ", () => {
-
+    it("TC_Create_002 ,Verify all form elements are present ", () => {
+        const firstname=(reuseableCode.getRandomFirstName())
+        const lastName=(reuseableCode.getRandomFirstName())
+        const creditor = (reuseableCode.getRandomFirstName())
+        const amount = (reuseableCode.getRandomNumber(2, 5))
+        const collector = (reuseableCode.getRandomFirstName())
+        const debitor = (reuseableCode.getRandomFirstName())
+        const houseNo = (reuseableCode.getRandomNumber(1, 4))
+        const streetName = (reuseableCode.generateRandomString(5))
+        const zipcode = (reuseableCode.getRandomNumber(2, 5))
+        const description = (reuseableCode.generateRandomString(10))
         const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
         project.gotoClient(clientName)
         campaign.gotoCampaign()
         testcall.clickONTestCall()
         testcall.clickOnCreateNewButton()
-        testcall.ValidatecreateNewButton()
-
+        testcall.ValidatecreateNewButton(firstname,lastName,creditor, amount, collector, debitor, '3', 'testing', houseNo, streetName, 'UK', '234000', description)
+        createproject.validateToastMessage('Success')
+        testcall.validateCreatedContact(firstname)
+        createproject.validateToastMessage('Success')
+        cy.get('.flex > > .ng-star-inserted').contains('Call Now').should('exist').click()
+        createproject.validateToastMessage('Success')
     })
 
 })

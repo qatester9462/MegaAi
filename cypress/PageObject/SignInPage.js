@@ -17,6 +17,7 @@ export class SignInPage  {
         cy.get(".p-button-label").should("be.visible").click({force:true});
         //cy.wait(4000)
        cy.url().should("include", "/login"); 
+       cy.wait(3000);
         cy.get(".header-title").should("be.visible").and('contain.text','Dashboard')
     }
     }

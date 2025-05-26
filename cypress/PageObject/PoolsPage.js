@@ -88,18 +88,18 @@ export class PoolsPage {
     verifyClickingPoolNameRedirectsToContactList() {
 
         cy.get('tbody td.cursor-pointer')
-            .first()
+            .eq(5)
             .click();
         cy.contains('Phone Number').should('be.visible'); // Header column
 
         // cy.get('body app-root th:nth-child(12)').should('be.visible')
     }
 
-    verifyModalFieldsVisible() {
+    verifyEditIconFunctionality(updatedName, description) {
 
         cy.get('span.p-dialog-title').should('contain.text', 'Edit Pool Info');
-        cy.get('input[formcontrolname="name"]').should('be.visible');
-        cy.get('textarea[formcontrolname="description"]').should('be.visible');
+        cy.get('input[formcontrolname="name"]').should('be.visible').type(updatedName);
+        cy.get('textarea[formcontrolname="description"]').should('be.visible').type(description)
         cy.get('label[for="country"]').should('be.visible');
 
 
@@ -123,17 +123,16 @@ export class PoolsPage {
             .should('be.disabled');
     }
 
-    blankPoolNameValidation() {
+    validateBlankFields() {
 
         cy.get('input[id="poolName"]').clear();
-        cy.contains('Update').click();
-
-    }
-    BlankDescriptionnotAllowed() {
-
         cy.get('textarea[id="poolDescription"]').clear();
         cy.contains('Update').click();
+        cy.get('[class="error"]').eq(0).contains('Enter Pool Name').should('exist')
+        cy.get('[class="error"]').eq(1).contains('Enter Pool Description').should('exist')
+
     }
+
 
     closeModalWithXButton() {
 
@@ -166,13 +165,15 @@ export class PoolsPage {
         cy.get('input[formcontrolname="poolDescription"]').type('Pool for testing upload flow');
 
         cy.get('p-dropdown[placeholder="Select Project"] span[role="combobox"]').click();
+        cy.get('li[role="option"]').should('have.length.greaterThan', 0);
         cy.get('li[role="option"]').first().click();
 
         cy.get('p-dropdown[placeholder="Select Country"] span[role="combobox"]').click();
+        cy.get('li[role="option"]').should('have.length.greaterThan', 0);
         cy.get('li[role="option"]').first().click();
+        cy.contains('button', 'Continue to upload').click()
+        cy.url().should('include', '/upload');
 
-        cy.contains('button', 'Continue to upload')
-            .should('not.be.disabled');
     }
 
     VerifyCancelButtonFunctionality() {

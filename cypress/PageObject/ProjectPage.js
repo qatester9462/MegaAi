@@ -42,7 +42,7 @@ export class ProjectPage {
 
 
 
-verifyProjectLabel() {
+  verifyProjectLabel() {
     cy.contains('Projects').should('be.visible')
     cy.contains('All Projects').should('be.visible')
   }
@@ -82,21 +82,21 @@ verifyProjectLabel() {
   openCampaignsDropdown() {
     cy.contains('Campaigns: All').click({ force: true })
   }
-selectFirstCampaign(){
+  selectFirstCampaign() {
 
     cy.get('p-dropdown[placeholder="Campaigns: All"] .p-dropdown-trigger', { timeout: 10000 }) // wait up to 10 seconds
-    .should('be.visible')
-    .click({ force: true })
+      .should('be.visible')
+      .click({ force: true })
 
-  // Wait for dropdown options to render (optional but sometimes needed)
-  cy.wait(500)
+    // Wait for dropdown options to render (optional but sometimes needed)
+    cy.wait(500)
 
-  // Select the first item from the list
-   cy.get('.p-dropdown-items-wrapper li')
-    .should('be.visible')
-    .first()
-    .click({ force: true })
-}
+    // Select the first item from the list
+    cy.get('.p-dropdown-items-wrapper li')
+      .should('be.visible')
+      .first()
+      .click({ force: true })
+  }
   selectPoolByIndex(index) {
     this.openPoolsDropdown()
     cy.get('li[role="option"]').eq(index).click({ force: true })
@@ -172,7 +172,7 @@ selectFirstCampaign(){
   }
 
   gotoClient(name) {
-    cy.get('.p-paginator-page').eq(1).should('exist').click()
+    cy.get('.p-paginator-page').eq(3).should('exist').click()
     cy.get('.p-datatable-table tbody tr td:nth-child(1)').contains(name).should('exist').click()
     cy.url().should("include", "/dashboard");
     cy.get('.header-title').contains('Dashboard (' + name + ')').should('exist')
@@ -187,68 +187,83 @@ selectFirstCampaign(){
     cy.url().should("include", "/projects/").and('include', '/info');
 
   }
-    validateEditBasicInfo(name, country, timezone) {
-      cy.get('[role="tab"]').eq(0).contains('Basic Info').should('exist')
-      cy.get('[id="projectName"]').should('exist').clear().type(name)
-      cy.get('[id="country"]').should('be.disabled').invoke('val').should('eq', country)
-      cy.get('[id="timezone"]').should('be.disabled').invoke('val').should('eq', timezone)
-    }
-    validateEditGoal() {
-      cy.get('[role="tab"]').eq(1).contains('Goals').should('exist').click()
-      cy.url().should("include", "/projects/").and('include', '/goals');
-      cy.wait(2000)
-      cy.get('[class="p-button-group p-component"] span').contains('Debt Collection').should('exist')
-      cy.get('[class="stepCard ng-star-inserted"]').eq(0).contains('Debt handling').should('exist').click()
-    }
-    validateEditGoall() {
-      cy.get('[role="tab"]').eq(1).contains('Goals').should('exist').click()
-      cy.url().should("include", "/projects/").and('include', '/goals');
-      cy.wait(2000)
-      cy.get('[class="p-button-group p-component"] span').contains('Debt Collection').should('exist')
-      cy.get('.stepCard-wrap.ng-star-inserted .stepCard:nth-child(3)')
+  validateEditBasicInfo(name, country, timezone) {
+    cy.get('[role="tab"]').eq(0).contains('Basic Info').should('exist')
+    cy.get('[id="projectName"]').should('exist').clear().type(name)
+    cy.get('[id="country"]').should('be.disabled').invoke('val').should('eq', country)
+    cy.get('[id="timezone"]').should('be.disabled').invoke('val').should('eq', timezone)
+  }
+  validateEditGoal() {
+    cy.get('[role="tab"]').eq(1).contains('Goals').should('exist').click()
+    cy.url().should("include", "/projects/").and('include', '/goals');
+    cy.wait(2000)
+    cy.get('[class="p-button-group p-component"] span').contains('Debt Collection').should('exist')
+    cy.get('[class="stepCard ng-star-inserted"]').eq(0).contains('Debt handling').should('exist').click()
+  }
+  validateEditGoall() {
+    cy.get('[role="tab"]').eq(1).contains('Goals').should('exist').click()
+    cy.url().should("include", "/projects/").and('include', '/goals');
+    cy.wait(2000)
+    cy.get('[class="p-button-group p-component"] span').contains('Debt Collection').should('exist')
+    cy.wait(3000);
+    cy.get('.stepCard-wrap.ng-star-inserted .stepCard:nth-child(3)')
       .should('be.visible')
       .click();
-      cy.get('.p-button-label').contains('Save').click()
-    }
-    validateEditPools() {
-      cy.get('[role="tab"]').eq(2).contains('Pools').should('exist').click()
-      cy.url().should("include", "/projects/").and('include', '/pools');
-      cy.wait(4000)
-      cy.get('.p-datatable-table tbody tr').should('have.length.at.least', 2).then(($rows) => {
-        cy.wrap($rows[0]).click();
-        cy.wrap($rows[1]).click();
-      })
-    }
-    validateEditScipts(firstMsg) {
-      cy.get('[role="tab"]').eq(3).contains('Script').should('exist').click()
-      cy.url().should("include", "/projects/").and('include', '/scripts');
-      cy.wait(2000)
-      cy.get('[class="card"]').contains('First Message').should('exist')
-      cy.get('[placeholder="Select Lead"]').eq(0).should('exist').click()
-      cy.get('[role="listbox"] li').eq(0).should('exist').click()
-      cy.get('[id="first_message"]').should('exist').clear().type(firstMsg)
-    }
-    validateEditSettings() {
-      cy.get('[role="tab"]').eq(4).contains('Settings').should('exist').click()
-      cy.url().should("include", "/projects/").and('include', '/settings');
-      cy.wait(2000)
-      cy.get('[class="form-labal"]').contains('Campaign Priority').should('exist')
-      cy.get('.p-slider').eq(0).click()
-      cy.get('[class="form-labal"]').contains('Number of Bots').should('exist')
-      cy.get('.p-slider').eq(1).click()
-    }
-    validateEditDialing() {
-      cy.get('[role="tab"]').eq(5).contains('Dialing').should('exist').click()
-      cy.url().should("include", "/projects/").and('include', '/dialings');
-      cy.wait(2000)
-      cy.get('[class*="text-sm"]').contains('Hours between Redials to unanswered calls').should('exist')
-      cy.get('.p-slider').eq(0).click()
-    }
-    validateDeleteProject() {
-      cy.get('[aria-label="Actions"]').contains('Actions').should('exist').click()
-      cy.get('[role="option"]').contains('Delete project').should('exist').click()
-      cy.get('[class*="p-element ng-trigger"]').contains('Delete Project').should('exist')
-      cy.get('[class="p-button-label"]').contains('Delete').should('exist').click()
-
-    }
+    cy.get('.p-button-label').contains('Save').click()
   }
+  validateEditPools() {
+    cy.get('[role="tab"]').eq(2).contains('Pools').should('exist').click()
+    cy.url().should("include", "/projects/").and('include', '/pools');
+    cy.wait(4000)
+    cy.get('.p-datatable-table tbody tr').should('have.length.at.least', 2).then(($rows) => {
+      cy.wrap($rows[0]).click();
+      cy.wrap($rows[1]).click();
+    })
+  }
+  validateEditScipts(firstMsg,lastMsg,prompt) {
+    cy.get('[role="tab"]').eq(3).contains('Script').should('exist').click()
+    cy.url().should("include", "/projects/").and('include', '/scripts');
+    cy.wait(2000)
+    cy.get('[class="card"]').contains('First Message').should('exist')
+    cy.get('[placeholder="Select Lead"]').eq(0).should('exist').click()
+    cy.get('[role="listbox"] li').eq(0).should('exist').click()
+    cy.get('[id="first_message"]').should('exist').clear().type(firstMsg)
+     cy.get('[class="card"]').contains('Last Message').should('exist')
+    cy.get('[placeholder="Select Lead"]').eq(1).should('exist').click()
+    cy.get('[role="listbox"] li').contains('Last Name').should('exist').click()
+    cy.get('[id="first_message"]').should('exist').clear().type(firstMsg)
+    cy.get('[id="last_message"]').should('exist').clear().type(lastMsg)
+    cy.get('[class="form-labal"]').contains('Gender').should('exist')
+    cy.get('[aria-label="Select a Gender"]').should('exist').click()
+    cy.get('[role="option"]').contains('female').should('exist').click()
+     cy.get('[class="form-labal"]').contains('Voice').should('exist')
+    cy.get('[aria-label="Select voice"]').should('exist').click()
+    cy.get('[role="option"]').contains('Olivia').should('exist').click()
+    cy.get('[class="card-title"]').contains('System Prompts').should('exist')
+    cy.get('[class="card-body"]').eq(2).should('exist').clear().type(prompt)
+
+  }
+  validateEditSettings() {
+    cy.get('[role="tab"]').eq(4).contains('Settings').should('exist').click()
+    cy.url().should("include", "/projects/").and('include', '/settings');
+    cy.wait(2000)
+    cy.get('[class="form-labal"]').contains('Campaign Priority').should('exist')
+    cy.get('.p-slider').eq(0).click()
+    cy.get('[class="form-labal"]').contains('Number of Bots').should('exist')
+    cy.get('.p-slider').eq(1).click()
+  }
+  validateEditDialing() {
+    cy.get('[role="tab"]').eq(5).contains('Dialing').should('exist').click()
+    cy.url().should("include", "/projects/").and('include', '/dialings');
+    cy.wait(2000)
+    cy.get('[class*="text-sm"]').contains('Hours between Redials to unanswered calls').should('exist')
+    cy.get('.p-slider').eq(0).click()
+  }
+  validateDeleteProject() {
+    cy.get('[aria-label="Actions"]').contains('Actions').should('exist').click()
+    cy.get('[role="option"]').contains('Delete project').should('exist').click()
+    cy.get('[class*="p-element ng-trigger"]').contains('Delete Project').should('exist')
+    cy.get('[class="p-button-label"]').contains('Delete').should('exist').click()
+
+  }
+}

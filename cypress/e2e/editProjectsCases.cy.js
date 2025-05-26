@@ -21,20 +21,20 @@ describe("editProjectsCases", () => {
         const name = ('Editing Porject Name ' + reuseableCode.generateRandomString(5))
         clients.clickonclients()
         //project.gotoClientMegaBhargav('MEGA-Bhargav')
-        const clientName = 'Sammi'
+        const clientName = 'MEGA-Bhargav'
         project.gotoClient(clientName)
         project.gotoProjectsPage(clientName)
-        project.validateEditBasicInfo(name, '(+45) Denmark', 'Europe/Copenhagen (UTC +02:00)')
+        project.validateEditBasicInfo(name, '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
         createproject.clickButton('Save')
         createproject.validateToastMessage('Success')
     })
     it("Validate that user is able to Edit,Save,Delete Goal step of any selected project", () => {
-        const clientName = 'Sammi'
+        const clientName = 'MEGA-Bhargav'
 
         clients.clickonclients()
-       project.gotoClient(clientName)
-    project.gotoProjectsPage(clientName)
- project.validateEditGoall()
+        project.gotoClient(clientName)
+        project.gotoProjectsPage(clientName)
+        project.validateEditGoall()
 
 
 
@@ -51,24 +51,28 @@ describe("editProjectsCases", () => {
     })
     it("Validate that user is able to Edit,Save,Delete Scripts step of any selected project", () => {
         clients.clickonclients()
-        project.gotoClientMegaBhargav('MEGA-Bhargav')
-        project.gotoProjectsPage()
-        project.validateEditScipts('Hi,I am Lisa from creditor,talking to Mona Lisa editing script')
+        //project.gotoClientMegaBhargav('MEGA-Bhargav')
+        project.gotoClient('MEGA-Bhargav')
+        project.gotoProjectsPage('MEGA-Bhargav')
+        project.validateEditScipts('Hi,I am Lisa from creditor,talking to Mona Lisa editing script','Last message testing thanks','You are a debt resolution AI assistant, your goal is to empathetically assist debtors')
         createproject.clickButton('Save')
         createproject.validateToastMessage('Success')
     })
     it("Validate that user is able to Edit,Save,Delete Settings step of any selected project", () => {
         clients.clickonclients()
-        project.gotoClientMegaBhargav('MEGA-Bhargav')
-        project.gotoProjectsPage()
+        //project.gotoClientMegaBhargav('MEGA-Bhargav')
+        project.gotoClient('MEGA-Bhargav')
+        project.gotoProjectsPage('MEGA-Bhargav')
         project.validateEditSettings()
         createproject.clickButton('Save')
         createproject.validateToastMessage('Success')
     })
     it("Validate that user is able to Edit,Save,Delete Dialing step of any selected project", () => {
         clients.clickonclients()
-        project.gotoClientMegaBhargav('MEGA-Bhargav')
-        project.gotoProjectsPage()
+        //project.gotoClientMegaBhargav('MEGA-Bhargav')
+        project.gotoClient('MEGA-Bhargav')
+        project.gotoProjectsPage('MEGA-Bhargav')
+
         project.validateEditDialing()
         createproject.setStatusToggles()
         createproject.clickButton('Save')
