@@ -42,8 +42,8 @@ export class ClientsPage {
     cy.get("input[placeholder='Enter Client Name']").should('be.visible').and('have.attr', 'placeholder', 'Enter Client Name');
     cy.get("p-dropdown[placeholder='Select Client Type']").should('be.visible').and('have.attr', 'placeholder', 'Select Client Type');
     cy.get('#pn_id_20 > .p-dropdown-trigger').should('be.visible')
-    cy.get("p-dropdown[placeholder='Select Country']").should('be.visible').and('have.attr', 'placeholder', 'Select Country');
-    cy.get('#pn_id_18 > .p-dropdown-trigger').should('be.visible')
+    cy.get("p-dropdown[placeholder='Select Country']").should('be.visible').and('have.attr', 'placeholder', 'Select Country').click()
+    cy.get('[role="listbox"]').should('be.visible')
     cy.get("span[class='flex align-items-center gap-2']").should('be.visible').and('contain.text', 'Create')
   }
 
