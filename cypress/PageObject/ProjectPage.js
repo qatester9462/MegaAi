@@ -40,136 +40,135 @@ export class ProjectPage {
     });
   }
 
-  verifyElementsPresentProjectsPage() {
-    cy.get(".flex-auto.text-base.font-semibold.line-height-3.text-900").should('be.visible').and('contain.text', 'Projects (MEGA-Bhargav)')
-    cy.get("p-dropdown[placeholder='Pools: All']").should('be.visible').and('contain.text', 'Pools: All');
-    cy.get("p-dropdown[placeholder='Campaigns: All']").should('be.visible').and('contain.text', 'Campaigns: All');
-    cy.get("input[placeholder='Search by project name']").should('be.visible').and("have.attr", "placeholder", "Search by project name")
-    cy.get(".p-element.p-ripple.p-button-icon-only.p-speeddial-button.p-button-rounded.p-speeddial-rotate.bg-primary.p-button.p-component").should('be.visible')
-  }
-  verifyPoolsFilterFunctionality() {
-
-    // Click on Dropdown Arrow
-    cy.get("p-dropdown[placeholder='Pools: All']").should('be.visible').click();
-    cy.wait(1000);
-
-    // Select First Option from Dropdown
-    cy.get("div.p-dropdown-items-wrapper li").eq(0).should('be.visible').and('contain.text', 'Testing pool').click();
-  }
-  verifyClearButtonAppearsWhenPoolsFilterApplied() {
-    cy.wait(1000);
-    cy.get(".p-2.text-700.cursor-pointer.font-semibold.ng-star-inserted").should('be.visible').and('contain.text', 'Clear')
 
 
-  }
-  verifyCampaignsFilterFunctionality() {
-
-    // Click on Dropdown Arrow
-    cy.get("p-dropdown[placeholder='Campaigns: All']").should('be.visible').click();
-    cy.wait(1000);
-
-    // Select First Option Dynamically (without text assertion)
-    cy.get("div.p-dropdown-items-wrapper li").first().should('be.visible').click(); // Removed text assertion
+verifyProjectLabel() {
+    cy.contains('Projects').should('be.visible')
+    cy.contains('All Projects').should('be.visible')
   }
 
-  verifyClearButtonAppearsWhenCampaignFilterApplied() {
-    cy.wait(1000);
-
-    // Verify Clear Button Appears
-    cy.get(".p-2.text-700.cursor-pointer.font-semibold.ng-star-inserted")
-      .should('be.visible')
-      .and('contain.text', 'Clear');
-  }
-  verifySearchFunctionalityExacProjectName() {
-    cy.get("input[placeholder='Search by project name']").should('be.visible').and("have.attr", "placeholder", "Search by project name")
-    cy.get("input[placeholder='Search by project name']").type('Testing project1')
-
-  }
-  verifyClickingClearButtonRemovesPoolsFilter() {
-
-    cy.wait(1000);
-    cy.get(".p-2.text-700.cursor-pointer.font-semibold.ng-star-inserted").should('be.visible').and('contain.text', 'Clear').click();
-  }
-  verifyClickingClearButtonRemovesCampaignFilter() {
-    cy.get(".p-2.text-700.cursor-pointer.font-semibold.ng-star-inserted")
-      .should('be.visible')
-      .and('contain.text', 'Clear').click();
-
-  }
-  verifyClearButtonFunctionalityBothFiltersApplied() {
-    cy.get(".p-2.text-700.cursor-pointer.font-semibold.ng-star-inserted")
-      .should('be.visible')
-      .and('contain.text', 'Clear').click();
-
-  }
-  verifySearchFunctionalityNonExistingProject() {
-    cy.get("input[placeholder='Search by project name']").should('be.visible').and("have.attr", "placeholder", "Search by project name")
-    cy.get("input[placeholder='Search by project name']").type('demo')
-    cy.get("div[class='md:text-lg text-base text-900 font-semibold line-height-3 text-center lh-24']").should('be.visible').and('contain.text', ' No record found.');
-  }
-  verifyClearSearchFunctionality() {
-    cy.get("input[placeholder='Search by project name']").clear(); // Clear Input Field
-    cy.get("input[placeholder='Search by project name']").should('have.value', '') // Verify Field is Empty
-  }
-  verifyClickingProjectRedirectsProjectDetails() {
-    cy.get("div[class='md:px-5 overflow-auto md:py-3 p-3 h-full flex flex-column min-w-0'] div:nth-child(1) div:nth-child(1) div:nth-child(2) div:nth-child(1)").should('be.visible').and('contain.text', ' Project Test 28Feb ').click();
-    cy.visit('/projects/159/info')
-  }
-  verifySettingsIconRedirectProjectSetting() {
-    cy.wait(1000);
-    cy.get("div[class='md:px-5 overflow-auto md:py-3 p-3 h-full flex flex-column min-w-0'] div:nth-child(1) div:nth-child(2) div:nth-child(1) i:nth-child(1)").eq(0).should('be.visible').click();
-  }
-  verifyDeleteIconOpenConfirmationModal() {
-    cy.wait(1000);
-    cy.get("i.pi.pi-trash").eq(1).should('be.visible').click(); // Optimized Delete icon selector
-    cy.wait(2000);
-    cy.get("div[role='dialog']").should('be.visible') // Use generic modal selector
-      .find("span.p-dialog-title")
-      .should('contain.text', 'Delete project'); // Verify modal title
+  verifyDropdowns() {
+    cy.contains('Pools: All').should('be.visible')
+    cy.wait(1000)
+    cy.contains('Campaigns: All').should('be.visible')
   }
 
-  verifyKeepProjectButtonClosesModal() {
-    cy.get("button.p-button-link").should('be.visible').and('contain.text', 'Keep project').click();
-    cy.get("div[role='dialog']").should('not.exist'); // Confirm modal is closed
+  verifySearchField() {
+    cy.get('input[placeholder="Search by project name"]').should('exist')
   }
-  verifyDeleteButtonFunctionality() {
 
-    cy.get("span[class='p-button-label']").should('be.visible').click()
+  verifyCreateProjectButton() {
+    cy.get('.p-speeddial-button').should('be.visible')
   }
-  verifyCrossButtonClosesDeleteModal() {
 
-    cy.get(".p-dialog-header-close-icon.p-icon").should('be.visible').click()
+  verifyProjectList() {
+    cy.get('.projectList-items').should('have.length.greaterThan', 0)
   }
-  verifyPaginationFunctionality() {
-    cy.get("button[aria-label='First Page']").should('be.visible').then(($btn) => {
-      if (!$btn.is(':disabled')) {
-        cy.wrap($btn).click();
-        cy.log('First Page Button Clicked');
-      } else {
-        cy.log('First Page Button is Disabled');
-      }
-    });
-    cy.get("button[aria-label='Last Page']").should('be.visible').then(($btn) => {
-      if (!$btn.is(':disabled')) {
-        cy.wrap($btn).click();
-        cy.log('Last Page Button Clicked');
-      } else {
-        cy.log('Last Page Button is Disabled');
-      }
-    });
 
-    cy.get("button[aria-label='1']").should('be.visible').click();
-    cy.get("button[aria-label='2']").then(($btn) => {
-      if ($btn.length > 0) {
-        cy.wrap($btn).click();
-        cy.log('Page 2 Button Clicked');
-      } else {
-        cy.log('Page 2 Button does not exist');
-      }
-    });
+  verifySettingsAndDelete() {
+    cy.get('.pi-cog').should('exist')
+    cy.get('.pi-trash').should('exist')
   }
-  verifyClickingAddButtonRedirectsCreateProject() {
-    cy.get(".p-speeddial.p-component.p-speeddial-linear.p-speeddial-direction-up").should('be.visible').click()
+
+  verifyPagination() {
+    cy.get('.p-paginator').should('exist')
+  }
+
+
+  openPoolsDropdown() {
+    cy.contains('Pools: All').click({ force: true })
+  }
+
+  openCampaignsDropdown() {
+    cy.contains('Campaigns: All').click({ force: true })
+  }
+selectFirstCampaign(){
+
+    cy.get('p-dropdown[placeholder="Campaigns: All"] .p-dropdown-trigger', { timeout: 10000 }) // wait up to 10 seconds
+    .should('be.visible')
+    .click({ force: true })
+
+  // Wait for dropdown options to render (optional but sometimes needed)
+  cy.wait(500)
+
+  // Select the first item from the list
+   cy.get('.p-dropdown-items-wrapper li')
+    .should('be.visible')
+    .first()
+    .click({ force: true })
+}
+  selectPoolByIndex(index) {
+    this.openPoolsDropdown()
+    cy.get('li[role="option"]').eq(index).click({ force: true })
+  }
+
+  selectCampaignByIndex(index) {
+    this.openCampaignsDropdown()
+    cy.get('li[role="option"]').eq(index).click({ force: true })
+  }
+
+  verifyProjectsFiltered() {
+    cy.get('.projectList-items').should('have.length.greaterThan', 0)
+  }
+
+  verifyClearButtonVisible() {
+    cy.contains('Clear').should('be.visible')
+  }
+
+  searchByProjectName(name) {
+    cy.get('input[placeholder="Search by project name"]').type(name)
+  }
+
+  clearSearchField() {
+    cy.get('input[placeholder="Search by project name"]').clear()
+  }
+
+  verifySearchedProjectVisible(name) {
+    cy.contains(name).should('be.visible')
+  }
+
+  clearFilters() {
+    cy.contains('Clear').click({ force: true })
+  }
+
+  verifyAllProjectsVisible() {
+    cy.get('.projectList-items').should('have.length.greaterThan', 0)
+  }
+
+  clickDeleteButtonOnFirstProject() {
+    cy.get('.pi-trash').first().click({ force: true })
+  }
+
+  confirmDelete() {
+    cy.get('span[class="p-button-label"]').click({ force: true })
+  }
+
+  closeDeleteModal() {
+    cy.get('.p-dialog-header-icons > .p-ripple').click()
+  }
+
+  verifyProjectDeleted() {
+    cy.get('.p-toast-top-center').should('exist')
+  }
+
+  verifyProjectStillVisible() {
+    cy.get('.projectList-items').should('have.length.greaterThan', 0)
+  }
+
+  goToNextPage() {
+    cy.get('.p-paginator-next').click({ force: true })
+  }
+
+  goToPreviousPage() {
+    cy.get('.p-paginator-prev').click({ force: true })
+  }
+
+  clickSpecificPage(number) {
+    cy.contains('button', `${number}`).click({ force: true })
+  }
+
+  verifyPageNumber(number) {
+    cy.contains('button.p-highlight', `${number}`).should('exist')
   }
 
   gotoClient(name) {

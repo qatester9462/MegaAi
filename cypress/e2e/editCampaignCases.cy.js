@@ -44,12 +44,12 @@ describe("editCampaignCases", () => {
 
     it("TC_Edit_Basic-Info_003 , Verify Name field accepts valid data ", () => {
 
-        const camp = 'dsfd'
+        
         const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
         project.gotoClient(clientName)
         campaign.gotoCampaign()
-        editcampaignn.clickOnFirstCampaign(camp)
+        editcampaignn.clickOnFirstCampaign()
         //editcampaignn.verifyOnlyNameFieldIsEditable()
         editcampaignn.verifyNameFieldAcceptsValidData()
 
@@ -202,6 +202,7 @@ describe("editCampaignCases", () => {
         campaign.gotoCampaign()
         editcampaignn.clickOnFirstCampaign(camp)
         editcampaignn.verifyRedirectionToPoolsPage()
+        
         editcampaignn.verifyDeleteCampaign()
     })
 
@@ -235,6 +236,7 @@ describe("editCampaignCases", () => {
         project.gotoClient(clientName)
         campaign.gotoCampaign()
         editcampaignn.clickOnFirstCampaign(camp)
+        editcampaignn.verifyRedirectionToScriptsPage() 
         editcampaignn.VerifyFirstMessageFieldEditable()
 
     })

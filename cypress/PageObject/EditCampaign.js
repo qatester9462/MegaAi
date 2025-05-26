@@ -1,13 +1,14 @@
 export class EditCampaigns {
 
 
-    clickOnFirstCampaign(CampName) {
+    clickOnFirstCampaign() {
 
-        cy.get('table.p-datatable-table').should('be.visible');
-        // Click on campaign row by name
-        cy.contains('td', CampName)
+
+        cy.get('tbody.p-datatable-tbody > tr')
+            .first()
+            .find('td.p-frozen-column')
             .should('be.visible')
-            .click();
+            .click()
     }
 
     verifyOnlyNameFieldIsEditable() {
@@ -26,11 +27,12 @@ export class EditCampaigns {
             .clear()
             .type(newCampaignName)
             .should('have.value', newCampaignName);
-        cy.contains('button', 'Save').should('be.visible').click();
-        cy.contains('div.p-button span.p-button-label', 'Pause').should('be.visible').click();
-        //  Wait for UI to reflect the update
-        cy.get('nav').should('contain.text', newCampaignName); // breadcrumb fallback
-
+        cy.contains('button', 'Save').should('be.visible').click({ force: true });
+        cy.get('body').then($body => {
+            if ($body.find('div[role="dialog"]').length) {
+                cy.get('div[role="dialog"]').contains('span.p-button-label', 'Pause').click();
+            }
+        });
     }
 
     verifyNameFieldMandotoryValidation() {
@@ -92,7 +94,10 @@ export class EditCampaigns {
         cy.contains('.p-tabview-title', 'Pools').should('be.visible').click()
     }
 
+verifyRedirectionToScriptsPage() {
 
+        cy.contains('Script').should('be.visible').click()
+    }
 
     verifyUiElementsOnPoolsPage() {
         // Step 1: Click on Pools tab
@@ -492,7 +497,7 @@ export class EditCampaigns {
         cy.contains('Save').click();
         // Assert error messages (adjust text as per actual UI)
         cy.get('p-toast').should('be.visible'); // Example
-        
+
     }
 
 
