@@ -35,15 +35,12 @@ export class ClientsPage {
   }
   VerifyCreateClientFormButtonFunctionality() {
     cy.get(".p-element.p-ripple.p-button-icon-only.p-speeddial-button.p-button-rounded.p-speeddial-rotate.bg-primary.p-button.p-component").click()
-
   }
   verifyElementsCreateClientForm() {
     cy.get(".font-semibold.text-base.ng-star-inserted").should('be.visible').and('contain.text', 'Create Client')
     cy.get("input[placeholder='Enter Client Name']").should('be.visible').and('have.attr', 'placeholder', 'Enter Client Name');
-    cy.get("p-dropdown[placeholder='Select Client Type']").should('be.visible').and('have.attr', 'placeholder', 'Select Client Type');
-    cy.get('#pn_id_20 > .p-dropdown-trigger').should('be.visible')
-    cy.get("p-dropdown[placeholder='Select Country']").should('be.visible').and('have.attr', 'placeholder', 'Select Country').click()
-    cy.get('[role="listbox"]').should('be.visible')
+    cy.get("p-dropdown[placeholder='Select Client Type']").should('be.visible').and('have.attr', 'placeholder', 'Select Client Type')
+    cy.get("p-dropdown[placeholder='Select Country']").should('be.visible').and('have.attr', 'placeholder', 'Select Country')
     cy.get("span[class='flex align-items-center gap-2']").should('be.visible').and('contain.text', 'Create')
   }
 
@@ -65,20 +62,16 @@ export class ClientsPage {
   }
 
   verifyCreateClientWithoutFillingFields() {
-    cy.wait(1000)
-    cy.get('button').contains('Create').click()
-    // cy.wait(1000)
-    // cy.get(':nth-child(1) > :nth-child(3) > .ng-star-inserted > .error').should('be.visible').and ('contain.text', 'Enter Client Name')
-    // cy.wait(1000)
-    // cy.get(':nth-child(2) > div[style=""] > .ng-star-inserted > .error').should('be.visible').and ('contain.text', 'Select Client Type')
-    // cy.wait(1000)
-    // cy.get(':nth-child(3) > div[style=""]').should('be.visible').and ('contain.text', 'Select Country')  
-    // cy.url().should('include', '/clients'); 
+    cy.wait(2000)
+    cy.get('button').contains('Create').click() 
+    cy.get('[class="error"]').eq(0).should('be.visible').and ('contain.text', 'Enter Client Name')
+   cy.get('[class="error"]').eq(1).should('be.visible').and ('contain.text', 'Select Client Type')
+   cy.get('[class="error"]').eq(2).should('be.visible').and ('contain.text', 'Select Country') 
   }
   verifyElementsUnderActionLabel() {
-  cy.get("i[title='Edit morten1']").should("be.visible")
-  cy.get("i[title='morten1 Connect']").should("be.visible")
-  cy.get("i[title='Delete morten1']").should("be.visible")
+  cy.get('[class*="pi pi-pencil"]').should("be.visible")
+  cy.get('[class*="pi pi-cog"]').should("be.visible")
+  cy.get('[class*="pi pi-trash"]').should("be.visible")
 
   }
 
@@ -86,7 +79,9 @@ export class ClientsPage {
     cy.wait(1000)
     cy.get("[class$='pi pi-pencil cursor-pointer']").eq(0).should("be.visible").click();
     cy.url().should("include", "/clients");
-    cy.get(".font-semibold.text-base.ng-star-inserted").should("be.visible").and("contain.text", "Update Client");
+    cy.get(".font-semibold.text-base.ng-star-inserted").should("be.visible").and("contain.text", "Update Client")
+    cy.get('[class*="p-element p-button"]').contains('Update').should('exist').click()
+    cy.get('.p-toast-top-center').contains('Client updated successfully').should('exist')
   }
 
 }

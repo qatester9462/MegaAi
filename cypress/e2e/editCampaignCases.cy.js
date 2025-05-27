@@ -20,7 +20,7 @@ describe("editCampaignCases", () => {
         signIn.verifyLoginFuntionality(email, password);
     })
 
-    it("TC_Edit_Basic-Info_001 , Verify redirection to Edit Campaign page (Basic Info) ", () => {
+    it.only("TC_Edit_Basic-Info_001 , Verify redirection to Edit Campaign page (Basic Info) ", () => {
 
 
         const clientName = 'MEGA-Bhargav'
@@ -43,8 +43,6 @@ describe("editCampaignCases", () => {
     })
 
     it("TC_Edit_Basic-Info_003 , Verify Name field accepts valid data ", () => {
-
-        
         const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
         project.gotoClient(clientName)
@@ -202,7 +200,6 @@ describe("editCampaignCases", () => {
         campaign.gotoCampaign()
         editcampaignn.clickOnFirstCampaign(camp)
         editcampaignn.verifyRedirectionToPoolsPage()
-        
         editcampaignn.verifyDeleteCampaign()
     })
 
@@ -322,7 +319,7 @@ describe("editCampaignCases", () => {
     });
 
 
-    it('TC_Edit-Campaign (Settings)_002 – Verify pre-filled data in Settings page', () => {
+    it.only('TC_Edit-Campaign (Settings)_002 – Verify pre-filled data in Settings page', () => {
         const camp = 'testing'
         const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
@@ -336,7 +333,7 @@ describe("editCampaignCases", () => {
 
 
 
-    it('TC_Edit-Campaign (Settings)_004 – Verify Campaign Priority slider value', () => {
+    it.only('TC_Edit-Campaign (Settings)_004 – Verify Campaign Priority slider value', () => {
         const camp = 'testing'
         const clientName = 'MEGA-Bhargav'
         clients.clickonclients()

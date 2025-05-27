@@ -8,10 +8,10 @@ describe("clients", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
     beforeEach(() => {
-     
+
         cy.visit('/login')
         cy.viewport(1920, 1080)
-        signIn.verifyLoginFuntionality(email,password);
+        signIn.verifyLoginFuntionality(email, password);
     })
 
     it("Verify,Navigation to the Clients Page via Side Navigation Men", () => {
@@ -26,10 +26,6 @@ describe("clients", () => {
         clients.clickonclients();
         clients.verifyClientsPage();
         clients.verifyTableHeaders();
-    });
-    it("Verify, Create Client Form Button Functionality", () => {
-        clients.clickonclients();
-        clients.VerifyCreateClientFormButtonFunctionality();
     });
     it("Verify, All Elements on Create Client form", () => {
         clients.clickonclients();
@@ -55,17 +51,13 @@ describe("clients", () => {
     //     clients.verifyRedirectionAfetrClientCreation();
     // });
 
-    it("Verify, Attempt to create a client without filling in any fields. ", () => {
-        const clientName = 'abc'
-        const clientType = 'Individual'
-        const country = 'Pakistan'
+    it("Verify empty fields error while creating client ", () => {
+
         clients.clickonclients();
         clients.VerifyCreateClientFormButtonFunctionality();
         clients.verifyCreateClientWithoutFillingFields();
     });
-
-
- it("Verify, Elements edit , setting, delete button under action label ", () => {
+    it("Verify, Elements edit , setting, delete buttons under action label ", () => {
         clients.clickonclients();
         clients.verifyElementsUnderActionLabel()
     });
@@ -73,6 +65,7 @@ describe("clients", () => {
     it("Verify Edit button click functionality for a client", () => {
         clients.clickonclients();
         clients.verifyEditButtonClickFunctionality();
+
     });
 });
 

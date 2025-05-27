@@ -15,7 +15,7 @@ describe("createProject", () => {
     beforeEach(() => {
         cy.visit('/login');
         cy.viewport(1920, 1080);
-        signIn.verifyLoginFuntionality(email,password);
+        signIn.verifyLoginFuntionality(email, password);
     });
 
     it("Verify Clicking '+' Add button Redirects user to the Create new Project", () => {
@@ -25,19 +25,8 @@ describe("createProject", () => {
         createproject.gotoProjects()
         createproject.clickOnplusButtonOnProjectPage()
     });
-    it("Verify All Elements on the 'Create New Project' Page" , () => {
-       const clientName = 'MEGA-Bhargav'
-        clients.clickonclients()
-        project.gotoClient(clientName)
-        createproject.gotoProjects()
-        createproject.clickOnplusButtonOnProjectPage()
-        createproject.verifyValidInputProjectNameField()
-
-    });
-   
-    
-    it("Verify 'Next Step' Button is Enabled After Filling All Fields" , () => {
-          const clientName = 'MEGA-Bhargav'
+    it("Verify 'Next Step' Button is Enabled After Filling All Fields", () => {
+        const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
         project.gotoClient(clientName)
         createproject.gotoProjects()
@@ -45,16 +34,13 @@ describe("createProject", () => {
         createproject.verifyValidInputProjectNameField()
         createproject.VerifyNextStepButtonEnabledAfteFillingAllFields()
     })
-    it("Verify 'Cancel' Button Functionality" , () => {
-
-          const clientName = 'MEGA-Bhargav'
+    it("Verify 'Cancel' Button Functionality", () => {
+        const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
         project.gotoClient(clientName)
         createproject.gotoProjects()
         createproject.clickOnplusButtonOnProjectPage()
         createproject.verifyValidInputProjectNameField()
-        createproject.VerifyCancelButtonFunctionality()})
-        
-  
-    
+        createproject.VerifyCancelButtonFunctionality()
+    })
 });
