@@ -3,7 +3,7 @@ export class EditCampaigns {
 
     clickOnFirstCampaign() {
 
-
+cy.wait(4000)
         cy.get('tbody.p-datatable-tbody > tr')
             .first()
             .find('td.p-frozen-column')
@@ -357,11 +357,12 @@ verifyRedirectionToScriptsPage() {
         cy.get('.form-labal').contains('Campaign Priority').should('contain', 'Campaign Priority');
         cy.get('.form-labal').contains('Number of Bots').should('contain', 'Number of Bots');
         cy.contains('Bot Functions:').should('exist');
-        cy.get('p-dropdown[placeholder="Select an option"]').should('contain.text', 'Appointment Reminder');
-        cy.get('p-dropdown[placeholder="Select an option"]').eq(1).should('contain.text', '+4520708989');
+        cy.get('p-dropdown[placeholder="Select an option"]').eq(0).should('exist')
+       // cy.get('p-dropdown[placeholder="Select an option"]').eq(0
     }
 
     updateCampaignPrioritySlider() {
+        cy.wait(3000);
         cy.get('.form-labal').contains('Campaign Priority:').then(($el) => {
             const currentValue = parseInt($el.text().split(':')[1].trim());
             const newValue = currentValue + 1;

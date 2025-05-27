@@ -4,6 +4,7 @@ export class Campaign {
         cy.get('.sidebarMenu-items ').should('be.visible').eq(1).click();
     }
     ValidateAndEditdropdownCampaignType(item) {
+        cy.wait(4000);
         cy.get('p-dropdown[placeholder="Campaign Type: All"] .p-dropdown-trigger').click();
         // cy.get('[aria-label="Discover"]')
         // .should('be.visible')
@@ -13,8 +14,6 @@ export class Campaign {
             .contains(item)
             .click();
     }
-
-
     verifyfilteringCampaignsByProject() {
         cy.get('p-dropdown[placeholder="Project: All"] .p-dropdown-trigger').click();
 
@@ -30,16 +29,13 @@ export class Campaign {
     }
     ValidateSortingInCampaign() {
         cy.get('.dropdown-icon').should('be.visible').click()
-
         // cy.get('[aria-label="Discover"]')
         // .should('be.visible')
         //.click();
         cy.get('.dropdown-menu > :nth-child(1)').should('be.visible').click()
-
     }
 
     ClickOnPlusbutton() {
-
         cy.get('.p-speeddial > .p-ripple').as('btn')
         cy.get('@btn').click()
         cy.url('https://app.aegis.mobi/campaigns/create').should('exist')
@@ -67,8 +63,6 @@ export class Campaign {
             .should('be.visible')
             .click();
         cy.contains('div', 'its connect description').should('exist').click()
-
-
     }
     SelectPools() {
         cy.url().should('include', '/create/pools')
@@ -112,13 +106,8 @@ export class Campaign {
             .parents('.card')
             .find('span[role="combobox"]')
             .should('not.contain.text', 'Select Lead');
-
-
-
     }
     selectSettings() {
-
-
         cy.contains('.form-labal', 'Campaign Priority')
             .parents('.form-group')
             .find('span[role="slider"]')
@@ -158,13 +147,8 @@ export class Campaign {
             .parents('.form-group')
             .find('span.p-inputswitch-slider')
             .click()
-
-
     }
     selectDialing() {
-
-
-
         const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
         days.forEach((day) => {
@@ -207,11 +191,7 @@ export class Campaign {
 
     }
     clickOnSaveAndExitButton() {
-
         cy.get(':nth-child(2) > p-button.p-element > .p-ripple').should('be.visible').click()
-
-
-
     }
     clickOnNextButton1() {
         // cy.get('.btn-primary').should('be.visible').click()
@@ -220,14 +200,8 @@ export class Campaign {
     }
     CampaignCreationToast() {
         cy.get('.p-toast.p-component.ng-tns-c1067615279-0.p-toast-top-center').should('be.visible')
-
     }
     CampaignCreateFirstForm() {
-
-
-
-
-
         cy.get('span[aria-label="Select Project"]').as('jugar').should('be.visible');
         cy.get('@jugar').click(); // Open the dropdown
 
@@ -251,37 +225,10 @@ export class Campaign {
             .parent()
             .find('span[role="combobox"]')
             .should('not.have.text', 'Select Country')
-            
-
-
         // Step 5: Assert 'Timezone' field has been populated
         cy.get('label:contains("Timezone")')
             .parent()
             .find('span[role="combobox"]')
             .should('not.have.text', 'Select Timezone');
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
