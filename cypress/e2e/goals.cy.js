@@ -1,13 +1,11 @@
 import { SignInPage } from "../PageObject/SignInPage";
 import { ClientsPage } from "../PageObject/ClientsPage";
-import { ProjectPage } from "../PageObject/ProjectPage";
 import { CreateProject } from "../PageObject/CreateProject";
 import { GoalsProject } from "../PageObject/GoalsPage";
 
 
 const signIn = new SignInPage();
 const clients = new ClientsPage();
-const projectPage = new ProjectPage();
 const createProject = new CreateProject();
 const goalsProject = new GoalsProject();
 

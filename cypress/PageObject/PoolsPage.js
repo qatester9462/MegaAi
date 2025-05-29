@@ -1,7 +1,4 @@
 export class PoolsPage {
-
-
-
     goTOPools() {
 
         cy.get('.sidebarMenu > :nth-child(3) > .sidebarMenu-links').click()
@@ -77,18 +74,26 @@ export class PoolsPage {
 
     }
     VerifyPaginationControlsWork() {
-
-        cy.get('.p-paginator-next').click();
-        cy.get('.p-paginator-page.p-highlight').should('contain.text', '2');
-        cy.get('.p-paginator-prev').click();
-        cy.get('.p-paginator-page.p-highlight').should('contain.text', '1')
-
+        cy.get('.p-paginator-page').then(($pages) => {
+            const totalPages = $pages.length;
+            cy.log('Total Pages:', totalPages);
+            if (totalPages === 1) {
+                cy.get('.p-paginator-page.p-highlight').should('contain', '1');
+                cy.get('.p-paginator-next').should('be.disabled');
+            } else {
+                for (let i = 1; i <= totalPages; i++) {
+                    cy.get('.p-paginator-page.p-highlight').should('contain', i);
+                    if (i < totalPages) {
+                        cy.get('.p-paginator-next').should('not.be.disabled').click();
+                    }
+                }
+            }
+        });
     }
-
     verifyClickingPoolNameRedirectsToContactList() {
 
         cy.get('tbody td.cursor-pointer')
-            .eq(5)
+            .eq(0)
             .click();
         cy.contains('Phone Number').should('be.visible'); // Header column
 

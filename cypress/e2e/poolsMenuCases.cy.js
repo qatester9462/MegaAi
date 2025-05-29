@@ -2,11 +2,10 @@ import { SignInPage } from "../PageObject/SignInPage";
 import { ClientsPage } from "../PageObject/ClientsPage";
 import { ProjectPage } from "../PageObject/ProjectPage";
 import { PoolsPage } from "../PageObject/PoolsPage";
-import { it } from "mocha";
 const signIn = new SignInPage
 const clients = new ClientsPage()
 const project = new ProjectPage();
-const poolss = new PoolsPage
+const poolss = new PoolsPage();
 
 
 

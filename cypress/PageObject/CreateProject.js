@@ -130,7 +130,7 @@ cy.url('include', '/Projects')
 
 
   validatePoolsStep(name, projectName, projectDescription, campaignType, country, timezone) {
-    cy.get('.p-paginator-page').eq(1).should('exist').click()
+    cy.get('.p-paginator-page').eq(3).should('exist').click()
     cy.get('.p-datatable-table tbody tr td:nth-child(1)').contains(name).should('exist').click()
     cy.url().should("include", "/dashboard");
     cy.get('.header-title').contains('Dashboard (MEGA-Bhargav)').should('exist')
