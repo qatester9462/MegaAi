@@ -35,9 +35,6 @@ describe("editProjectsCases", () => {
         project.gotoClient(clientName)
         project.gotoProjectsPage(clientName)
         project.validateEditGoall()
-
-
-
     })
     it("Validate that user is able to Edit,Save,Delete Pools step of any selected project", () => {
         const clientName = 'MEGA-Bhargav'

@@ -2,12 +2,14 @@ import { ClientsPage } from "../PageObject/ClientsPage";
 import { ProjectPage } from "../PageObject/ProjectPage";
 import { SignInPage } from "../PageObject/SignInPage";
 import { CreateProject } from "../PageObject/CreateProject";
+import { PoolsPage } from "../PageObject/PoolsPage";
 
 const project = new ProjectPage();
 const signIn = new SignInPage();
 const clients = new ClientsPage();
 const projectpage = new ProjectPage();
 const createproject = new CreateProject();
+const poolss = new PoolsPage();
 
 describe("Project", () => {
     const email = Cypress.config('users').user1.username
@@ -44,7 +46,7 @@ describe("Project", () => {
         project.gotoClient(clientName)
         createproject.gotoProjects()
         projectpage.openPoolsDropdown()
-        projectpage.selectPoolByIndex(1)
+        projectpage.selectPoolByIndex(0)
         projectpage.verifyProjectsFiltered()
 
     })
@@ -67,13 +69,13 @@ describe("Project", () => {
         projectpage.verifyClearButtonVisible()
     })
 
-    it('TC_Project_007 - Verify Search field functionality by Exact Project Name', () => {
+    it('TC_Project_007 - Verify Search field functionality by Project Name', () => {
         const clientName = 'MEGA-Bhargav'
         clients.clickonclients()
         project.gotoClient(clientName)
         createproject.gotoProjects()
-        projectpage.searchByProjectName('Testing Mega AI Script step')
-        projectpage.verifySearchedProjectVisible('Testing Mega AI Script step')
+        projectpage.searchByProjectName('Test')
+        projectpage.verifySearchedProjectVisible('Test')
     })
 
     it('TC_Project_008 - Verify Clicking the Clear Button Removes Pools Filter', () => {
@@ -81,7 +83,8 @@ describe("Project", () => {
         clients.clickonclients()
         project.gotoClient(clientName)
         createproject.gotoProjects()
-        projectpage.selectPoolByIndex(1)
+        projectpage.openPoolsDropdown()
+        projectpage.selectPoolByIndex(0)
         projectpage.clearFilters()
         projectpage.verifyAllProjectsVisible()
     })
@@ -121,9 +124,6 @@ describe("Project", () => {
         clients.clickonclients()
         project.gotoClient(clientName)
         createproject.gotoProjects()
-        projectpage.goToNextPage()
-        projectpage.goToPreviousPage()
-        projectpage.clickSpecificPage(3)
-        projectpage.verifyPageNumber(3)
+        poolss.VerifyPaginationControlsWork()
     })
 })

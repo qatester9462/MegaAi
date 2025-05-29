@@ -98,7 +98,6 @@ export class ProjectPage {
       .click({ force: true })
   }
   selectPoolByIndex(index) {
-    this.openPoolsDropdown()
     cy.get('li[role="option"]').eq(index).click({ force: true })
   }
 
@@ -204,9 +203,9 @@ export class ProjectPage {
     cy.get('[role="tab"]').eq(1).contains('Goals').should('exist').click()
     cy.url().should("include", "/projects/").and('include', '/goals');
     cy.wait(2000)
-    cy.get('[class="p-button-group p-component"] span').contains('Debt Collection').should('exist')
+    cy.get('[class="p-button-group p-component"] span').contains('Debt Collection').should('exist').click()
     cy.wait(3000);
-    cy.get('.stepCard-wrap.ng-star-inserted .stepCard:nth-child(3)')
+    cy.get('[class="stepCard ng-star-inserted"]').contains('Debt handling')
       .should('be.visible')
       .click();
     cy.get('.p-button-label').contains('Save').click()
@@ -231,7 +230,6 @@ export class ProjectPage {
      cy.get('[class="card"]').contains('Last Message').should('exist')
     cy.get('[placeholder="Select Lead"]').eq(1).should('exist').click()
     cy.get('[role="listbox"] li').contains('Last Name').should('exist').click()
-    cy.get('[id="first_message"]').should('exist').clear().type(firstMsg)
     cy.get('[id="last_message"]').should('exist').clear().type(lastMsg)
     cy.get('[class="form-labal"]').contains('Gender').should('exist')
     cy.get('[aria-label="Select a Gender"]').should('exist').click()
