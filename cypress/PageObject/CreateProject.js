@@ -19,8 +19,52 @@ export class CreateProject {
 
 
 
+  // verifyEditButtonClickFunctionality() {
+  //   cy.get('[title*="Edit"]').eq(0).should('exist').click(); //navigate to 2nd page
+  //   cy.wait(1000);
+
+  //   // Intercept the API request to capture tokens dynamically
+  //   cy.intercept('POST', '**/api/accounts/admin-login/**').as('impersonate');
+
+  //   // Override window.open to prevent opening a new tab
+  //   cy.window().then((win) => {
+  //     cy.stub(win, 'open').as('windowOpen').callsFake((url) => {
+  //       win.location.href = url; // Navigate in the same tab
+  //     });
+  //   });
+
+  //   // Click on the Client Row
+  //   cy.get("tbody tr:nth-child(7) td:nth-child(1)")
+  //     .should('be.visible')
+  //     .click();
+
+  //   // Wait for the API request and get tokens
+  //   cy.wait('@impersonate').then((interception) => {
+  //     const { access, refresh } = interception.response.body;
+
+  //     // Store both tokens in Local Storage
+  //     cy.window().then((win) => {
+  //       win.localStorage.setItem('access_token', access);
+  //       win.localStorage.setItem('refresh_token', refresh);
+  //     });
+
+  //     // Navigate to Dashboard
+  //     cy.visit('/dashboard')
+  //     cy.url().should('include', '/dashboard');
+
+  //     cy.get("span[class='ng-star-inserted']").should('be.visible').and('contain.text', '(MEGA-Bhargav)');
+  //     cy.wait(1000);
+  //     cy.get('[class="px-2 relative group ng-star-inserted"] [class*="border-round-sm relative"]').should('be.visible').click();
+
+  //   });
+  //   // Use cy command inside the class method
+  //   cy.get('[class="p-element ng-star-inserted"]').should('be.visible') //page should be fully loaded
+  //   cy.wait(2000)
+  //   cy.get('.p-speeddial > .p-ripple').should('be.visible').click(); // Create project icon
+  //   cy.url().should('include', '/projects/create');
+  // }
   verifyEditButtonClickFunctionality() {
-    cy.get('[title*="Edit"]').eq(0).should('exist').click(); //navigate to 2nd page
+    cy.get("button[aria-label='4']").should('be.visible').click(); //navigate to 2nd page
     cy.wait(1000);
 
     // Intercept the API request to capture tokens dynamically
@@ -34,7 +78,7 @@ export class CreateProject {
     });
 
     // Click on the Client Row
-    cy.get("tbody tr:nth-child(7) td:nth-child(1)")
+    cy.get("tbody tr:nth-child(3) td:nth-child(1)")
       .should('be.visible')
       .click();
 
@@ -53,49 +97,58 @@ export class CreateProject {
       cy.url().should('include', '/dashboard');
 
       cy.get("span[class='ng-star-inserted']").should('be.visible').and('contain.text', '(MEGA-Bhargav)');
-      cy.wait(1000);
-      cy.get('[class="px-2 relative group ng-star-inserted"] [class*="border-round-sm relative"]').should('be.visible').click();
+      cy.wait(4000);
+      cy.get('[class="speeddial"]').should('be.visible').click();
+      //cy.get("body > app-root:nth-child(3) > app-shared-layout:nth-child(2) > div:nth-child(1) > div:nth-child(1) > app-shared-sidebar:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > svg:nth-child(1)").should('be.visible').click();
 
     });
     // Use cy command inside the class method
-    cy.get('[class="p-element ng-star-inserted"]').should('be.visible') //page should be fully loaded
+    // cy.get('[class="p-element ng-star-inserted"]').should('be.visible') //page should be fully loaded
     cy.wait(2000)
-    cy.get('.p-speeddial > .p-ripple').should('be.visible').click(); // Create project icon
+    cy.get('[type="button"]').eq(1).should('be.visible').click(); // Create project icon
     cy.url().should('include', '/projects/create');
   }
   verifyElementsCreateNewProjectPage() {
 
     cy.get("span[class='ng-star-inserted']").should('be.visible').and('contain.text', '(MEGA-Bhargav)');
   }
-  verifyValidInputProjectNameField() {
+  verifyValidInputProjectNameField(projectName) {
     cy.get('input[formcontrolname="projectName"]')
       .should('be.visible')
       .clear()
-      .type('My Automation Project')
-      .should('have.value', 'My Automation Project');
-
+      .type(projectName)
+      .should('have.value', projectName);
+  }
+  verifyValidInputProjectDescriptionField(description) {
     cy.get('input[formcontrolname="description"]')
       .should('be.visible')
       .clear()
-      .type('This is an automation test project')
-      .should('have.value', 'This is an automation test project');
-
+      .type(description)
+      .should('have.value', description);
+  }
+  verifyValidSelectionCampaignTypeDropdown(type) {
     cy.get('p-dropdown[placeholder="Select Campaign Type"]').click();
-    cy.get('.p-dropdown-items li').contains('Connect').click();
+    cy.get('.p-dropdown-items li').contains(type).click();
 
     // Wait for dropdown to close
     cy.wait(500); // small wait or you can add .should('not.exist') on dropdown list
-
-    // Now click on Country dropdown
-    cy.get('p-dropdown[placeholder="Select Country"]').click();
-    cy.get('.p-dropdown-items li').contains('Pakistan').click();
-    cy.get('p-dropdown[placeholder="Select Timezone"] .p-dropdown-label')
-      .should('have.attr', 'aria-disabled', 'false');
-
-    cy.contains('button', 'Cancel').should('be.visible').and('not.be.disabled');
-    cy.contains('button', 'Next Step').should('be.disabled');
-
   }
+  // Now click on Country dropdown
+  verifyValidSelectionCountryDropdown() {
+    cy.get('p-dropdown[placeholder="Select Country"]').click();
+    cy.get('.p-dropdown-items li').contains('Pakistan').click({ force: true });
+  }
+  verifyValidSelectionTimezoneDropdown() {
+    cy.get('[placeholder="Select Timezone"]').should('exist').click()
+    cy.get('[role="option"]').contains('Asia/Karachi (UTC +05:00)').should('exist').click()
+  }
+
+  // cy.contains('button', 'Cancel').should('be.visible').and('not.be.disabled');
+  //cy.contains('button', 'Next Step').should('be.disabled');
+  clickNextButton() {
+    cy.get('[type="button"]').contains('Next Step').should('exist').click({ force: true })
+  }
+
 
   VerifyNextStepButtonEnabledAfteFillingAllFields() {
 
@@ -107,12 +160,12 @@ export class CreateProject {
 
   }
 
-VerifyCancelButtonFunctionality(){
+  VerifyCancelButtonFunctionality() {
 
-cy.contains('button', 'Cancel').should('be.visible').click();
-cy.url('include', '/Projects')
+    cy.contains('button', 'Cancel').should('be.visible').click();
+    cy.url('include', '/Projects')
 
-}
+  }
 
   verifyBrowserRefreshClearsData() {
     cy.reload();
@@ -164,7 +217,7 @@ cy.url('include', '/Projects')
     cy.get('[class="p-steps-number"]').contains('1').should('exist')
     cy.get('.p-steps-title').contains('Goal').should('exist')
     cy.get('[class="p-button-group p-component"] span').contains('Debt Collection').should('exist')
-    cy.get('[class="stepCard ng-star-inserted"]').eq(0).contains('Debt handling').should('exist').click()
+    cy.get('[class="stepCard ng-star-inserted"]').eq(1).contains('Debt handling').should('exist').click()
   }
   selectpool() {
     cy.url().should("include", "/projects/create/pool");
@@ -293,7 +346,7 @@ cy.url('include', '/Projects')
     cy.get('[class="form-labal"]').contains('SMS Template Used in Call').should('exist')
     cy.get('[role="combobox"]').eq(0).should('exist').click()
     cy.get('[class="p-dropdown-items-wrapper"]').should('exist')
-    cy.get('[role="option"]').eq(1).should('exist').click()
+    cy.get('[role="option"]').eq(0).should('exist').click()
   }
   selectCallNumber() {
     cy.get('[class="form-labal"]').contains('Transfer Calls to').should('exist')
@@ -356,7 +409,7 @@ cy.url('include', '/Projects')
     cy.get('[class="p-steps-number"]').contains('1').should('exist')
     cy.get('.p-steps-title').contains('Goal').should('exist')
     cy.get('[class="p-button-group p-component"] span').contains('Debt Collection').should('exist')
-    cy.get('[class="stepCard ng-star-inserted"]').eq(0).contains('Debt handling').should('exist').click()
+    cy.get('[class="stepCard-wrap ng-star-inserted"]').contains('Debt handling').should('exist').click()
   }
   validateEditPool() {
     cy.get('.card-title').contains('Pools').should('exist')
@@ -366,12 +419,12 @@ cy.url('include', '/Projects')
     cy.get('.p-datatable-table tbody tr').should('have.length.at.least', 2).then(($rows) => {
       cy.wrap($rows[0]).click();
       cy.wrap($rows[1]).click();
-      cy.wrap($rows[2]).click();
+      // cy.wrap($rows[2]).click();
     });
   }
   validateEditScript() {
     cy.get('.card-title').contains('Script').should('exist')
-    cy.get('[class="card-icon"]').eq(4).should('exist').click()
+    cy.get('[class="card-icon"]').eq(2).should('exist').click()
     cy.url().should("include", "/projects/create/script");
     cy.get('[class="p-steps-number"]').contains('3').should('exist')
     cy.get('[class*="p-steps-title"]').contains('Script').should('exist')

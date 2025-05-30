@@ -21,7 +21,7 @@ describe("campaignCreationCases", () => {
         clients.clickonclients()
         project.gotoClient(clientName)
         campaign.gotoCampaign()
-        campaign.ValidateAndEditdropdownCampaignType('Discover')
+        campaign.ValidateCampaignTypeFilter('Debt Collection')
     })
     it("TC_Campaign_004 , Verify filtering campaigns by Project ", () => {
 
@@ -85,4 +85,27 @@ describe("campaignCreationCases", () => {
         campaign.ClickOnPlusbutton();
         campaign.CampaignCreateFirstForm()
     })
+    it("TC_Create-Campaign_004 , Verify search filter functionality", () => {
+        const clientName = 'MEGA-Bhargav';
+        const name= 'camp'
+        clients.clickonclients();
+        project.gotoClient(clientName);
+        campaign.gotoCampaign();
+        campaign.validateSearchFunctionality(name)
+    })
+     it("TC_Create-Campaign_005 , Verify Clear filter functionality", () => {
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients();
+        project.gotoClient(clientName);
+        campaign.gotoCampaign();
+        campaign.ValidateCampaignTypeFilter('Debt Collection')
+         campaign. validateClearFilter()
+     })
+      it("TC_Create-Campaign_006 , Validate that user is able to chnage the status Active/Pause", () => {
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients();
+        project.gotoClient(clientName);
+        campaign.gotoCampaign();
+        campaign.validateChangeStatus()
+      })
 })

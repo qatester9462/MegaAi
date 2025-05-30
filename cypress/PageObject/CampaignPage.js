@@ -3,7 +3,7 @@ export class Campaign {
     gotoCampaign() {
         cy.get('.sidebarMenu-items ').should('be.visible').eq(1).click();
     }
-    ValidateAndEditdropdownCampaignType(item) {
+    ValidateCampaignTypeFilter(item) {
         cy.wait(4000);
         cy.get('p-dropdown[placeholder="Campaign Type: All"] .p-dropdown-trigger').click();
         // cy.get('[aria-label="Discover"]')
@@ -13,6 +13,8 @@ export class Campaign {
             .find('li.p-dropdown-item')
             .contains(item)
             .click();
+        cy.get('thead th:nth-child(4)').contains('Campaign Type').should('exist')
+        cy.get('tbody td:nth-child(4)').contains('Debt Collection').should('exist')
     }
     verifyfilteringCampaignsByProject() {
         cy.get('p-dropdown[placeholder="Project: All"] .p-dropdown-trigger').click();
@@ -34,7 +36,48 @@ export class Campaign {
         //.click();
         cy.get('.dropdown-menu > :nth-child(1)').should('be.visible').click()
     }
+    validateSearchFunctionality(name) {
+        cy.get('[placeholder="Search by campaign name"]').should('exist').clear().type(name)
+        cy.get('thead th:nth-child(1)').contains('Name').should('exist')
+        cy.get('tbody td:nth-child(1)').contains(name).should('exist')
+    }
+    validateClearFilter() {
+        cy.get('[class="btn-link ng-star-inserted"]').contains('Clear').should('exist').click()
+        cy.get('[aria-label="Campaign Type: All"]').should('exist')
+        cy.get('[aria-label="Project: All"]').should('exist')
+        cy.get('[aria-label="Status: All"]').should('exist')
+    }
+    validateChangeStatus() {
+        cy.get('thead th:nth-child(2)').contains('Status').should('exist')
+        cy.get('[aria-label="Active"]').eq(0).then(($el) => {
+            const status = $el.attr('aria-label');
 
+            if (status === 'Active') {
+                // Click to change it to Pause and the again resume to Active
+                cy.wrap($el).click();
+                cy.get('[aria-label="Pause"]').should('exist').click();
+                cy.get('[class*="p-toast-message-text"]').contains('Success').should('exist').wait(2000)
+                cy.get('[aria-label="Inactive"]').eq(0).should('exist').click()
+                cy.get('[aria-label="Resume"]').should('exist').click();
+                cy.get('[class*="p-toast-message-text"]').contains('Success').should('exist').wait(2000)
+                cy.get('[aria-label="Active"]').should('exist')
+                cy.log('Changed status from Active to Pause');
+            } else if (status === 'Inactive') {
+                // Click to change it to Active
+                cy.wrap($el).click();
+                cy.get('[aria-label="Resume"]').should('exist').click();
+                cy.get('[class*="p-toast-message-text"]').contains('Success').should('exist').wait(2000)
+                cy.get('[aria-label="Active"]').eq(0).should('exist').click()
+                 cy.get('[aria-label="Pause"]').should('exist').click();
+                cy.get('[class*="p-toast-message-text"]').contains('Success').should('exist').wait(2000)
+                cy.get('[aria-label="Inactive"]').should('exist')
+                cy.log('Changed status from Pause to Active');
+            } else {
+                cy.log('Unexpected status:', status);
+            }
+        });
+
+    }
     ClickOnPlusbutton() {
         cy.get('.p-speeddial > .p-ripple').as('btn')
         cy.get('@btn').click()

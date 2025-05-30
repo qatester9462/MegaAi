@@ -30,8 +30,10 @@ export class TestCallPage {
 
     ValidateEyeIconviewContactDetails() {
 
-        cy.get('.pi.pi-eye').should('be.visible').click();
-        cy.get('label[for="description"]').should('exist')
+        cy.get('.pi.pi-eye').eq(0).should('exist').click();
+        cy.get('[role="complementary"]').should('exist')
+        cy.get('[class*="font-semibold"]').contains('View Test Contact').should('exist')
+
     }
 
     ValidateCancelbuttonFunctionality() {
@@ -84,6 +86,38 @@ export class TestCallPage {
         cy.get('table tr td [class="pi pi-trash cursor-pointer text-red-700"]').eq(0).should('exist').click()
     }
 
-
-
+    gotoTestCall() {
+        cy.get('[class="sidebarMenu-links"]').eq(4).should('exist').click()
+        cy.url().should("include", "/calls");
+        cy.get('.header-title').contains('Calls (MEGA-Bhargav)').should('exist').wait(5000)
+    }
+    validateExportError() {
+        cy.get('[class="btn-primary"]').contains('Export').should('exist').click()
+        cy.get('[class*="p-toast-detail"]').contains('Please select campaign').should('exist')
+    }
+    clickExportButton() {
+        cy.get('[class="btn-primary"]').contains('Export').should('exist').click()
+    }
+    validateCampaignFilter(campName) {
+        cy.wait(3000)
+        cy.get('[aria-label="Campaigns: All"]').should('exist').click()
+        cy.get('[class="p-dropdown-items-wrapper"]').should('exist')
+        cy.get('[role="option"]').contains(campName).should('exist').click()
+        cy.get('thead th:nth-child(1)').contains('Campaign').should('exist')
+        cy.get('tbody tr td:nth-child(1)').contains(campName).should('exist')
+    }
+    validateSearchbyPhoneNumber(phoneNo) {
+        cy.get('[placeholder="Search by phone number"]').should('exist').clear().type(phoneNo)
+        cy.wait(5000)
+        cy.get('thead th:nth-child(4)').contains('Phone Number').should('exist')
+        cy.get('tbody tr td:nth-child(4)').contains(phoneNo).should('exist')
+    }
+    validateCallOutcomeFilter(outcome) {
+        cy.get('[aria-label="Call Outcome: All"]').should('exist').click()
+        cy.get('[role="listbox"]').should('exist')
+        cy.get('[role="option"]').contains(outcome).should('exist').click()
+        cy.wait(5000)
+        cy.get('thead th:nth-child(6)').contains('Call Outcome').should('exist')
+        cy.get('tbody tr td:nth-child(6)').contains(outcome).should('exist')
+    }
 }
