@@ -37,15 +37,15 @@ describe("testContactModal", () => {
 
     })
 
-    // /*it("TC_Modal_005 , Eye icon - view contact details ", () => {
+    it("TC_Modal_005 , Eye icon - view contact details ", () => {
 
-    //     const clientName = 'MEGA-Bhargav'
-    //     clients.clickonclients()
-    //     project.gotoClient(clientName)
-    //     campaign.gotoCampaign()
-    //     testcall.clickONTestCall()
-    //     testcall.ValidateEyeIconviewContactDetails()
-    // })*/
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients()
+        project.gotoClient(clientName)
+        campaign.gotoCampaign()
+        testcall.clickONTestCall()
+        testcall.ValidateEyeIconviewContactDetails()
+    })
     it("TC_Modal_007 , Cancel button functionality ", () => {
 
         const clientName = 'MEGA-Bhargav'
@@ -79,7 +79,7 @@ describe("testContactModal", () => {
 
     })
 
-    it("TC_Create_002 ,Verify all form elements are present ", () => {
+    it("TC_Create_002 ,Verify that new contact is being created ", () => {
         const firstname=(reuseableCode.getRandomFirstName())
         const lastName=(reuseableCode.getRandomFirstName())
         const creditor = (reuseableCode.getRandomFirstName())
@@ -103,5 +103,6 @@ describe("testContactModal", () => {
         cy.get('.flex > > .ng-star-inserted').contains('Call Now').should('exist').click()
         createproject.validateToastMessage('Success')
     })
+
 
 })

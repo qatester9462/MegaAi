@@ -84,7 +84,7 @@ export class PoolsPage {
                 for (let i = 1; i <= totalPages; i++) {
                     cy.get('.p-paginator-page.p-highlight').should('contain', i);
                     if (i < totalPages) {
-                        cy.get('.p-paginator-next').should('not.be.disabled').click();
+                        cy.get('.p-paginator-next').should('not.be.disabled').click().wait(8000);
                     }
                 }
             }
