@@ -89,7 +89,7 @@ export class TestCallPage {
     gotoTestCall() {
         cy.get('[class="sidebarMenu-links"]').eq(4).should('exist').click()
         cy.url().should("include", "/calls");
-        cy.get('.header-title').contains('Calls (MEGA-Bhargav)').should('exist').wait(5000)
+        cy.get('.header-title').contains('Calls (MEGA-Bhargav)').should('exist').wait(9000)
     }
     validateExportError() {
         cy.get('[class="btn-primary"]').contains('Export').should('exist').click()
@@ -119,5 +119,18 @@ export class TestCallPage {
         cy.wait(5000)
         cy.get('thead th:nth-child(6)').contains('Call Outcome').should('exist')
         cy.get('tbody tr td:nth-child(6)').contains(outcome).should('exist')
+    }
+    validateViewMoreButton(){
+        cy.get('[class="btn-link"]').contains('View More').first().should('exist').click()
+        cy.get('[role="complementary"]').contains('Call Info').should('exist')
+        cy.get('.p-sidebar-close').should('exist').click()
+    }
+    applyDateRangeFilter(month){
+        cy.get('[placeholder="Select Date Range"]').eq(1).should('exist').click()
+        cy.get('[aria-label="Choose Date"]').should('exist')
+        cy.get('[aria-label="Choose Month"]').should('exist').click()
+        cy.get('.p-monthpicker-month ').contains(month).should('exist').click()
+        cy.get('.p-datepicker-calendar tr td').eq(15).should('exist').click()
+        cy.get('.p-datepicker-calendar tr td').eq(26).should('exist').click().wait(3000)
     }
 }
