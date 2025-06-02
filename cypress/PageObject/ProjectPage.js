@@ -134,9 +134,14 @@ export class ProjectPage {
     cy.get('.projectList-items').should('have.length.greaterThan', 0)
   }
 
-  clickDeleteButtonOnFirstProject() {
-    cy.get('.pi-trash').first().click({ force: true })
-  }
+ 
+deleteProjects() {
+  cy.get('.pi-trash').each(($el, index) => {
+    if (index < 3) {
+      cy.wrap($el).click({ force: true });
+    }
+  });
+}
 
   confirmDelete() {
     cy.get('span[class="p-button-label"]').click({ force: true })
@@ -147,7 +152,7 @@ export class ProjectPage {
   }
 
   verifyProjectDeleted() {
-    cy.get('.p-toast-top-center').should('exist')
+    cy.get('.p-toast-top-center').contains('Success').should('exist')
   }
 
   verifyProjectStillVisible() {

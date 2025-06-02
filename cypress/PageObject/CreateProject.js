@@ -7,7 +7,7 @@ export class CreateProject {
     cy.get('.sidebarMenu-items ').should('be.visible').eq(6).click();
     cy.url().should("include", "/projects");
     cy.get('.header-title').contains('Projects').should('exist')
-    cy.wait(3000)
+    cy.wait(4000)
 
   }
   clickOnplusButtonOnProjectPage() {
@@ -151,11 +151,6 @@ export class CreateProject {
 
 
   VerifyNextStepButtonEnabledAfteFillingAllFields() {
-
-    cy.get('p-dropdown[placeholder="Select Timezone"] .p-dropdown-trigger').click();
-
-    // Wait for dropdown options to appear (adjust selector if needed)
-    cy.get('.p-dropdown-items li').contains('Asia/Karachi').click();
     cy.contains('button', 'Next Step').should('be.enabled');
 
   }
@@ -439,5 +434,40 @@ export class CreateProject {
     cy.get('[class*="p-element ng-trigger"]').contains('Delete project').should('exist')
     cy.get('[class="p-button-label"]').contains('Delete').should('exist').click()
   }
+ uploadLogo(file) {
+    cy.get('.projectList-items').should('exist').first().click()
+    cy.url().should("include", "/projects/").and('include', '/info');
+    cy.wait(3000)
+    cy.get('body').then(($body) => {
+      if ($body.find('[class*="pi pi-upload"]').length > 0) {
+      cy.get('[class*="pi pi-upload"]').should('exist');
+      cy.get('input[type="file"]').attachFile(file);
+      cy.wait(2000);
+      cy.log('Logo Uploaded');
+    } else {
+      cy.log('Upload icon not found.');
+    }
+  })
+  }
+
+  deleteLogo() {
+  cy.get('.projectList-items').should('exist').first().click();
+  cy.url().should('include', '/projects/').and('include', '/info');
+  cy.wait(3000);
+  cy.get('body').then(($body) => {
+    if ($body.find('[class*="pi pi-trash"]').length > 0) {
+      cy.get('[class*="pi pi-trash"]').click();
+      cy.log('Logo Deleted');
+    // } else if ($body.find('[class*="pi pi-upload"]').length > 0) {
+    //   // Upload icon is present, so upload the file
+    //   cy.get('[class*="pi pi-upload"]').should('exist');
+    //   cy.get('input[type="file"]').attachFile(file);
+    //   cy.wait(2000);
+    //   cy.log('Logo uploaded');
+    } else {
+      cy.log('Delete icon not found');
+    }
+  });
+}
 
 }

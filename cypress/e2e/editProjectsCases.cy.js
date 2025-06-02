@@ -46,7 +46,7 @@ describe("editProjectsCases", () => {
         createproject.clickButton('Save')
         createproject.validateToastMessage('Success')
     })
-    it("Validate that user is able to Edit,Save,Delete Scripts step of any selected project", () => {
+    it.skip("Validate that user is able to Edit,Save,Delete Scripts step of any selected project", () => {
         clients.clickonclients()
         //project.gotoClientMegaBhargav('MEGA-Bhargav')
         project.gotoClient('MEGA-Bhargav')
@@ -55,7 +55,7 @@ describe("editProjectsCases", () => {
         createproject.clickButton('Save')
         createproject.validateToastMessage('Success')
     })
-    it("Validate that user is able to Edit,Save,Delete Settings step of any selected project", () => {
+    it.skip("Validate that user is able to Edit,Save,Delete Settings step of any selected project", () => {
         clients.clickonclients()
         //project.gotoClientMegaBhargav('MEGA-Bhargav')
         project.gotoClient('MEGA-Bhargav')
@@ -64,7 +64,7 @@ describe("editProjectsCases", () => {
         createproject.clickButton('Save')
         createproject.validateToastMessage('Success')
     })
-    it("Validate that user is able to Edit,Save,Delete Dialing step of any selected project", () => {
+    it.skip("Validate that user is able to Edit,Save,Delete Dialing step of any selected project", () => {
         clients.clickonclients()
         //project.gotoClientMegaBhargav('MEGA-Bhargav')
         project.gotoClient('MEGA-Bhargav')

@@ -104,7 +104,7 @@ describe("Project", () => {
         clients.clickonclients()
         project.gotoClient(clientName)
         createproject.gotoProjects()
-        projectpage.clickDeleteButtonOnFirstProject()
+        projectpage.deleteProjects()
         projectpage.confirmDelete()
         projectpage.verifyProjectDeleted()
     })
@@ -114,7 +114,7 @@ describe("Project", () => {
         clients.clickonclients()
         project.gotoClient(clientName)
         createproject.gotoProjects()
-        projectpage.clickDeleteButtonOnFirstProject()
+        projectpage.deleteProjects()
         projectpage.closeDeleteModal()
         projectpage.verifyProjectStillVisible()
     })
@@ -126,4 +126,21 @@ describe("Project", () => {
         createproject.gotoProjects()
         poolss.VerifyPaginationControlsWork()
     })
+    it('TC_Project_021, Verify that user is able to upload logo', () => {
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients()
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        createproject.uploadLogo('files/logo.jpg')
+        createproject.validateToastMessage('Project Image Uploaded Successfully')
+    })
+    it('TC_Project_021, Verify that user is able to delete logo', () => {
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients()
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        createproject.deleteLogo()
+        createproject.validateToastMessage('Project Image Deleted Successfully')
+    })
+
 })
