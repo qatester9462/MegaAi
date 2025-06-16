@@ -63,10 +63,9 @@ export class CreateProject {
   //   cy.get('.p-speeddial > .p-ripple').should('be.visible').click(); // Create project icon
   //   cy.url().should('include', '/projects/create');
   // }
-  verifyEditButtonClickFunctionality() {
-    cy.get("button[aria-label='4']").should('be.visible').click(); //navigate to 2nd page
-    cy.wait(1000);
-
+  verifyEditButtonClickFunctionality(name) {
+    cy.get('.p-paginator-page').eq(3).should('exist').click()
+    cy.wait(2000)
     // Intercept the API request to capture tokens dynamically
     cy.intercept('POST', '**/api/accounts/admin-login/**').as('impersonate');
 
@@ -76,12 +75,7 @@ export class CreateProject {
         win.location.href = url; // Navigate in the same tab
       });
     });
-
-    // Click on the Client Row
-    cy.get("tbody tr:nth-child(3) td:nth-child(1)")
-      .should('be.visible')
-      .click();
-
+    cy.get('.p-datatable-table tbody tr td:nth-child(1)').contains(name).should('exist').click()
     // Wait for the API request and get tokens
     cy.wait('@impersonate').then((interception) => {
       const { access, refresh } = interception.response.body;
@@ -93,10 +87,8 @@ export class CreateProject {
       });
 
       // Navigate to Dashboard
-      cy.visit('/dashboard')
-      cy.url().should('include', '/dashboard');
-
-      cy.get("span[class='ng-star-inserted']").should('be.visible').and('contain.text', '(MEGA-Bhargav)');
+      cy.url().should("include", "/dashboard");
+      cy.get('.header-title').contains('Dashboard (' + name + ')').should('exist')
       cy.wait(4000);
       cy.get('[class="speeddial"]').should('be.visible').click();
       //cy.get("body > app-root:nth-child(3) > app-shared-layout:nth-child(2) > div:nth-child(1) > div:nth-child(1) > app-shared-sidebar:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > svg:nth-child(1)").should('be.visible').click();
@@ -191,7 +183,7 @@ export class CreateProject {
     cy.get('[class="form-labal"]').contains('Project Name').should('exist')
     cy.get('#projectName').should('exist').clear().type(projectName)
     cy.get('[class="form-labal"]').contains('Project Description').should('exist')
-    cy.get('#projectName').should('exist').clear().type(projectDescription)
+    cy.get('#description').should('exist').clear().type(projectDescription)
     cy.get('[class="form-labal"]').contains('Campaign Type').should('exist')
     cy.get('.p-dropdown-label').eq(0).should('exist').click()
     cy.get('[role*="listbox"]').contains(campaignType).should('exist').click()
@@ -389,16 +381,16 @@ export class CreateProject {
     cy.get('[class="form-labal"]').contains('Max. Total Attempts:').should('exist')
     cy.get('[placeholder="Enter no. of attempts"]').should('exist').clear().type(attempts)
   }
-  validateReviewStep(projectDescription) {
+  validateReviewStep(projectName) {
     cy.url().should("include", "/projects/create/review");
     cy.get('[class="p-steps-number"]').contains('6').should('exist')
     cy.get('[class*="p-steps-title"]').contains('Review').should('exist')
     cy.get('[class="form-labal"]').contains('Project Name').should('exist')
-    cy.get('[id="projectName"]').should('be.disabled').invoke('val').should('eq', projectDescription)
+    cy.get('[id="projectName"]').should('be.disabled').invoke('val').should('eq', projectName)
   }
   validateEditGoal() {
-    cy.get('[class="card-title"]').contains('Goal').should('exist')
-    cy.get('[class="card-icon"]').eq(0).should('exist').click()
+    cy.get('[class*="card-title"]').contains('Goal').should('exist')
+    cy.get('[class="card-icon"]').eq(1).should('exist').click()
     cy.url().should("include", "/projects/create/goal");
     cy.wait(3000)
     cy.get('[class="p-steps-number"]').contains('1').should('exist')
@@ -406,6 +398,7 @@ export class CreateProject {
     cy.get('[class="p-button-group p-component"] span').contains('Debt Collection').should('exist')
     cy.get('[class="stepCard-wrap ng-star-inserted"]').contains('Debt handling').should('exist').click()
   }
+
   validateEditPool() {
     cy.get('.card-title').contains('Pools').should('exist')
     cy.get('[class="card-icon"]').eq(2).should('exist').click()
@@ -434,40 +427,40 @@ export class CreateProject {
     cy.get('[class*="p-element ng-trigger"]').contains('Delete project').should('exist')
     cy.get('[class="p-button-label"]').contains('Delete').should('exist').click()
   }
- uploadLogo(file) {
+  uploadLogo(file) {
     cy.get('.projectList-items').should('exist').first().click()
     cy.url().should("include", "/projects/").and('include', '/info');
     cy.wait(3000)
     cy.get('body').then(($body) => {
       if ($body.find('[class*="pi pi-upload"]').length > 0) {
-      cy.get('[class*="pi pi-upload"]').should('exist');
-      cy.get('input[type="file"]').attachFile(file);
-      cy.wait(2000);
-      cy.log('Logo Uploaded');
-    } else {
-      cy.log('Upload icon not found.');
-    }
-  })
+        cy.get('[class*="pi pi-upload"]').should('exist');
+        cy.get('input[type="file"]').attachFile(file);
+        cy.wait(2000);
+        cy.log('Logo Uploaded');
+      } else {
+        cy.log('Upload icon not found.');
+      }
+    })
   }
 
   deleteLogo() {
-  cy.get('.projectList-items').should('exist').first().click();
-  cy.url().should('include', '/projects/').and('include', '/info');
-  cy.wait(3000);
-  cy.get('body').then(($body) => {
-    if ($body.find('[class*="pi pi-trash"]').length > 0) {
-      cy.get('[class*="pi pi-trash"]').click();
-      cy.log('Logo Deleted');
-    // } else if ($body.find('[class*="pi pi-upload"]').length > 0) {
-    //   // Upload icon is present, so upload the file
-    //   cy.get('[class*="pi pi-upload"]').should('exist');
-    //   cy.get('input[type="file"]').attachFile(file);
-    //   cy.wait(2000);
-    //   cy.log('Logo uploaded');
-    } else {
-      cy.log('Delete icon not found');
-    }
-  });
-}
+    cy.get('.projectList-items').should('exist').first().click();
+    cy.url().should('include', '/projects/').and('include', '/info');
+    cy.wait(3000);
+    cy.get('body').then(($body) => {
+      if ($body.find('[class*="pi pi-trash"]').length > 0) {
+        cy.get('[class*="pi pi-trash"]').click();
+        cy.log('Logo Deleted');
+        // } else if ($body.find('[class*="pi pi-upload"]').length > 0) {
+        //   // Upload icon is present, so upload the file
+        //   cy.get('[class*="pi pi-upload"]').should('exist');
+        //   cy.get('input[type="file"]').attachFile(file);
+        //   cy.wait(2000);
+        //   cy.log('Logo uploaded');
+      } else {
+        cy.log('Delete icon not found');
+      }
+    });
+  }
 
 }

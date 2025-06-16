@@ -4,8 +4,8 @@ import { CreateProject } from "../PageObject/CreateProject";
 const signIn = new SignInPage
 const clients = new ClientsPage()
 const createproject = new CreateProject();
-
-describe("scriptCases", () => {
+//scrip tab is removed from project creation step
+describe.skip("scriptCases", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
     beforeEach(() => {

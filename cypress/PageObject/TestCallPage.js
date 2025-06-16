@@ -99,10 +99,10 @@ export class TestCallPage {
         cy.get('[class="btn-primary"]').contains('Export').should('exist').click()
     }
     validateCampaignFilter(campName) {
-        cy.wait(3000)
         cy.get('[aria-label="Campaigns: All"]').should('exist').click()
         cy.get('[class="p-dropdown-items-wrapper"]').should('exist')
         cy.get('[role="option"]').contains(campName).should('exist').click()
+        cy.wait(7000)
         cy.get('thead th:nth-child(1)').contains('Campaign').should('exist')
         cy.get('tbody tr td:nth-child(1)').contains(campName).should('exist')
     }
@@ -113,19 +113,19 @@ export class TestCallPage {
         cy.get('tbody tr td:nth-child(4)').contains(phoneNo).should('exist')
     }
     validateCallOutcomeFilter(outcome) {
-        cy.get('[aria-label="Call Outcome: All"]').should('exist').click()
+        cy.get('[aria-label="Call Status: All"]').should('exist').click()
         cy.get('[role="listbox"]').should('exist')
         cy.get('[role="option"]').contains(outcome).should('exist').click()
         cy.wait(5000)
-        cy.get('thead th:nth-child(6)').contains('Call Outcome').should('exist')
-        cy.get('tbody tr td:nth-child(6)').contains(outcome).should('exist')
+        cy.get('thead th:nth-child(5)').contains('Call Status').should('exist')
+        cy.get('tbody tr td:nth-child(5)').contains('Completed').should('exist')
     }
-    validateViewMoreButton(){
+    validateViewMoreButton() {
         cy.get('[class="btn-link"]').contains('View More').first().should('exist').click()
         cy.get('[role="complementary"]').contains('Call Info').should('exist')
         cy.get('.p-sidebar-close').should('exist').click()
     }
-    applyDateRangeFilter(month){
+    applyDateRangeFilter(month) {
         cy.get('[placeholder="Select Date Range"]').eq(1).should('exist').click()
         cy.get('[aria-label="Choose Date"]').should('exist')
         cy.get('[aria-label="Choose Month"]').should('exist').click()
