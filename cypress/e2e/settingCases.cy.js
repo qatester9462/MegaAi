@@ -1,10 +1,11 @@
 import { SignInPage } from "../PageObject/SignInPage";
 import { ClientsPage } from "../PageObject/ClientsPage";
 import { CreateProject } from "../PageObject/CreateProject";
+import { AgentPersonality } from "../PageObject/AgentPersonalityPage";
 const signIn = new SignInPage
 const clients = new ClientsPage()
 const createproject = new CreateProject();
-
+const agent = new AgentPersonality();
 describe("settingsCases", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
@@ -20,15 +21,18 @@ describe("settingsCases", () => {
         createproject.clickButton('Next Step')
         createproject.selectGoal()
         createproject.clickButton('Next Step')
-        createproject.selectpool()
-        createproject.clickButton('Next Step')
-        createproject.validateScriptStep()
-        createproject.addFirstMessage('Hi,I am Lisa from creditor,talking to Mona Lisa')
-        createproject.addLastMessage('Thank you for your time.')
-        createproject.selectGender('female')
-        createproject.selectVoice()
-        createproject.selectDomainLibrary()
-        createproject.addPrompts('You are a debt resolution AI assistant, your goal is to empathetically assist debtors')
+        agent.validateAgentPersonality()
+        agent.selectAgentCard()
+        //below steps removed from app
+        // createproject.selectpool()
+        // createproject.clickButton('Next Step')
+        // createproject.validateScriptStep()
+        // createproject.addFirstMessage('Hi,I am Lisa from creditor,talking to Mona Lisa')
+        // createproject.addLastMessage('Thank you for your time.')
+        // createproject.selectGender('female')
+        // createproject.selectVoice()
+        // createproject.selectDomainLibrary()
+        // createproject.addPrompts('You are a debt resolution AI assistant, your goal is to empathetically assist debtors')
         createproject.clickButton('Next Step')
         createproject.validateSettingStep()
         createproject.setCampaignPriority()

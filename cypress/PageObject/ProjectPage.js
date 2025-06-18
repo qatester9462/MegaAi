@@ -134,14 +134,14 @@ export class ProjectPage {
     cy.get('.projectList-items').should('have.length.greaterThan', 0)
   }
 
- 
-deleteProjects() {
-  cy.get('.pi-trash').each(($el, index) => {
-    if (index < 3) {
-      cy.wrap($el).click({ force: true });
-    }
-  });
-}
+
+  deleteProjects() {
+    cy.get('.pi-trash').each(($el, index) => {
+      if (index < 3) {
+        cy.wrap($el).click({ force: true });
+      }
+    });
+  }
 
   confirmDelete() {
     cy.get('span[class="p-button-label"]').click({ force: true })
@@ -224,7 +224,7 @@ deleteProjects() {
       cy.wrap($rows[1]).click();
     })
   }
-  validateEditScipts(firstMsg,lastMsg,prompt) {
+  validateEditScipts(firstMsg, lastMsg, prompt) {
     cy.get('[role="tab"]').eq(3).contains('Script').should('exist').click()
     cy.url().should("include", "/projects/").and('include', '/scripts');
     cy.wait(2000)
@@ -232,14 +232,14 @@ deleteProjects() {
     cy.get('[placeholder="Select Lead"]').eq(0).should('exist').click()
     cy.get('[role="listbox"] li').eq(0).should('exist').click()
     cy.get('[id="first_message"]').should('exist').clear().type(firstMsg)
-     cy.get('[class="card"]').contains('Last Message').should('exist')
+    cy.get('[class="card"]').contains('Last Message').should('exist')
     cy.get('[placeholder="Select Lead"]').eq(1).should('exist').click()
     cy.get('[role="listbox"] li').contains('Last Name').should('exist').click()
     cy.get('[id="last_message"]').should('exist').clear().type(lastMsg)
     cy.get('[class="form-labal"]').contains('Gender').should('exist')
     cy.get('[aria-label="Select a Gender"]').should('exist').click()
     cy.get('[role="option"]').contains('female').should('exist').click()
-     cy.get('[class="form-labal"]').contains('Voice').should('exist')
+    cy.get('[class="form-labal"]').contains('Voice').should('exist')
     cy.get('[aria-label="Select voice"]').should('exist').click()
     cy.get('[role="option"]').contains('Olivia').should('exist').click()
     cy.get('[class="card-title"]').contains('System Prompts').should('exist')
@@ -247,7 +247,7 @@ deleteProjects() {
 
   }
   validateEditSettings() {
-    cy.get('[role="tab"]').eq(4).contains('Settings').should('exist').click()
+    cy.get('[role="tab"]').eq(3).contains('Settings').should('exist').click()
     cy.url().should("include", "/projects/").and('include', '/settings');
     cy.wait(2000)
     cy.get('[class="form-labal"]').contains('Campaign Priority').should('exist')
@@ -256,7 +256,7 @@ deleteProjects() {
     cy.get('.p-slider').eq(1).click()
   }
   validateEditDialing() {
-    cy.get('[role="tab"]').eq(5).contains('Dialing').should('exist').click()
+    cy.get('[role="tab"]').eq(4).contains('Dialing').should('exist').click()
     cy.url().should("include", "/projects/").and('include', '/dialings');
     cy.wait(2000)
     cy.get('[class*="text-sm"]').contains('Hours between Redials to unanswered calls').should('exist')

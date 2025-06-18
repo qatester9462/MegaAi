@@ -36,7 +36,8 @@ describe("editProjectsCases", () => {
         project.gotoProjectsPage(clientName)
         project.validateEditGoall()
     })
-    it("Validate that user is able to Edit,Save,Delete Pools step of any selected project", () => {
+    //below case is skipped because pools tab is misisng so can't goto next tabs..need to fix add new tab
+    it.skip("Validate that user is able to Edit,Save,Delete Pools step of any selected project", () => {
         const clientName = 'MEGA-Bhargav'
 
         clients.clickonclients()
@@ -55,6 +56,7 @@ describe("editProjectsCases", () => {
         createproject.clickButton('Save')
         createproject.validateToastMessage('Success')
     })
+    //below 2cases need fixes from backend
     it.skip("Validate that user is able to Edit,Save,Delete Settings step of any selected project", () => {
         clients.clickonclients()
         //project.gotoClientMegaBhargav('MEGA-Bhargav')
