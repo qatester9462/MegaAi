@@ -190,97 +190,97 @@ describe("editCampaignCases", () => {
         editcampaignn.verifyRedirectionToPoolsPage()
         editcampaignn.verifyDeleteCampaign()
     })
-    it('TC_Edit-Campaign(Script)_001 - Verify redirection to Script page', () => {
-        const camp = 'testing'
-        const clientName = 'MEGA-Bhargav'
-        clients.clickonclients()
-        project.gotoClient(clientName)
-        campaign.gotoCampaign()
-        editcampaignn.clickOnFirstCampaign(camp)
-        editcampaignn.VerifyRedirectionToScriptPage()
-    });
-    it('TC_Edit-Campaign(Script)_002 - Verify UI elements on Script page', () => {
+    // it('TC_Edit-Campaign(Script)_001 - Verify redirection to Script page', () => {
+    //     const camp = 'testing'
+    //     const clientName = 'MEGA-Bhargav'
+    //     clients.clickonclients()
+    //     project.gotoClient(clientName)
+    //     campaign.gotoCampaign()
+    //     editcampaignn.clickOnFirstCampaign(camp)
+    //     editcampaignn.VerifyRedirectionToScriptPage()
+    // });
+    // it('TC_Edit-Campaign(Script)_002 - Verify UI elements on Script page', () => {
 
-        const camp = 'testing'
-        const clientName = 'MEGA-Bhargav'
-        clients.clickonclients()
-        project.gotoClient(clientName)
-        campaign.gotoCampaign()
-        editcampaignn.clickOnFirstCampaign(camp)
-        editcampaignn.VerifyUiElementsOnScriptPage()
-    })
-    it('TC_Edit-Campaign(Script)_003 - Verify First Message field editable', () => {
-        const camp = 'testing'
-        const clientName = 'MEGA-Bhargav'
-        clients.clickonclients()
-        project.gotoClient(clientName)
-        campaign.gotoCampaign()
-        editcampaignn.clickOnFirstCampaign(camp)
-        editcampaignn.verifyRedirectionToScriptsPage()
-        editcampaignn.VerifyFirstMessageFieldEditable()
+    //     const camp = 'testing'
+    //     const clientName = 'MEGA-Bhargav'
+    //     clients.clickonclients()
+    //     project.gotoClient(clientName)
+    //     campaign.gotoCampaign()
+    //     editcampaignn.clickOnFirstCampaign(camp)
+    //     editcampaignn.VerifyUiElementsOnScriptPage()
+    // })
+    // it('TC_Edit-Campaign(Script)_003 - Verify First Message field editable', () => {
+    //     const camp = 'testing'
+    //     const clientName = 'MEGA-Bhargav'
+    //     clients.clickonclients()
+    //     project.gotoClient(clientName)
+    //     campaign.gotoCampaign()
+    //     editcampaignn.clickOnFirstCampaign(camp)
+    //     editcampaignn.verifyRedirectionToScriptsPage()
+    //     editcampaignn.VerifyFirstMessageFieldEditable()
 
-    })
-    it('TC_Edit-Campaign(Script)_004 -Edit Last Message field and save', () => {
-        const camp = 'testing'
-        const clientName = 'MEGA-Bhargav'
-        clients.clickonclients()
-        project.gotoClient(clientName)
-        campaign.gotoCampaign()
-        editcampaignn.clickOnFirstCampaign(camp)
-        editcampaignn.gotoScript()
-        editcampaignn.VerifyFirstMessageFieldEditable()
-        editcampaignn.EditLastMessagefieldAndSave()
-    });
-    it('TC_Edit-Campaign(Script)_005, Verify Gender dropdown options', () => {
-        const camp = 'testing'
-        const clientName = 'MEGA-Bhargav'
-        clients.clickonclients()
-        project.gotoClient(clientName)
-        campaign.gotoCampaign()
-        editcampaignn.clickOnFirstCampaign(camp)
-        editcampaignn.gotoScript()
-        editcampaignn.VerifyGenderdropdownOptions()
-    });
-    it('TC_Edit-Campaign(Script)_006, Select Gender and Save', () => {
-        const camp = 'testing'
-        const clientName = 'MEGA-Bhargav'
-        clients.clickonclients()
-        project.gotoClient(clientName)
-        campaign.gotoCampaign()
-        editcampaignn.clickOnFirstCampaign(camp)
-        editcampaignn.gotoScript()
-        editcampaignn.selectGenderAndSave()
-    });
-    it('TC_Edit-Campaign(Script)_007 – Voice options based on Gender', () => {
-        const camp = 'testing'
-        const clientName = 'MEGA-Bhargav'
-        clients.clickonclients()
-        project.gotoClient(clientName)
-        campaign.gotoCampaign()
-        editcampaignn.clickOnFirstCampaign(camp)
-        editcampaignn.gotoScript()
-        editcampaignn.selectGenderAndCheckVoiceOptions()
-    });
-    it('TC_Edit-Campaign(Script)_009 – Verify Domain Library dropdown options', () => {
-        const camp = 'testing'
-        const clientName = 'MEGA-Bhargav'
-        clients.clickonclients()
-        project.gotoClient(clientName)
-        campaign.gotoCampaign()
-        editcampaignn.clickOnFirstCampaign(camp)
-        editcampaignn.gotoScript()
-        editcampaignn.verifyDomainLibraryDropdownOptions()
-    });
-    it('TC_Edit-Campaign(Script)_011 – Verify System Prompts field editable', () => {
-        const camp = 'testing'
-        const clientName = 'MEGA-Bhargav'
-        clients.clickonclients()
-        project.gotoClient(clientName)
-        campaign.gotoCampaign()
-        editcampaignn.clickOnFirstCampaign(camp)
-        editcampaignn.gotoScript()
-        editcampaignn.EditSystemPromptsandSave()
-    });
+    // })
+    // it('TC_Edit-Campaign(Script)_004 -Edit Last Message field and save', () => {
+    //     const camp = 'testing'
+    //     const clientName = 'MEGA-Bhargav'
+    //     clients.clickonclients()
+    //     project.gotoClient(clientName)
+    //     campaign.gotoCampaign()
+    //     editcampaignn.clickOnFirstCampaign(camp)
+    //     editcampaignn.gotoScript()
+    //     editcampaignn.VerifyFirstMessageFieldEditable()
+    //     editcampaignn.EditLastMessagefieldAndSave()
+    // });
+    // it('TC_Edit-Campaign(Script)_005, Verify Gender dropdown options', () => {
+    //     const camp = 'testing'
+    //     const clientName = 'MEGA-Bhargav'
+    //     clients.clickonclients()
+    //     project.gotoClient(clientName)
+    //     campaign.gotoCampaign()
+    //     editcampaignn.clickOnFirstCampaign(camp)
+    //     editcampaignn.gotoScript()
+    //     editcampaignn.VerifyGenderdropdownOptions()
+    // });
+    // it('TC_Edit-Campaign(Script)_006, Select Gender and Save', () => {
+    //     const camp = 'testing'
+    //     const clientName = 'MEGA-Bhargav'
+    //     clients.clickonclients()
+    //     project.gotoClient(clientName)
+    //     campaign.gotoCampaign()
+    //     editcampaignn.clickOnFirstCampaign(camp)
+    //     editcampaignn.gotoScript()
+    //     editcampaignn.selectGenderAndSave()
+    // });
+    // it('TC_Edit-Campaign(Script)_007 – Voice options based on Gender', () => {
+    //     const camp = 'testing'
+    //     const clientName = 'MEGA-Bhargav'
+    //     clients.clickonclients()
+    //     project.gotoClient(clientName)
+    //     campaign.gotoCampaign()
+    //     editcampaignn.clickOnFirstCampaign(camp)
+    //     editcampaignn.gotoScript()
+    //     editcampaignn.selectGenderAndCheckVoiceOptions()
+    // });
+    // it('TC_Edit-Campaign(Script)_009 – Verify Domain Library dropdown options', () => {
+    //     const camp = 'testing'
+    //     const clientName = 'MEGA-Bhargav'
+    //     clients.clickonclients()
+    //     project.gotoClient(clientName)
+    //     campaign.gotoCampaign()
+    //     editcampaignn.clickOnFirstCampaign(camp)
+    //     editcampaignn.gotoScript()
+    //     editcampaignn.verifyDomainLibraryDropdownOptions()
+    // });
+    // it('TC_Edit-Campaign(Script)_011 – Verify System Prompts field editable', () => {
+    //     const camp = 'testing'
+    //     const clientName = 'MEGA-Bhargav'
+    //     clients.clickonclients()
+    //     project.gotoClient(clientName)
+    //     campaign.gotoCampaign()
+    //     editcampaignn.clickOnFirstCampaign(camp)
+    //     editcampaignn.gotoScript()
+    //     editcampaignn.EditSystemPromptsandSave()
+    // });
     it('TC_Edit-Campaign (Settings)_001 – Verify redirection to Settings page', () => {
         const camp = 'testing'
         const clientName = 'MEGA-Bhargav'

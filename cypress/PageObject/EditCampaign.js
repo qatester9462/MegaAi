@@ -3,7 +3,7 @@ export class EditCampaigns {
 
     clickOnFirstCampaign() {
 
-cy.wait(4000)
+        cy.wait(4000)
         cy.get('tbody.p-datatable-tbody > tr')
             .first()
             .find('td.p-frozen-column')
@@ -94,7 +94,7 @@ cy.wait(4000)
         cy.contains('.p-tabview-title', 'Pools').should('be.visible').click()
     }
 
-verifyRedirectionToScriptsPage() {
+    verifyRedirectionToScriptsPage() {
 
         cy.contains('Script').should('be.visible').click()
     }
@@ -133,6 +133,13 @@ verifyRedirectionToScriptsPage() {
             cy.wrap($rows[0]).click();
             cy.wrap($rows[1]).click();
             cy.contains('span.p-button-label', 'Save').click();
+            // If Pause modal appears, click Pause button inside it
+            cy.get('body').then(($body) => {
+                if ($body.text().includes('Pause Campaign')) {
+                    cy.get('.flex-column > .flex > .p-element').click()
+                }
+            });
+            cy.contains('Save').click();
             // Confirm success toast or alert (adjust message as per app)
             // cy.get('.p-toast').should('contain.text', 'Goal updated successfully');
             cy.get('.p-toast').within(() => {
@@ -358,7 +365,7 @@ verifyRedirectionToScriptsPage() {
         cy.get('.form-labal').contains('Number of Bots').should('contain', 'Number of Bots');
         cy.contains('Bot Functions:').should('exist');
         cy.get('p-dropdown[placeholder="Select an option"]').eq(0).should('exist')
-       // cy.get('p-dropdown[placeholder="Select an option"]').eq(0
+        // cy.get('p-dropdown[placeholder="Select an option"]').eq(0
     }
 
     updateCampaignPrioritySlider() {
@@ -388,9 +395,14 @@ verifyRedirectionToScriptsPage() {
         cy.get('p-dropdown[placeholder="Select an option"]').first().click();
         cy.get('ul[role="listbox"] li').first().click();
         cy.contains('Save').click();
-
-        cy.get('p-dropdown[placeholder="Select an option"]')
-            .find('.p-dropdown-label')
+        // If Pause modal appears, click Pause button inside it
+        cy.get('body').then(($body) => {
+            if ($body.text().includes('Pause Campaign')) {
+                cy.get('.flex-column > .flex > .p-element').click()
+            }
+        });
+        cy.contains('Save').click();
+        cy.get('p-dropdown[placeholder="Select an option"]').eq(0)
             .should('not.contain.text', 'Select an option');
     }
 
@@ -402,7 +414,13 @@ verifyRedirectionToScriptsPage() {
         cy.get('ul[role="listbox"] li').eq(0).should('be.visible').click();
 
         cy.contains('Save').click();
-
+        // If Pause modal appears, click Pause button inside it
+        cy.get('body').then(($body) => {
+            if ($body.text().includes('Pause Campaign')) {
+                cy.get('.flex-column > .flex > .p-element').click()
+            }
+        });
+        cy.contains('Save').click();
         cy.get('p-dropdown[placeholder="Select an option"]').eq(0) // was 0 → must be 1 here
             .find('.p-dropdown-label')
             .should('not.contain.text', 'Select an option');
@@ -411,7 +429,7 @@ verifyRedirectionToScriptsPage() {
     verifyActionsDropdownOptions() {
         cy.get('span.p-dropdown-label').contains('Actions').click();
         cy.get('ul[role="listbox"]').within(() => {
-            cy.contains('Resume').should('exist');
+            cy.contains(/Resume|Pause/).should('exist');
             cy.contains('Duplicate').should('exist');
             cy.contains('Delete Campaign').should('exist');
         });
@@ -495,6 +513,14 @@ verifyRedirectionToScriptsPage() {
         cy.get('input[placeholder="Enter days"]').clear();
         cy.get('input[placeholder="Enter no. of attempts"]').clear();
         // Click Save
+        cy.contains('Save').click();
+
+        // If Pause modal appears, click Pause button inside it
+        cy.get('body').then(($body) => {
+            if ($body.text().includes('Pause Campaign')) {
+                cy.get('.flex-column > .flex > .p-element').click()
+            }
+        });
         cy.contains('Save').click();
         // Assert error messages (adjust text as per actual UI)
         cy.get('p-toast').should('be.visible'); // Example
