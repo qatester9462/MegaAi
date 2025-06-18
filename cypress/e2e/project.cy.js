@@ -56,7 +56,7 @@ describe("Project", () => {
         project.gotoClient(clientName)
         createproject.gotoProjects()
         projectpage.openCampaignsDropdown()
-        projectpage.selectCampaignByIndex(1)
+        projectpage.selectCampaignByIndex(0)
         projectpage.verifyProjectsFiltered()
     })
     it('TC_Project_006 - Verify Clear Button Appears When Campaign Filter is Applied', () => {

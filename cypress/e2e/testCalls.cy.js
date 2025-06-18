@@ -12,7 +12,7 @@ const poolss = new PoolsPage();
 describe("Test Call(Mega-Bhargav) Cases", () => {
   const email = Cypress.config('users').user1.username
   const password = Cypress.config('users').user1.password
-  const campName = '22 release'
+  const campName = 'testing'
   const clientName = 'MEGA-Bhargav'
   beforeEach(() => {
 

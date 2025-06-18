@@ -137,7 +137,7 @@ export class ProjectPage {
 
   deleteProjects() {
     cy.get('.pi-trash').each(($el, index) => {
-      if (index < 3) {
+      if (index < 8) {
         cy.wrap($el).click({ force: true });
       }
     });
@@ -223,6 +223,13 @@ export class ProjectPage {
       cy.wrap($rows[0]).click();
       cy.wrap($rows[1]).click();
     })
+  }
+  verifyEditAgent() {
+    cy.get('[role="tab"]').eq(2).contains('Agent Personality').should('exist').click()
+    cy.url().should("include", "/projects/").and('include', '/script');
+    cy.wait(2000)
+    cy.get('[class="stepCard ng-star-inserted"]').eq(3).should('exist').click()
+    cy.get('.stepCard.ng-star-inserted').eq(3).should('have.class', 'active');
   }
   validateEditScipts(firstMsg, lastMsg, prompt) {
     cy.get('[role="tab"]').eq(3).contains('Script').should('exist').click()

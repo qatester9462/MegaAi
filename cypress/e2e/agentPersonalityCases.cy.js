@@ -28,6 +28,7 @@ describe("Agent Personality Cases", () => {
         createproject.clickButton('Next')
         createproject.selectGoal()
         createproject.clickButton('Next Step')
+        agent.validateAgentPersonality()
     })
     it("Verify user is able to select any agent card and move to next", () => {
         clients.clickonclients();
@@ -37,7 +38,75 @@ describe("Agent Personality Cases", () => {
         createproject.clickButton('Next')
         createproject.selectGoal()
         createproject.clickButton('Next Step')
+        agent.validateAgentPersonality()
         agent.selectAgentCard()
         createproject.clickButton('Next')
+    })
+    it("Verify select Gender filter functionality", () => {
+        clients.clickonclients();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        agent.createNewProject('Agent personality', 'I am testing agent personality gender filter. This is testing paragrapgh,inore it,thanks', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        createproject.clickButton('Next')
+        createproject.selectGoal()
+        createproject.clickButton('Next Step')
+        agent.validateAgentPersonality()
+        agent.selectGenderFilter('female')
+    })
+    it("Verify select Language filter functionality", () => {
+        clients.clickonclients();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        agent.createNewProject('Agent personality', 'I am testing agent personality language filter. This is testing paragrapgh,inore it,thanks', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        createproject.clickButton('Next')
+        createproject.selectGoal()
+        createproject.clickButton('Next Step')
+        agent.validateAgentPersonality()
+        agent.selectLanguageFilter('English')
+    })
+    it("Verify select Accent filter functionality", () => {
+        clients.clickonclients();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        agent.createNewProject('Agent personality', 'I am testing agent personality accent filter. This is testing paragrapgh,inore it,thanks', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        createproject.clickButton('Next')
+        createproject.selectGoal()
+        createproject.clickButton('Next Step')
+        agent.validateAgentPersonality()
+        agent.selectAccentFilter('American')
+    })
+
+    it("Verify select Tone filter functionality", () => {
+        clients.clickonclients();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        agent.createNewProject('Agent personality', 'I am testing agent personality tone filter. This is testing paragrapgh,inore it,thanks', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        createproject.clickButton('Next')
+        createproject.selectGoal()
+        createproject.clickButton('Next Step')
+        agent.validateAgentPersonality()
+        agent.selectToneFilter('Professional')
+    })
+    it("Verify clear filter functionality", () => {
+        clients.clickonclients();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        agent.createNewProject('Agent personality', 'I am testing agent personality tone filter. This is testing paragrapgh,inore it,thanks', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        createproject.clickButton('Next')
+        createproject.selectGoal()
+        createproject.clickButton('Next Step')
+        agent.validateAgentPersonality()
+        agent.validateClearFilter()
+    })
+    it("Verify user is not able to move to next step without selecing nay agent", () => {
+        clients.clickonclients();
+        project.gotoClient(clientName)
+        createproject.gotoProjects()
+        agent.createNewProject('Agent personality', 'I am testing agent personality tone filter. This is testing paragrapgh,inore it,thanks', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        createproject.clickButton('Next')
+        createproject.selectGoal()
+        createproject.clickButton('Next Step')
+        agent.validateAgentPersonality()
+        agent.validateDisableNextButton()
     })
 })

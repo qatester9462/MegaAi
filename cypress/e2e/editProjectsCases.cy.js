@@ -36,28 +36,28 @@ describe("editProjectsCases", () => {
         project.gotoProjectsPage(clientName)
         project.validateEditGoall()
     })
-    //below case is skipped because pools tab is misisng so can't goto next tabs..need to fix add new tab
-    it.skip("Validate that user is able to Edit,Save,Delete Pools step of any selected project", () => {
+    it("Validate that user is able to Edit,Save,Delete agent personality step of any selected project", () => {
         const clientName = 'MEGA-Bhargav'
 
         clients.clickonclients()
         project.gotoClient('MEGA-Bhargav')
         project.gotoProjectsPage('MEGA-Bhargav')
-        project.validateEditPools()
+        project.verifyEditAgent()
         createproject.clickButton('Save')
         createproject.validateToastMessage('Success')
     })
-    it.skip("Validate that user is able to Edit,Save,Delete Scripts step of any selected project", () => {
-        clients.clickonclients()
-        //project.gotoClientMegaBhargav('MEGA-Bhargav')
-        project.gotoClient('MEGA-Bhargav')
-        project.gotoProjectsPage('MEGA-Bhargav')
-        project.validateEditScipts('Hi,I am Lisa from creditor,talking to Mona Lisa editing script','Last message testing thanks','You are a debt resolution AI assistant, your goal is to empathetically assist debtors')
-        createproject.clickButton('Save')
-        createproject.validateToastMessage('Success')
-    })
+    //below case is skipped because script tab is removed
+    // it("Validate that user is able to Edit,Save,Delete Scripts step of any selected project", () => {
+    //     clients.clickonclients()
+    //     //project.gotoClientMegaBhargav('MEGA-Bhargav')
+    //     project.gotoClient('MEGA-Bhargav')
+    //     project.gotoProjectsPage('MEGA-Bhargav')
+    //     project.validateEditScipts('Hi,I am Lisa from creditor,talking to Mona Lisa editing script','Last message testing thanks','You are a debt resolution AI assistant, your goal is to empathetically assist debtors')
+    //     createproject.clickButton('Save')
+    //     createproject.validateToastMessage('Success')
+    // })
     //below 2cases need fixes from backend
-    it.skip("Validate that user is able to Edit,Save,Delete Settings step of any selected project", () => {
+    it("Validate that user is able to Edit,Save,Delete Settings step of any selected project", () => {
         clients.clickonclients()
         //project.gotoClientMegaBhargav('MEGA-Bhargav')
         project.gotoClient('MEGA-Bhargav')
@@ -66,7 +66,7 @@ describe("editProjectsCases", () => {
         createproject.clickButton('Save')
         createproject.validateToastMessage('Success')
     })
-    it.skip("Validate that user is able to Edit,Save,Delete Dialing step of any selected project", () => {
+    it("Validate that user is able to Edit,Save,Delete Dialing step of any selected project", () => {
         clients.clickonclients()
         //project.gotoClientMegaBhargav('MEGA-Bhargav')
         project.gotoClient('MEGA-Bhargav')

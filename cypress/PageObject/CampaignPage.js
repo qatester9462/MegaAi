@@ -49,7 +49,7 @@ export class Campaign {
     }
     validateChangeStatus() {
         cy.get('thead th:nth-child(2)').contains('Status').should('exist')
-        cy.get('[aria-label="Active"]').eq(0).then(($el) => {
+        cy.get('[aria-label="Active"], [aria-label="Inactive"]').eq(0).then(($el) => {
             const status = $el.attr('aria-label');
 
             if (status === 'Active') {
@@ -68,7 +68,7 @@ export class Campaign {
                 cy.get('[aria-label="Resume"]').should('exist').click();
                 cy.get('[class*="p-toast-message-text"]').contains('Success').should('exist').wait(2000)
                 cy.get('[aria-label="Active"]').eq(0).should('exist').click()
-                 cy.get('[aria-label="Pause"]').should('exist').click();
+                cy.get('[aria-label="Pause"]').should('exist').click();
                 cy.get('[class*="p-toast-message-text"]').contains('Success').should('exist').wait(2000)
                 cy.get('[aria-label="Inactive"]').should('exist')
                 cy.log('Changed status from Pause to Active');

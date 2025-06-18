@@ -54,12 +54,12 @@ export class WorkflowPage {
                 .type(text.trim());
 
             cy.get('[class*="p-dropdown-panel"]').should('exist')
-            cy.get('[role="option"]').first().should('exist').click()
+            cy.get('[role="option"]').eq(1).should('exist').click()
             cy.wait(4000)
-       });
+        });
     }
     deleteWorkflow() {
-        cy.get('[class*="btn-icon pi"]').should('exist').click({multiple:true});
+        cy.get('[class*="btn-icon pi"]').should('exist').click({ multiple: true });
     }
     addandDeleteAllActions() {
         cy.get('[class*="p-ripple p-element"]').contains('Add Send SMS').should('exist').click()
@@ -82,33 +82,33 @@ export class WorkflowPage {
         cy.get('[aria-label="Select Forward Call"]').should('exist').click()
         cy.get('[role="option"]').eq(0).should('exist').click()
 
-         cy.get('[class*="btn-icon pi"]').should('exist').click({ multiple: true })
+        cy.get('[class*="btn-icon pi"]').should('exist').click({ multiple: true })
 
     }
- checkNewLeadStatus(){
-    cy.get('[class="p-checkbox-box"]').eq(0).should('exist').click()
- }
- checkTechnicalProbLeadStsus(){
-    cy.get('[class="p-checkbox-box"]').eq(1).should('exist').click()
- }
- checkBusyLineLeadStatus(){
-       cy.get('[class="p-checkbox-box"]').eq(2).should('exist').click()
- }
- checkAutomaticRedialLeadStatus(){
-       cy.get('[class="p-checkbox-box"]').eq(3).should('exist').click()
- }
- checkClosedDeclinedLeadStatus(){
-       cy.get('[class="p-checkbox-box"]').eq(8).should('exist').click()
- }
- checkContactNoOutcomeLeadStatus(){
-       cy.get('[class="p-checkbox-box"]').eq(11).should('exist').click()
- }
- checkProcessingLeadStatus(){
-       cy.get('[class="p-checkbox-box"]').eq(17).should('exist').click()
- }
-validateLeadStatuses(status){
-    cy.get('[class*="listGroup overflow-visible"]').should('exist')
-    cy.get('[class="listItems-title"]').contains('Status').should('exist')
-    cy.get('[class="badge"]').contains(status).should('exist')
-}
+    checkNewLeadStatus() {
+        cy.get('[class="p-checkbox-box"]').eq(0).should('exist').click()
+    }
+    checkTechnicalProbLeadStsus() {
+        cy.get('[class="p-checkbox-box"]').eq(1).should('exist').click()
+    }
+    checkBusyLineLeadStatus() {
+        cy.get('[class="p-checkbox-box"]').eq(2).should('exist').click()
+    }
+    checkAutomaticRedialLeadStatus() {
+        cy.get('[class="p-checkbox-box"]').eq(3).should('exist').click()
+    }
+    checkClosedDeclinedLeadStatus() {
+        cy.get('[class="p-checkbox-box"]').eq(8).should('exist').click()
+    }
+    checkContactNoOutcomeLeadStatus() {
+        cy.get('[class="p-checkbox-box"]').eq(11).should('exist').click()
+    }
+    checkProcessingLeadStatus() {
+        cy.get('[class="p-checkbox-box"]').eq(17).should('exist').click()
+    }
+    validateLeadStatuses(status) {
+        cy.get('[class*="listGroup overflow-visible"]').should('exist')
+        cy.get('[class="listItems-title"]').contains('Status').should('exist')
+        cy.get('[class="badge"]').contains(status).should('exist')
+    }
 }
