@@ -105,7 +105,8 @@ export class Campaign {
         cy.contains('span.p-button-label', goalName)
             .should('be.visible')
             .click();
-        cy.contains('div', 'its connect description').should('exist').click()
+            cy.get('[class*="stepCard "]').eq(0).contains('Debt handling').should('exist').click()
+      //  cy.contains('div', 'its connect description').should('exist').click()
     }
     SelectPools() {
         cy.url().should('include', '/create/pools')
@@ -186,10 +187,10 @@ export class Campaign {
             .eq(0)
             .should('be.visible')
             .click();
-        cy.contains('.form-labal', 'Experimental AI')
-            .parents('.form-group')
-            .find('span.p-inputswitch-slider')
-            .click()
+        // cy.contains('.form-labal', 'Experimental AI') deprecated
+        //     .parents('.form-group')
+        //     .find('span.p-inputswitch-slider')
+        //     .click()
     }
     selectDialing() {
         const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -230,8 +231,14 @@ export class Campaign {
         });
     }
     clickOnNextButton() {
-        cy.get('.btn-primary > .p-element').click()
+        cy.get('.btn-primary > .p-element').contains('Next Step').click()
 
+    }
+        validateCampaignAgentPersonality() {
+        cy.url().should("include", "/campaigns/create/script")
+        cy.wait(2000)
+        cy.get('[class="p-steps-number"]').contains('3').should('exist')
+        cy.get('.p-steps-title').contains('Agent Personality').should('exist')
     }
     clickOnSaveAndExitButton() {
         cy.get(':nth-child(2) > p-button.p-element > .p-ripple').should('be.visible').click()
