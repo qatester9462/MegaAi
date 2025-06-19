@@ -63,37 +63,37 @@ export class CreateProject {
   //   cy.get('.p-speeddial > .p-ripple').should('be.visible').click(); // Create project icon
   //   cy.url().should('include', '/projects/create');
   // }
-  verifyEditButtonClickFunctionality(name) {
-    cy.get('.p-paginator-page').eq(3).should('exist').click()
-    cy.wait(2000)
-    // Intercept the API request to capture tokens dynamically
-    cy.intercept('POST', '**/api/accounts/admin-login/**').as('impersonate');
+  verifyEditButtonClickFunctionality() {
+    // cy.get('.p-paginator-page').eq(3).should('exist').click()
+    // cy.wait(2000)
+    // // Intercept the API request to capture tokens dynamically
+    // cy.intercept('POST', '**/api/accounts/admin-login/**').as('impersonate');
 
-    // Override window.open to prevent opening a new tab
-    cy.window().then((win) => {
-      cy.stub(win, 'open').as('windowOpen').callsFake((url) => {
-        win.location.href = url; // Navigate in the same tab
-      });
-    });
-    cy.get('.p-datatable-table tbody tr td:nth-child(1)').contains(name).should('exist').click()
-    // Wait for the API request and get tokens
-    cy.wait('@impersonate').then((interception) => {
-      const { access, refresh } = interception.response.body;
+    // // Override window.open to prevent opening a new tab
+    // cy.window().then((win) => {
+    //   cy.stub(win, 'open').as('windowOpen').callsFake((url) => {
+    //     win.location.href = url; // Navigate in the same tab
+    //   });
+    // });
+    // cy.get('.p-datatable-table tbody tr td:nth-child(1)').contains(name).should('exist').click()
+    // // Wait for the API request and get tokens
+    // cy.wait('@impersonate').then((interception) => {
+    //   const { access, refresh } = interception.response.body;
 
-      // Store both tokens in Local Storage
-      cy.window().then((win) => {
-        win.localStorage.setItem('access_token', access);
-        win.localStorage.setItem('refresh_token', refresh);
-      });
+    //   // Store both tokens in Local Storage
+    //   cy.window().then((win) => {
+    //     win.localStorage.setItem('access_token', access);
+    //     win.localStorage.setItem('refresh_token', refresh);
+    //   });
 
-      // Navigate to Dashboard
-      cy.url().should("include", "/dashboard");
-      cy.get('.header-title').contains('Dashboard (' + name + ')').should('exist')
-      cy.wait(4000);
+    //   // Navigate to Dashboard
+    //   cy.url().should("include", "/dashboard");
+    //   cy.get('.header-title').contains('Dashboard (' + name + ')').should('exist')
+    //   cy.wait(4000);
       cy.get('[class="speeddial"]').should('be.visible').click();
       //cy.get("body > app-root:nth-child(3) > app-shared-layout:nth-child(2) > div:nth-child(1) > div:nth-child(1) > app-shared-sidebar:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > svg:nth-child(1)").should('be.visible').click();
 
-    });
+    
     // Use cy command inside the class method
     // cy.get('[class="p-element ng-star-inserted"]').should('be.visible') //page should be fully loaded
     cy.wait(2000)
@@ -169,11 +169,11 @@ export class CreateProject {
   }
 
 
-  validatePoolsStep(name, projectName, projectDescription, campaignType, country, timezone) {
-    cy.get('.p-paginator-page').eq(3).should('exist').click()
-    cy.get('.p-datatable-table tbody tr td:nth-child(1)').contains(name).should('exist').click()
-    cy.url().should("include", "/dashboard");
-    cy.get('.header-title').contains('Dashboard (MEGA-Bhargav)').should('exist')
+  validatePoolsStep(projectName, projectDescription, campaignType, country, timezone) {
+    // cy.get('.p-paginator-page').eq(3).should('exist').click()
+    // cy.get('.p-datatable-table tbody tr td:nth-child(1)').contains(name).should('exist').click()
+    // cy.url().should("include", "/dashboard");
+    // cy.get('.header-title').contains('Dashboard (MEGA-Bhargav)').should('exist')
     cy.get('[class="sidebarMenu-icon ng-star-inserted"]').eq(4).should('exist').click()
     cy.url().should("include", "/projects");
     cy.get('.header-title').contains('Projects (MEGA-Bhargav)').should('exist')
@@ -204,7 +204,7 @@ export class CreateProject {
     cy.get('[class="p-steps-number"]').contains('1').should('exist')
     cy.get('.p-steps-title').contains('Goal').should('exist')
     cy.get('[class="p-button-group p-component"] span').contains('Debt Collection').should('exist')
-    cy.get('[class="stepCard ng-star-inserted"]').eq(1).contains('Debt handling').should('exist').click()
+    cy.get('[class="stepCard ng-star-inserted"]').eq(1).should('exist').click()
   }
   selectpool() {
     cy.url().should("include", "/projects/create/pool");

@@ -43,7 +43,6 @@ describe("testContactModal", () => {
         clients.clickonclients()
         project.gotoClient(clientName)
         campaign.gotoCampaign()
-        testcall.clickONTestCall()
         testcall.ValidateEyeIconviewContactDetails()
     })
     it("TC_Modal_007 , Cancel button functionality ", () => {

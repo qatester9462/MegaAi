@@ -12,7 +12,7 @@ const poolss = new PoolsPage();
 describe("Test Call(Mega-Bhargav) Cases", () => {
   const email = Cypress.config('users').user1.username
   const password = Cypress.config('users').user1.password
-  const campName = 'testing'
+  const campName = 'bhargav MVA test'
   const clientName = 'MEGA-Bhargav'
   beforeEach(() => {
 
@@ -57,7 +57,7 @@ describe("Test Call(Mega-Bhargav) Cases", () => {
     clients.clickonclients()
     project.gotoClient(clientName)
     testcall.gotoTestCall()
-    testcall.validateCallOutcomeFilter(outcome)
+    testcall.validateCallStatusFilter(outcome)
   })
   it("TC_TestCall_007 Verify that pagination works correctly ", () => {
     clients.clickonclients()

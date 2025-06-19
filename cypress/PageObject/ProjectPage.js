@@ -176,10 +176,27 @@ export class ProjectPage {
   }
 
   gotoClient(name) {
-    cy.get('.p-paginator-page').eq(3).should('exist').click()
-    cy.get('.p-datatable-table tbody tr td:nth-child(1)').contains(name).should('exist').click()
-    cy.url().should("include", "/dashboard");
-    cy.get('.header-title').contains('Dashboard (' + name + ')').should('exist')
+     const searchAndClick = () => {
+      cy.get('.p-datatable-table tbody tr td:nth-child(1)').then($cells => {
+        const found = [...$cells].some(cell => cell.innerText.trim() === name);
+        if (found) {
+          cy.get('.p-datatable-table tbody tr td:nth-child(1)').contains(name).should('exist').click();
+          cy.url().should('include', '/dashboard');
+          cy.get('.header-title').contains('Dashboard (' + name + ')').should('exist');
+        } else {
+          cy.get('.p-paginator-next').then($next => {
+            if (!$next.hasClass('p-disabled')) {
+              cy.wrap($next).click({ force: true });
+              cy.wait(4000);
+              searchAndClick();
+            } else {
+              throw new Error(`Client with name '${name}' not found on any page.`);
+            }
+          });
+        }
+      });
+    };
+    searchAndClick();
   }
 
   gotoProjectsPage(name) {

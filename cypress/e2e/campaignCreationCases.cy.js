@@ -87,7 +87,7 @@ describe("campaignCreationCases", () => {
     })
     it("TC_Create-Campaign_004 , Verify search filter functionality", () => {
         const clientName = 'MEGA-Bhargav';
-        const name = 'testing'
+        const name = 'bhargav MVA test'
         clients.clickonclients();
         project.gotoClient(clientName);
         campaign.gotoCampaign();
