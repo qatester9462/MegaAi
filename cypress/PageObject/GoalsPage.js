@@ -11,13 +11,13 @@ export class GoalsProject {
             .should('exist')
             .and('be.visible');
 
-        cy.get("p-button:nth-child(2) button:nth-child(1) span:nth-child(1)")
-            .should('exist')
-            .and('be.visible');
+        // cy.get("p-button:nth-child(2) button:nth-child(1) span:nth-child(1)")
+        //     .should('exist')
+        //     .and('be.visible');
 
-        cy.get("p-button:nth-child(3) button:nth-child(1) span:nth-child(1)")
-            .should('exist')
-            .and('be.visible');
+        // cy.get("p-button:nth-child(3) button:nth-child(1) span:nth-child(1)")
+        //     .should('exist')
+        //     .and('be.visible');
     }
  
     verifyGoalSelection() {

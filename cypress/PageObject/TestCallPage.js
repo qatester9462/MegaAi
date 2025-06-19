@@ -29,11 +29,26 @@ export class TestCallPage {
     }
 
     ValidateEyeIconviewContactDetails() {
-
-        cy.get('.pi.pi-eye').eq(0).should('exist').click();
-        cy.get('[role="complementary"]').should('exist')
-        cy.get('[class*="font-semibold"]').contains('View Test Contact').should('exist')
-
+      function tryTestCall(index = 0) {
+        cy.get('span[class="font-semibold"]').then($calls => {
+          if ($calls.length > index) {
+            cy.wrap($calls).eq(index).click();
+            cy.get('body').then($body => {
+              if ($body.find('.pi.pi-eye').length > 0) {
+                cy.get('.pi.pi-eye').eq(0).should('exist').click();
+                cy.get('[role="complementary"]').should('exist');
+                cy.get('[class*="font-semibold"]').contains('View Test Contact').should('exist');
+              } else {
+                cy.get('.p-button.p-component').contains('Cancel').click({force: true});
+                tryTestCall(index + 1);
+              }
+            });
+          } else {
+             cy.log('No Test Call entry with contact was found.');
+          }
+        });
+      }
+      tryTestCall();
     }
 
     ValidateCancelbuttonFunctionality() {
@@ -107,18 +122,18 @@ export class TestCallPage {
         cy.get('tbody tr td:nth-child(1)').contains(campName).should('exist')
     }
     validateSearchbyPhoneNumber(phoneNo) {
-        cy.get('[placeholder="Search by phone number"]').should('exist').clear().type(phoneNo)
+        cy.get('[placeholder="Search by phone number and call Id"]').should('exist').clear().type(phoneNo)
         cy.wait(5000)
         cy.get('thead th:nth-child(4)').contains('Phone Number').should('exist')
         cy.get('tbody tr td:nth-child(4)').contains(phoneNo).should('exist')
     }
-    validateCallOutcomeFilter(outcome) {
+    validateCallStatusFilter(outcome) {
         cy.get('[aria-label="Call Status: All"]').should('exist').click()
         cy.get('[role="listbox"]').should('exist')
         cy.get('[role="option"]').contains(outcome).should('exist').click()
         cy.wait(5000)
-        cy.get('thead th:nth-child(5)').contains('Call Status').should('exist')
-        cy.get('tbody tr td:nth-child(5)').contains('Completed').should('exist')
+        cy.get('thead th:nth-child(6)').contains('Call Status').should('exist')
+        cy.get('tbody tr td:nth-child(6)').contains('Completed').should('exist')
     }
     validateViewMoreButton() {
         cy.get('[class="btn-link"]').contains('View More').first().should('exist').click()

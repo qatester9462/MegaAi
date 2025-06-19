@@ -2,13 +2,16 @@ import { SignInPage } from "../PageObject/SignInPage";
 import { ClientsPage } from "../PageObject/ClientsPage";
 import { CreateProject } from "../PageObject/CreateProject";
 import { AgentPersonality } from "../PageObject/AgentPersonalityPage";
+import { ProjectPage } from "../PageObject/ProjectPage";
 const signIn = new SignInPage
 const clients = new ClientsPage()
 const createproject = new CreateProject();
 const agent = new AgentPersonality();
+const projectpage = new ProjectPage();
 describe("reviewStepCases", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
+    const clientName = 'MEGA-Bhargav'
     beforeEach(() => {
 
         cy.visit('/login')
@@ -18,7 +21,8 @@ describe("reviewStepCases", () => {
     it("Verify the complete flow to 'Review' Step in Project Creation and able to submit it", () => {
         const projectName = 'Testing Project'
         clients.clickonclients()
-        createproject.validatePoolsStep('MEGA-Bhargav', projectName, 'Testing Mega AI Review step', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        projectpage.gotoClient(clientName)
+        createproject.validatePoolsStep( projectName, 'Testing Mega AI Review step', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
         createproject.clickButton('Next Step')
         createproject.selectGoal()
         createproject.clickButton('Next Step')
@@ -62,7 +66,8 @@ describe("reviewStepCases", () => {
     it("Verify that user is able to delete the launched project", () => {
         const projectName = 'Testing Project'
         clients.clickonclients()
-        createproject.validatePoolsStep('MEGA-Bhargav', projectName, 'Testing Mega AI Review step', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+        projectpage.gotoClient(clientName)
+        createproject.validatePoolsStep( projectName, 'Testing Mega AI Review step', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
         createproject.clickButton('Next Step')
         createproject.selectGoal()
         createproject.clickButton('Next Step')

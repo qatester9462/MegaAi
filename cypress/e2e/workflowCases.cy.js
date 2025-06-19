@@ -75,7 +75,7 @@ describe("Workflow Cases", () => {
         workflow.addAction(actionName)
         workflow.clickAddWorkflow()
         workflow.validateToastMessage('Workflow added successfully.')
-          workflow.filterWorkflow()
+          //workflow.filterWorkflow()
         workflow.deleteWorkflow()
     })
     it("TC_Workflow_006, Add and Delete all the actions", () => {

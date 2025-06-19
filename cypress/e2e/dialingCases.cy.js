@@ -2,13 +2,16 @@ import { SignInPage } from "../PageObject/SignInPage";
 import { ClientsPage } from "../PageObject/ClientsPage";
 import { CreateProject } from "../PageObject/CreateProject";
 import { AgentPersonality } from "../PageObject/AgentPersonalityPage";
+import { ProjectPage } from "../PageObject/ProjectPage";
 const signIn = new SignInPage
 const clients = new ClientsPage()
 const createproject = new CreateProject();
 const agent = new AgentPersonality();
+const projectpage = new ProjectPage();
 describe("dialingCases", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
+    const clientName = 'MEGA-Bhargav'
     beforeEach(() => {
 
         cy.visit('/login')
@@ -17,7 +20,8 @@ describe("dialingCases", () => {
     })
     it("Verify the complete flow to 'Dialing' Step in Project Creation and validate all fields", () => {
         clients.clickonclients()
-        createproject.validatePoolsStep('MEGA-Bhargav', 'Testing Project', 'Testing Mega AI Pools step', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
+         projectpage.gotoClient(clientName)
+        createproject.validatePoolsStep('Testing Project', 'Testing Mega AI Pools step', 'Debt Collection', '(+92) Pakistan', 'Asia/Karachi (UTC +05:00)')
         createproject.clickButton('Next Step')
         createproject.selectGoal()
         createproject.clickButton('Next Step')

@@ -11,7 +11,7 @@ export class PoolsPage {
     }
 
     verifyPresenceOfAllElementsOnPoolspage() {
-
+cy.wait(5000)
         cy.contains('All Pools').should('be.visible');
         cy.contains('Projects: All').should('exist');
         cy.contains('Campaigns: All').should('exist');

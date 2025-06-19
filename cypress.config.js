@@ -13,7 +13,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       require('cypress-mochawesome-reporter/plugin')(on);
     },
-    baseUrl: 'https://app.megavoice.ai/',
+    baseUrl: 'https://app.test.megavoice.ai/',
     users: {
       user1: {
         username: "qatesthub2@gmail.com",
