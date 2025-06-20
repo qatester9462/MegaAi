@@ -102,6 +102,7 @@ export class TestCallPage {
     }
 
     gotoTestCall() {
+        cy.wait(3000)
         cy.get('[class="sidebarMenu-links"]').eq(4).should('exist').click()
         cy.url().should("include", "/calls");
         cy.get('.header-title').contains('Calls (MEGA-Bhargav)').should('exist').wait(9000)

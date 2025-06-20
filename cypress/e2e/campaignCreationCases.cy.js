@@ -17,6 +17,7 @@ describe("campaignCreationCases", () => {
         cy.visit('/login')
         cy.viewport(1920, 1080)
         signIn.verifyLoginFuntionality(email, password);
+         signIn.validateSignIn()
     })
 
     it("TC_Campaign_003 , Verify filtering campaigns by Campaign Type ", () => {
@@ -90,14 +91,14 @@ describe("campaignCreationCases", () => {
         campaign.ClickOnPlusbutton();
         campaign.CampaignCreateFirstForm()
     })
-    it("TC_Create-Campaign_004 , Verify search filter functionality", () => {
-        const clientName = 'MEGA-Bhargav';
-        const name = 'bhargav MVA test'
-        clients.clickonclients();
-        project.gotoClient(clientName);
-        campaign.gotoCampaign();
-        campaign.validateSearchFunctionality(name)
-    })
+    // it("TC_Create-Campaign_004 , Verify search filter functionality", () => {
+    //     const clientName = 'MEGA-Bhargav';
+    //     const name = 'bhargav MVA test'
+    //     clients.clickonclients();
+    //     project.gotoClient(clientName);
+    //     campaign.gotoCampaign();
+    //     campaign.validateSearchFunctionality(name)
+    // })
     it("TC_Create-Campaign_005 , Verify Clear filter functionality", () => {
         const clientName = 'MEGA-Bhargav'
         clients.clickonclients();

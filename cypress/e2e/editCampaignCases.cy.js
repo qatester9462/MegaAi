@@ -18,6 +18,7 @@ describe("editCampaignCases", () => {
         cy.visit('/login')
         cy.viewport(1920, 1080)
         signIn.verifyLoginFuntionality(email, password);
+        signIn.validateSignIn()
     })
 
     it("TC_Edit_Basic-Info_001 , Verify redirection to Edit Campaign page (Basic Info) ", () => {

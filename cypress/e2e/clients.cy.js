@@ -12,6 +12,7 @@ describe("clients", () => {
         cy.visit('/login')
         cy.viewport(1920, 1080)
         signIn.verifyLoginFuntionality(email, password);
+        signIn.validateSignIn()
     })
 
     it("Verify,Navigation to the Clients Page via Side Navigation Men", () => {

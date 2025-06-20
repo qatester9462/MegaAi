@@ -19,6 +19,7 @@ describe("Test Call(Mega-Bhargav) Cases", () => {
     cy.visit('/login')
     cy.viewport(1920, 1080)
     signIn.verifyLoginFuntionality(email, password);
+     signIn.validateSignIn()
   })
 
   it("TC_TestCall_001 validate that user is able to goto Callls Page ", () => {

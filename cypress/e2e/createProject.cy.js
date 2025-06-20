@@ -18,6 +18,7 @@ describe("createProject", () => {
         cy.visit('/login');
         cy.viewport(1920, 1080);
         signIn.verifyLoginFuntionality(email, password);
+         signIn.validateSignIn()
     });
 
     it("Verify Clicking '+' Add button Redirects user to the Create new Project", () => {

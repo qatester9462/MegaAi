@@ -18,6 +18,7 @@ describe("Upload Pool cases", () => {
         cy.visit('/login')
         cy.viewport(1920, 1080)
         signIn.verifyLoginFuntionality(email, password);
+       signIn.validateSignIn()
     })
     it('TC_UploadPool_001 - Verify redirection to "Upload New Pool" page', () => {
         const clientName = 'MEGA-Bhargav'

@@ -17,6 +17,7 @@ describe("Workflow Cases", () => {
         cy.visit('/login')
         cy.viewport(1920, 1080)
         signIn.verifyLoginFuntionality(email, password);
+        signIn.validateSignIn()
     })
     it("TC_Workflow_001 , Verify user is able to goto workflow page ", () => {
         const clientName = 'MEGA-Bhargav'
@@ -75,7 +76,7 @@ describe("Workflow Cases", () => {
         workflow.addAction(actionName)
         workflow.clickAddWorkflow()
         workflow.validateToastMessage('Workflow added successfully.')
-          //workflow.filterWorkflow()
+        //workflow.filterWorkflow()
         workflow.deleteWorkflow()
     })
     it("TC_Workflow_006, Add and Delete all the actions", () => {
@@ -124,7 +125,7 @@ describe("Workflow Cases", () => {
     })
     it('TC_Workflow_009, Create and delete workflow against "Busy Line" lead status', () => {
         const clientName = 'MEGA-Bhargav'
-        const actionName = 'Update CRM'
+        const actionName = 'Forward Call'
         const workflowName = ('Workflow ' + reuseableCode.generateRandomString(5))
         const status = "Busy Line"
         clients.clickonclients()
@@ -142,7 +143,7 @@ describe("Workflow Cases", () => {
     })
     it('TC_Workflow_010, Create and delete workflow against "Automatic Redial" lead status', () => {
         const clientName = 'MEGA-Bhargav'
-        const actionName = 'Update CRM'
+        const actionName = 'API Request'
         const workflowName = ('Workflow ' + reuseableCode.generateRandomString(5))
         const status = "Automatic Redial"
         clients.clickonclients()
@@ -150,7 +151,7 @@ describe("Workflow Cases", () => {
         workflow.gotoWorkflow(clientName)
         workflow.addWorkflowName(workflowName)
         workflow.selectProject()
-        workflow. checkAutomaticRedialLeadStatus()
+        workflow.checkAutomaticRedialLeadStatus()
         workflow.clickAnyAction(actionName)
         workflow.addAction(actionName)
         workflow.clickAddWorkflow()
@@ -158,9 +159,9 @@ describe("Workflow Cases", () => {
         workflow.validateLeadStatuses(status)
         workflow.deleteWorkflow()
     })
-  it('TC_Workflow_011, Create and delete workflow against "Closed Declined" lead status', () => {
+    it('TC_Workflow_011, Create and delete workflow against "Closed Declined" lead status', () => {
         const clientName = 'MEGA-Bhargav'
-        const actionName = 'Update CRM'
+        const actionName = 'API Request'
         const workflowName = ('Workflow ' + reuseableCode.generateRandomString(5))
         const status = "Closed Declined"
         clients.clickonclients()
@@ -168,7 +169,7 @@ describe("Workflow Cases", () => {
         workflow.gotoWorkflow(clientName)
         workflow.addWorkflowName(workflowName)
         workflow.selectProject()
-        workflow. checkClosedDeclinedLeadStatus()
+        workflow.checkClosedDeclinedLeadStatus()
         workflow.clickAnyAction(actionName)
         workflow.addAction(actionName)
         workflow.clickAddWorkflow()
@@ -176,7 +177,7 @@ describe("Workflow Cases", () => {
         workflow.validateLeadStatuses(status)
         workflow.deleteWorkflow()
     })
-     it('TC_Workflow_012, Create and delete workflow against "Contact But No Outcome" lead status', () => {
+    it('TC_Workflow_012, Create and delete workflow against "Contact But No Outcome" lead status', () => {
         const clientName = 'MEGA-Bhargav'
         const actionName = 'Send SMS'
         const workflowName = ('Workflow ' + reuseableCode.generateRandomString(5))
@@ -195,7 +196,7 @@ describe("Workflow Cases", () => {
         workflow.deleteWorkflow()
     })
 
-     it('TC_Workflow_013, Create and delete workflow against "Processing" lead status', () => {
+    it('TC_Workflow_013, Create and delete workflow against "Processing" lead status', () => {
         const clientName = 'MEGA-Bhargav'
         const actionName = 'Forward Call'
         const workflowName = ('Workflow ' + reuseableCode.generateRandomString(5))
