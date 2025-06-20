@@ -25,6 +25,7 @@ describe("goals", () => {
         cy.visit('/login');
         cy.viewport(1920, 1080);
         signIn.verifyLoginFuntionality(email, password);
+        signIn.validateSignIn()
     });
 
     it("Goals step redirection.", () => {

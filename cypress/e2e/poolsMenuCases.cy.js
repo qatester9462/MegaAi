@@ -17,6 +17,7 @@ describe("poolsMenuCases", () => {
         cy.visit('/login')
         cy.viewport(1920, 1080)
         signIn.verifyLoginFuntionality(email, password);
+         signIn.validateSignIn()
     })
 
     it('TC_Pools_Libraries-001 - Verify redirection to the Pools page', () => {
@@ -69,7 +70,7 @@ describe("poolsMenuCases", () => {
         clients.clickonclients()
         project.gotoClient(clientName)
         poolss.goTOPools()
-        cy.wait(3000)
+        cy.wait(7000)
         poolss.VerifyCampaignsFilterDropdownWorksCorrectly()
     });
 

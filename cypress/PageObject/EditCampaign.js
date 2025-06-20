@@ -417,11 +417,11 @@ export class EditCampaigns {
         // If Pause modal appears, click Pause button inside it
         cy.get('body').then(($body) => {
             if ($body.text().includes('Pause Campaign')) {
-                cy.get('.flex-column > .flex > .p-element').click()
+                cy.get('.flex-column > .flex > .p-element').click({timeout:2000})
             }
         });
         cy.contains('Save').click();
-        cy.get('p-dropdown[placeholder="Select an option"]').eq(0) // was 0 → must be 1 here
+        cy.get('p-dropdown[placeholder="Select an option"]').eq(1) 
             .find('.p-dropdown-label')
             .should('not.contain.text', 'Select an option');
     }

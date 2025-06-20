@@ -16,6 +16,7 @@ describe("editProjectsCases", () => {
         cy.visit('/login')
         cy.viewport(1920, 1080)
         signIn.verifyLoginFuntionality(email, password);
+       signIn.validateSignIn()
     })
     it("Validate that user is able to Edit,Save,Delete basic info of any selected project", () => {
         const name = ('Editing Porject Name ' + reuseableCode.generateRandomString(5))

@@ -17,6 +17,7 @@ describe("dialingCases", () => {
         cy.visit('/login')
         cy.viewport(1920, 1080)
         signIn.verifyLoginFuntionality(email, password);
+         signIn.validateSignIn()
     })
     it("Verify the complete flow to 'Dialing' Step in Project Creation and validate all fields", () => {
         clients.clickonclients()

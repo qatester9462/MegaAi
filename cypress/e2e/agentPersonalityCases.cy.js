@@ -3,7 +3,7 @@ import { ClientsPage } from "../PageObject/ClientsPage";
 import { CreateProject } from "../PageObject/CreateProject";
 import { ProjectPage } from "../PageObject/ProjectPage";
 import { AgentPersonality } from "../PageObject/AgentPersonalityPage";
-const signIn = new SignInPage
+const signIn = new SignInPage()
 const clients = new ClientsPage()
 const createproject = new CreateProject();
 const project = new ProjectPage();
@@ -18,6 +18,7 @@ describe("Agent Personality Cases", () => {
         cy.visit('/login')
         cy.viewport(1920, 1080)
         signIn.verifyLoginFuntionality(email, password);
+         signIn.validateSignIn()
     })
 
     it("Verify user is able to goto Agent Personality Page", () => {

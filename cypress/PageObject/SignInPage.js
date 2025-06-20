@@ -1,5 +1,5 @@
-export class SignInPage  {
-        verifyAllElementsSignInPage(){
+export class SignInPage {
+    verifyAllElementsSignInPage() {
         cy.get("img[alt='mega-logo']").should("be.visible");
         cy.contains("Sign in to your Mega Account").should("be.visible");
         cy.contains("Start automating your calls with Mega's powerful AI models.").should("be.visible");
@@ -11,13 +11,33 @@ export class SignInPage  {
 
     }
     verifyLoginFuntionality(email, password) {
-        cy.get("#email").should("be.visible").clear({force:true}).type(email)
-        cy.get("#password").should("be.visible").clear({force:true}).type(password)
+        if (email != null) {
+            cy.get("#email").should("be.visible").clear({ force: true }).type(email)
+        }
+        if (password != null) {
+            cy.get("#password").should("be.visible").clear({ force: true }).type(password)
+        }
+
         cy.get(".p-checkbox-box").click();
-        cy.get(".p-button-label").should("be.visible").click({force:true});
+        cy.get(".p-button-label").should("be.visible").click({ force: true });
         //cy.wait(4000)
-       cy.url().should("include", "/login"); 
-       cy.wait(3000);
-        cy.get(".header-title").should("be.visible").and('contain.text','Dashboard')
     }
+    validateSignIn() {
+        cy.url().should("include", "/login");
+        cy.wait(3000);
+        cy.get(".header-title").should("be.visible").and('contain.text', 'Dashboard')
     }
+    validateError(error) {
+        cy.get('[class="error"]').should('be.visible').and('contain.text', error)
+    }
+    validateToastMessage(toastMsg) {
+        cy.get('[class*="p-toast-message-content"]').contains(toastMsg).should('be.visible')
+    }
+    verifySignOut() {
+        cy.get('[class="pi pi-sign-out"]').should('be.visible').click()
+        cy.url().should("include", "/login");
+        cy.get('.font-bold').should('be.visible').and('contain.text', 'Sign in to your Mega Account')
+          cy.get("#email").should("be.visible").and('have.class', 'ng-invalid');
+          cy.get("#password").should("be.visible").and('have.class', 'ng-invalid');
+    }
+}

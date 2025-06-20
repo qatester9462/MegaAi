@@ -59,7 +59,11 @@ export class WorkflowPage {
         });
     }
     deleteWorkflow() {
-        cy.get('[class*="btn-icon pi"]').should('exist').click({ multiple: true });
+        cy.get('[class*="btn-icon pi').each(($el, index) => {
+            if (index < 3) {
+                cy.wrap($el).click()
+            }
+        })
     }
     addandDeleteAllActions() {
         cy.get('[class*="p-ripple p-element"]').contains('Add Send SMS').should('exist').click()

@@ -37,7 +37,7 @@ export class Campaign {
         cy.get('.dropdown-menu > :nth-child(1)').should('be.visible').click()
     }
     validateSearchFunctionality(name) {
-        cy.get('[placeholder="Search by campaign name"]').should('exist').clear().type(name)
+        cy.get('[placeholder="Search by campaign name"]').should('exist').clear().type(name).wait(2000)
         cy.get('thead th:nth-child(1)').contains('Name').should('exist')
         cy.get('tbody td:nth-child(1)').contains(name).should('exist')
     }

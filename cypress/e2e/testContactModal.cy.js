@@ -22,6 +22,7 @@ describe("testContactModal", () => {
         cy.visit('/login')
         cy.viewport(1920, 1080)
         signIn.verifyLoginFuntionality(email, password);
+        signIn.validateSignIn()
     })
 
     it("TC_Modal_001 , Redirect to Test Call modal ", () => {
