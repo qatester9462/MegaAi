@@ -6,7 +6,7 @@ export class UserPage {
         cy.wait(3000)
     }
     validateSearchFilter(Email) {
-        cy.get('[placeholder="Search by email"]').should('exist').clear().type(Email)
+        cy.get('[placeholder="Search by email"]').should('exist').clear().type(Email).wait(2000)
         cy.get('tbody tr td:nth-child(2)').should('exist').and('contain.text', Email)
     }
     validateClientFilter(client) {
@@ -64,5 +64,90 @@ export class UserPage {
                     })
             })
 
+    }
+    clickPlusButotn() {
+        cy.get('[class*="p-element p-ripple"]').should('be.visible').click()
+        cy.get('[role="complementary"]').contains('Create User').should('exist').wait(3000)
+    }
+    selectClient() {
+        cy.get('[class="form-labal"]').contains('Client').should('exist')
+        cy.get('[aria-label="Select Client"]').should('exist').click()
+        cy.get('[class*="p-dropdown-panel"]').should('exist')
+        cy.get('[role="option"]').should('exist').eq(0).click()
+
+    }
+    validateRole() {
+        cy.get('[class="form-labal"]').contains('Role').should('exist')
+        cy.get('[placeholder="Enter Role"]').should('exist').and('have.value', 'user')
+    }
+    addName(name) {
+        cy.get('[class="form-labal"]').contains('Name').should('exist')
+        cy.get('[placeholder="Enter Name"]').should('be.visible').type(name)
+    }
+    addEmail(userEmail) {
+        cy.get('[class="form-labal"]').contains('Email').should('exist')
+        cy.get('[placeholder="Enter Email"]').should('exist').type(userEmail)
+    }
+    addPassword(userPassword) {
+        cy.get('[class="form-labal"]').contains('Password').should('exist')
+        cy.get('[placeholder="Enter Password"]').should('exist').type(userPassword)
+    }
+    addPhoneNumber(phoneNo) {
+        cy.get('[class="form-labal"]').contains(' Phone Number ').should('exist')
+        cy.get('[placeholder="Enter Phone Number"]').should('exist').type(phoneNo)
+    }
+    selectCountry(country) {
+        cy.get('[class="form-labal"]').contains(' Phone Number ').should('exist')
+        cy.get('[aria-label="Select Country"]').should('exist').click()
+        cy.get('[class*="p-dropdown-panel"]').should('be.visible')
+        cy.get('[role="option"]').should('exist').contains(country).click()
+    }
+    clickButton(btnName) {
+        cy.get('[class*="p-element p-button"]').contains(btnName).should('exist').click()
+    }
+    deleteCreatedUser(userEmail) {
+        cy.get('tbody tr td').contains(userEmail).parents('tr').within(() => {
+            cy.get('.pi.pi-trash')
+                .click();
+        });
+        cy.get('[role="dialog"]').contains('Delete ' + userEmail).should('be.visible')
+        cy.get('[class="p-button-label"]').should('exist').click()
+
+    }
+    validateGeneratePassword() {
+        cy.get('[class="form-labal"]').contains('Password').should('exist')
+        cy.get('[placeholder="Enter Password"]').should('exist').clear()
+        cy.get('.p-button-text').contains('Generate').should('exist').click()
+        let initialPassword = '';
+        let newPassword = '';
+        cy.get('[placeholder="Enter Password"]').should('exist').and('have.class', 'p-filled').invoke('val').then((text) => {
+            initialPassword = text;
+        });
+        cy.get('button').contains('Generate').click();
+        cy.get('[placeholder="Enter Password"]').should('exist').invoke('val').then((updatedText) => {
+            newPassword = updatedText;
+            expect(newPassword).to.not.equal(initialPassword);
+        });
+    }
+    validateFieldErrors(error) {
+        cy.get('[class="error"]').contains(error).should('be.visible')
+    }
+    validateTooltip() {
+        cy.get('.pi-info-circle').should('be.visible').trigger('mouseenter', { force: true })
+        cy.contains('Please use international phone number format').should('be.visible');
+    }
+    validateEditUser(userEmail) {
+        cy.get('tbody tr td').contains(userEmail).parents('tr').within(() => {
+            cy.get('.pi-pencil')
+                .click();
+        });
+        cy.get('[role="complementary"]').contains('Update User').should('exist').wait(3000)
+        cy.get('[placeholder="Enter Name"]')
+            .should('exist')
+            .invoke('val')
+            .then((existingName) => {
+                const updatedName = `updated.${existingName}`;
+                cy.get('[placeholder="Enter Name"]').clear().type(updatedName);
+            });
     }
 }

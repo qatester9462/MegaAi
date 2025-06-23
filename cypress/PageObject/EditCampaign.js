@@ -127,26 +127,30 @@ export class EditCampaigns {
         cy.contains('li', 'Duplicate').should('be.visible');
         cy.contains('li', 'Delete Campaign').should('be.visible');
     }
-
     verifyAbilityToSelectDeselectPool() {
-        cy.get('tbody tr.p-selectable-row ').should('have.length.at.least', 1).then(($rows) => {
-            cy.wrap($rows[0]).click();
-            cy.wrap($rows[1]).click();
+        cy.get('tbody tr.p-selectable-row').should('have.length.at.least', 1).then(($rows) => {
+            const rowCount = $rows.length;
+            if (rowCount === 1) {
+                cy.wrap($rows[0]).click();
+            } else {
+                for (let i = 0; i < rowCount; i++) {
+                    cy.wrap($rows[i]).click();
+                }
+            }
             cy.contains('span.p-button-label', 'Save').click();
             // If Pause modal appears, click Pause button inside it
             cy.get('body').then(($body) => {
                 if ($body.text().includes('Pause Campaign')) {
-                    cy.get('.flex-column > .flex > .p-element').click()
+                    cy.get('.flex-column > .flex > .p-element').click();
                 }
             });
+
             cy.contains('Save').click();
-            // Confirm success toast or alert (adjust message as per app)
-            // cy.get('.p-toast').should('contain.text', 'Goal updated successfully');
             cy.get('.p-toast').within(() => {
                 cy.contains('Success').should('exist');
                 cy.contains('Pools Updated Successfully').should('exist');
             });
-        })
+        });
     }
 
     verifyPoolDataVisibility() {
@@ -417,11 +421,11 @@ export class EditCampaigns {
         // If Pause modal appears, click Pause button inside it
         cy.get('body').then(($body) => {
             if ($body.text().includes('Pause Campaign')) {
-                cy.get('.flex-column > .flex > .p-element').click({timeout:2000})
+                cy.get('.flex-column > .flex > .p-element').click({ timeout: 2000 })
             }
         });
         cy.contains('Save').click();
-        cy.get('p-dropdown[placeholder="Select an option"]').eq(1) 
+        cy.get('p-dropdown[placeholder="Select an option"]').eq(1)
             .find('.p-dropdown-label')
             .should('not.contain.text', 'Select an option');
     }

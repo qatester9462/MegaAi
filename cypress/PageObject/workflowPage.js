@@ -66,29 +66,21 @@ export class WorkflowPage {
         })
     }
     addandDeleteAllActions() {
-        cy.get('[class*="p-ripple p-element"]').contains('Add Send SMS').should('exist').click()
-        cy.get('[class="listGroup-header"]').contains('Send SMS').should('exist')
-        cy.get('[aria-label="Select Send SMS"]').should('exist').click()
-        cy.get('[role="option"]').eq(0).should('exist').click()
-
-        cy.get('[class*="p-ripple p-element"]').contains('Add API Request').should('exist').click()
-        cy.get('[class="listGroup-header"]').contains('API Request').should('exist')
-        cy.get('[aria-label="Select API Request"]').should('exist').click()
-        cy.get('[role="option"]').eq(0).should('exist').click()
-
-        cy.get('[class*="p-ripple p-element"]').contains('Add Update CRM').should('exist').click()
-        cy.get('[class="listGroup-header"]').contains('Update CRM').should('exist')
-        cy.get('[aria-label="Select Update CRM"]').should('exist').click()
-        cy.get('[role="option"]').eq(0).should('exist').click()
-
-        cy.get('[class*="p-ripple p-element"]').contains('Add Forward Call').should('exist').click()
-        cy.get('[class="listGroup-header"]').contains('Forward Call').should('exist')
-        cy.get('[aria-label="Select Forward Call"]').should('exist').click()
-        cy.get('[role="option"]').eq(0).should('exist').click()
-
+        const actions = [
+            { name: 'Send SMS', label: 'Select Send SMS' },
+            { name: 'API Request', label: 'Select API Request' },
+            { name: 'Update CRM', label: 'Select Update CRM' },
+            { name: 'Forward Call', label: 'Select Forward Call' },
+        ];
+        actions.forEach((action) => {
+            cy.get('[class*="p-ripple p-element"]').contains(`Add ${action.name}`).should('be.visible').click();
+            cy.get('[class="listGroup-header"]').contains(action.name).should('be.visible');
+            cy.get(`[aria-label="${action.label}"]`).should('be.visible').click();
+            cy.get('[role="option"]').first().should('be.visible').click();
+        });
         cy.get('[class*="btn-icon pi"]').should('exist').click({ multiple: true })
-
     }
+
     checkNewLeadStatus() {
         cy.get('[class="p-checkbox-box"]').eq(0).should('exist').click()
     }

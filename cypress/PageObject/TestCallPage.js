@@ -133,8 +133,8 @@ export class TestCallPage {
         cy.get('[role="listbox"]').should('exist')
         cy.get('[role="option"]').contains(outcome).should('exist').click()
         cy.wait(5000)
-        cy.get('thead th:nth-child(6)').contains('Call Status').should('exist')
-        cy.get('tbody tr td:nth-child(6)').contains('Completed').should('exist')
+        cy.get('thead th:nth-child(5)').contains('Call Status').should('exist')
+        cy.get('tbody tr td:nth-child(5)').contains('Completed').should('exist')
     }
     validateViewMoreButton() {
         cy.get('[class="btn-link"]').contains('View More').first().should('exist').click()
