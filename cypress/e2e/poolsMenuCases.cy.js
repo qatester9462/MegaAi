@@ -26,6 +26,7 @@ describe("poolsMenuCases", () => {
         clients.clickonclients()
         project.gotoClient(clientName)
         poolss.goTOPools()
+         cy.wait(6000)
         poolss.verifyRedirectionToThePoolsPage()
         poolss.verifyPresenceOfAllElementsOnPoolspage()
     })
@@ -36,6 +37,7 @@ describe("poolsMenuCases", () => {
         clients.clickonclients()
         project.gotoClient(clientName)
         poolss.goTOPools()
+         cy.wait(6000)
         poolss.verifyPlusButtonRedirectsToUploadNewPoolPage()
     })
 
@@ -46,6 +48,7 @@ describe("poolsMenuCases", () => {
         clients.clickonclients()
         project.gotoClient(clientName)
         poolss.goTOPools()
+         cy.wait(6000)
         poolss.verifyEditIconOpensEditPoolInfoModal()
     })
 
@@ -55,6 +58,7 @@ describe("poolsMenuCases", () => {
         clients.clickonclients()
         project.gotoClient(clientName)
         poolss.goTOPools()
+         cy.wait(6000)
         poolss.verifyDeleteiconOpensConfirmationModal()
     })
 
@@ -63,6 +67,7 @@ describe("poolsMenuCases", () => {
         clients.clickonclients()
         project.gotoClient(clientName)
         poolss.goTOPools()
+         cy.wait(7000)
         poolss.verifyProjectFilterDropdownWorksCorrectly()
     });
     it('TC_Pools_Libraries_007 - Verify Campaigns filter dropdown works correctly', () => {

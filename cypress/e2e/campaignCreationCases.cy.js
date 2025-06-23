@@ -17,7 +17,7 @@ describe("campaignCreationCases", () => {
         cy.visit('/login')
         cy.viewport(1920, 1080)
         signIn.verifyLoginFuntionality(email, password);
-         signIn.validateSignIn()
+        signIn.validateSignIn()
     })
 
     it("TC_Campaign_003 , Verify filtering campaigns by Campaign Type ", () => {
@@ -64,7 +64,7 @@ describe("campaignCreationCases", () => {
         campaign.clickOnNextButton()
         campaign.SelectPools()
         campaign.clickOnNextButton1()
-    campaign.validateCampaignAgentPersonality()
+        campaign.validateCampaignAgentPersonality()
         agent.selectAgentCard()
         // campaign.SelectScript()
         campaign.clickOnNextButton()

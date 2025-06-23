@@ -6,7 +6,7 @@ import { it } from "mocha";
 const signIn = new SignInPage
 const clients = new ClientsPage()
 const project = new ProjectPage();
-const poolss = new PoolsPage
+const poolss = new PoolsPage()
 
 
 

@@ -33,11 +33,11 @@ export class SignInPage {
     validateToastMessage(toastMsg) {
         cy.get('[class*="p-toast-message-content"]').contains(toastMsg).should('be.visible')
     }
-    verifySignOut() {
+    verifySignOut(email,password) {
         cy.get('[class="pi pi-sign-out"]').should('be.visible').click()
         cy.url().should("include", "/login");
         cy.get('.font-bold').should('be.visible').and('contain.text', 'Sign in to your Mega Account')
-          cy.get("#email").should("be.visible").and('have.class', 'ng-invalid');
-          cy.get("#password").should("be.visible").and('have.class', 'ng-invalid');
+          cy.get("#email").should("be.visible").and('have.value', email);
+          cy.get("#password").should("be.visible").and('have.value', password);
     }
 }

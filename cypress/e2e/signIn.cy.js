@@ -44,7 +44,7 @@ describe("Sign-In Page Validation", () => {
   it('Verify that user is able to sign out', () => {
     signIn.verifyLoginFuntionality(email, password);
     signIn.validateSignIn()
-    signIn.verifySignOut()
+    signIn.verifySignOut(email,password)
   })
 });
 
