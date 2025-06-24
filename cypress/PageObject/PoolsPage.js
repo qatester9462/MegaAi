@@ -242,24 +242,5 @@ cy.wait(5000)
         cy.get('@btn').click()
         cy.wait(2000)
         cy.url().should('include', '/pools');
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
