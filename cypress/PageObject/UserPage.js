@@ -23,13 +23,10 @@ export class UserPage {
         let totalRowCount = 0
 
         //Get initial filter text
-        cy.get(selector)
-            .invoke('text')
-            .then((text) => {
+        cy.get(selector).invoke('text').then((text) => {
                 initialFilterText = text.trim()
             })
             .then(() => {
-                // Apply the filter
                 cy.get(selector).click();
                 cy.get('[class*="p-dropdown-panel"]').should('be.visible')
                 cy.get('[role="searchbox"]').should('be.visible').clear().type(client)
@@ -43,21 +40,15 @@ export class UserPage {
                         filteredRowCount = $rows.length;
                         cy.log(`Filtered rows: ${filteredRowCount}`)
                     });
-
-                //Clear the filter
                 cy.get('[class*="btn-link"]').contains('Clear').click()
                 cy.wait(500)
 
                 //Validate filter text reset + rows count after clearing filter
-                cy.get(selector)
-                    .invoke('text')
-                    .then((afterClearText) => {
+                cy.get(selector).invoke('text').then((afterClearText) => {
                         expect(afterClearText.trim()).to.equal(initialFilterText)
                     })
 
-                cy.get('table tbody tr')
-                    .should('exist')
-                    .then($rows => {
+                cy.get('table tbody tr').should('exist').then($rows => {
                         totalRowCount = $rows.length;
                         cy.log(`Total rows after clearing the filter: ${totalRowCount}`)
                         expect(totalRowCount).to.be.greaterThan(filteredRowCount)
@@ -73,7 +64,12 @@ export class UserPage {
         cy.get('[class="form-labal"]').contains('Client').should('exist')
         cy.get('[aria-label="Select Client"]').should('exist').click()
         cy.get('[class*="p-dropdown-panel"]').should('exist')
-        cy.get('[role="option"]').should('exist').eq(0).click()
+        cy.get('[role="option"]').should('exist').then(($options) => {
+            const count = $options.length;
+            const randomIndex = Math.floor(Math.random() * count)
+            cy.wrap($options[randomIndex]).click()
+        });
+
 
     }
     validateRole() {
@@ -103,7 +99,7 @@ export class UserPage {
         cy.get('[role="option"]').should('exist').contains(country).click()
     }
     clickButton(btnName) {
-        cy.get('[class*="p-element p-button"]').contains(btnName).should('exist').click()
+        cy.get('[class*="p-element p-button"]').contains(btnName).should('exist').click({timeout:7000})
     }
     deleteCreatedUser(userEmail) {
         cy.get('tbody tr td').contains(userEmail).parents('tr').within(() => {
@@ -134,20 +130,39 @@ export class UserPage {
     }
     validateTooltip() {
         cy.get('.pi-info-circle').should('be.visible').trigger('mouseenter', { force: true })
-        cy.contains('Please use international phone number format').should('be.visible');
+        cy.contains('Please use international phone number format').should('be.visible')
+    }
+    validateCrossIcon() {
+        cy.get('.p-sidebar-close').should('exist').click()
     }
     validateEditUser(userEmail) {
         cy.get('tbody tr td').contains(userEmail).parents('tr').within(() => {
             cy.get('.pi-pencil')
-                .click();
+                .click()
         });
         cy.get('[role="complementary"]').contains('Update User').should('exist').wait(3000)
         cy.get('[placeholder="Enter Name"]')
             .should('exist')
             .invoke('val')
             .then((existingName) => {
-                const updatedName = `updated.${existingName}`;
-                cy.get('[placeholder="Enter Name"]').clear().type(updatedName);
-            });
+                const updatedName = `updated.${existingName}`
+                cy.get('[placeholder="Enter Name"]').clear().type(updatedName)
+            })
+    }
+    validateChangePassword(userEmail) {
+        cy.get('tbody tr td').contains(userEmail).parents('tr').within(() => {
+            cy.get('.pi-lock').click()
+        });
+        cy.get('.ng-trigger-panelState').contains('Change Password').should('exist')
+        cy.get('[class="form-labal"]').contains('Password').should('exist')
+        cy.get('[placeholder="Enter Password"]').should('exist').clear()
+        cy.get('.p-button-text').contains('Generate').should('exist').click()
+        cy.get('[placeholder="Enter Password"]').should('exist').and('have.class', 'p-filled').invoke('val').then((typedPassword) => {
+            cy.get('[class="form-labal"]').contains('Password').should('exist')
+            cy.get('[placeholder="Enter Confirm Password"]').should('exist').clear().type(typedPassword)
+            cy.get('[placeholder="Enter Password"]').invoke('val').should('eq', typedPassword);
+            cy.get('[placeholder="Enter Confirm Password"]').should('exist').and('have.class', 'p-filled').invoke('val').should('eq', typedPassword);
+            cy.get('[class*="p-element p-button"]').contains('Confirm').should('exist').click()
+        })
     }
 }

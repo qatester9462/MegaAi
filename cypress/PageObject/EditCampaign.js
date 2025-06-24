@@ -383,7 +383,13 @@ export class EditCampaigns {
             });
 
             cy.contains('Save').click();
-
+            //if pause campaign modal appears
+            cy.get('body').then(($body) => {
+                if ($body.text().includes('Pause Campaign')) {
+                    cy.get('.flex-column > .flex > .p-element').click();
+                }
+            });
+            cy.contains('Save').click();
             cy.get('.form-labal')
                 .contains(`Campaign Priority: ${newValue}`)
                 .should('exist');
