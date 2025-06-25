@@ -174,19 +174,19 @@ describe("editCampaignCases", () => {
         editcampaignn.verifyResumeCampaign()
 
     })
-    //Uncomment when fixed..duplicate functionality is not working
-    // it("TC_Edit-Campaign(Pools)_009 , Verify Duplicate action functionality", () => {
 
-    //     const camp = 'testing'
-    //     const clientName = 'MEGA-Bhargav'
-    //     clients.clickonclients()
-    //     project.gotoClient(clientName)
-    //     campaign.gotoCampaign()
-    //     editcampaignn.clickOnFirstCampaign(camp)
-    //     editcampaignn.verifyRedirectionToPoolsPage()
-    //     editcampaignn.verifyDuplicateCampaign()
+    it("TC_Edit-Campaign(Pools)_009 , Verify Duplicate action functionality", () => {
 
-    // })
+        const camp = 'testing'
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients()
+        project.gotoClient(clientName)
+        campaign.gotoCampaign()
+        editcampaignn.clickOnFirstCampaign(camp)
+        editcampaignn.verifyRedirectionToPoolsPage()
+        editcampaignn.verifyDuplicateCampaign()
+
+    })
     it("TC_Edit-Campaign(Pools)_010 , Verify Delete action functionality", () => {
 
         const camp = 'testing'
@@ -446,19 +446,19 @@ describe("editCampaignCases", () => {
         editcampaignn.verifyResumeCampaign()
 
     })
-    //Uncomment when fixed..duplicate functionality is not working
-    // it("TC_Edit-Campaign(Dialing)_016 , Verify Duplicate action functionality from Dialing page", () => {
 
-    //     const camp = 'testing'
-    //     const clientName = 'MEGA-Bhargav'
-    //     clients.clickonclients()
-    //     project.gotoClient(clientName)
-    //     campaign.gotoCampaign()
-    //     editcampaignn.clickOnFirstCampaign(camp)
-    //     editcampaignn.verifyDialingTabRedirection()
-    //     editcampaignn.verifyDuplicateCampaign()
+    it("TC_Edit-Campaign(Dialing)_016 , Verify Duplicate action functionality from Dialing page", () => {
 
-    // })
+        const camp = 'testing'
+        const clientName = 'MEGA-Bhargav'
+        clients.clickonclients()
+        project.gotoClient(clientName)
+        campaign.gotoCampaign()
+        editcampaignn.clickOnFirstCampaign(camp)
+        editcampaignn.verifyDialingTabRedirection()
+        editcampaignn.verifyDuplicateCampaign()
+
+    })
     it("TC_Edit-Campaign(Dialing)_017 , Verify Delete campaign functionality from Dialing page", () => {
 
         const camp = 'testing'

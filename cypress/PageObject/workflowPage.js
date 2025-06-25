@@ -48,23 +48,25 @@ export class WorkflowPage {
         cy.get('[placeholder="All projects"]').should('exist').click()
         cy.get('.listItems-title.flex-grow-0').eq(0).invoke('text').then((text) => {
             cy.log('Extracted text:', text);
-            cy.get('[role="searchbox"]')
-                .should('exist')
-                .clear()
-                .type(text.trim());
-
+            cy.get('[role="searchbox"]').should('exist').clear().type(text.trim())
             cy.get('[class*="p-dropdown-panel"]').should('exist')
             cy.get('[role="option"]').eq(1).should('exist').click()
             cy.wait(4000)
         });
     }
     deleteWorkflow() {
-        cy.get('[class*="btn-icon pi').each(($el, index) => {
-            if (index < 3) {
-                cy.wrap($el).click()
+        cy.get('[class*="btn-icon pi"]').then($icons => {
+            const totalToDelete = $icons.length;
+            if (totalToDelete === 0) {
+                cy.log('No workflows to delete')
+                return
+            }
+            for (let i = 0; i < totalToDelete; i++) {
+                cy.get('[class*="btn-icon pi"]').first().should('exist').click({ force: true }).wait(1000)
             }
         })
     }
+
     addandDeleteAllActions() {
         const actions = [
             { name: 'Send SMS', label: 'Select Send SMS' },

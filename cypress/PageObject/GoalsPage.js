@@ -93,7 +93,7 @@ export class GoalsProject {
         cy.get('[class*="p-dropdown-panel"]').should('be.visible')
         cy.get('[role="searchbox"]').should('be.visible').clear().type(module)
         cy.get('[role="option"]').should('exist').contains(module).click()
-        cy.wait(3000)
+        cy.wait(2000)
         cy.get('tbody tr').then(($filteredRows) => {
             const filteredCount = $filteredRows.length;
             cy.log(`Filtered row count: ${filteredCount}`);
@@ -139,5 +139,19 @@ export class GoalsProject {
                 })
             })
 
+    }
+
+    gotoGoalsTab() {
+        cy.get('[role="tab"]').contains('Goals').should('exist').click()
+        cy.url().should('include', '/goals/goals')
+        cy.get('.header-title').contains('Goals').should('be.visible')
+    }
+    validateClientFilter(client) {
+        cy.wait(2000)
+        cy.get('[aria-label="Clients: All"]').should('exist').click()
+        cy.get('[class*="p-dropdown-panel"]').should('be.visible')
+        cy.get('[role="searchbox"]').should('be.visible').clear().type(client).wait(2000)
+        cy.get('[role="option"]').should('exist').contains(client).click().wait(1000)
+        cy.get('tbody tr td:nth-child(2)').should('exist').and('contain.text', client)
     }
 }

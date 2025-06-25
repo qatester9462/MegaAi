@@ -6,7 +6,7 @@ const signIn = new SignInPage()
 const goalsProject = new GoalsProject()
 const users = new UserPage()
 const workflow = new WorkflowPage()
-describe("Admin Side Goals Cases", () => {
+describe("Admin Side Goal Types Tab Cases", () => {
     const email = Cypress.config('users').user1.username
     const password = Cypress.config('users').user1.password
     const description = 'This is testing description for goal types and goal. Please ignore. Thanks.'
@@ -49,7 +49,7 @@ describe("Admin Side Goals Cases", () => {
     })
     it("Verify Modules filter functionality", () => {
         goalsProject.gotoAdminGoals()
-         cy.wait(3000)
+        cy.wait(3000)
         goalsProject.validateModuleFilter('Module-1')
     })
     it("Verify clear filter functionality", () => {
@@ -57,4 +57,26 @@ describe("Admin Side Goals Cases", () => {
         cy.wait(3000)
         goalsProject.validateClearFilter('Module-1')
     })
+})
+
+describe("Admin Side Goals Tab Cases", () => {
+    const email = Cypress.config('users').user1.username
+    const password = Cypress.config('users').user1.password
+    const client = "MEGA-Bhargav"
+    beforeEach(() => {
+        cy.visit('/login')
+        cy.viewport(1920, 1080)
+        signIn.verifyLoginFuntionality(email, password);
+        signIn.validateSignIn()
+    })
+    it("Verify user is able to goto Goals Tab(Admin Goals Page)", () => {
+        goalsProject.gotoAdminGoals()
+        goalsProject.gotoGoalsTab()
+    })
+    it("Verify that client filter is getting applied and showing relevant clients", () => {
+        goalsProject.gotoAdminGoals()
+        goalsProject.gotoGoalsTab()
+        goalsProject.validateClientFilter(client)
+    })
+ 
 })
