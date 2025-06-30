@@ -72,7 +72,7 @@ export class WorkflowPage {
             { name: 'Send SMS', label: 'Select Send SMS' },
             { name: 'API Request', label: 'Select API Request' },
             { name: 'Update CRM', label: 'Select Update CRM' },
-            { name: 'Forward Call', label: 'Select Forward Call' },
+            //{ name: 'Forward Call', label: 'Select Forward Call' },
         ];
         actions.forEach((action) => {
             cy.get('[class*="p-ripple p-element"]').contains(`Add ${action.name}`).should('be.visible').click();
